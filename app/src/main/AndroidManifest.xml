@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.estoreid.estoreid">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".views.Cart_Activity"></activity>
+        <activity android:name=".views.QRActivity" />
+        <activity android:name=".views.OrderPlaced" />
+        <activity android:name=".views.Product_Reviews" />
+        <activity android:name=".views.Product_details" />
+        <activity android:name=".views.Products_Screen" />
+        <activity android:name=".views.VerifyScreen" />
+        <activity android:name=".views.SignUp" />
+        <activity
+            android:name=".views.Login"
+            android:screenOrientation="userPortrait" />
+        <activity android:name=".views.MainActivity" />
+        <activity
+            android:name=".views.SplashScreen"
+            android:screenOrientation="userPortrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>

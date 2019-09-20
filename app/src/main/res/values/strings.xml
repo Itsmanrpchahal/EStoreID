@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">EStoreID</string>
+    <string name="policy">I have read all the <b><u>Terms &amp; condition</u></b> and <b><u>Privacy policy</u></b></string>
+    <string name="Allreadyaccount">Already have an account? <b><u>Login</u></b></string>
+    <string name="signuptext">New to eStore? <b><u>Sign Up</u></b></string>
+    <string name="address"><u>Change</u></string>
+    <string name="forgot"><u>Forgot?</u></string>
+    <string name="reviews"><u>(40 reviews)</u></string>
+    <string name="decs">A wonderful serenity has taken possession of my entire soul, like these sweet mornings of spring which I enjoy with my whole heart. I am alone, and feel the charm of existence in this spot, which was created for the bliss of souls like mine.</string>
+
+    <string name="reviewtext">Touch for case ran fortune. Have mouth. Temple. The king\'s the eightypercent she my so the all the next accustomed.   Be think evaluation the that boss country, various technology support the whose the its in having partiality escape, they for many much I low follow to well choose essay such he narrow point then where by minutes.</string>
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
+    <string name="sharre"><u>Share QR Code</u></string>
+</resources>
+

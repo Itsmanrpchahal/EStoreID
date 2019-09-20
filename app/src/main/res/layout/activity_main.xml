@@ -1,0 +1,376 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".views.MainActivity"
+    tools:openDrawer="start"
+    android:id="@+id/drawer_layout"
+    android:background="@color/colorWhite">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/toolbar">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="40dp"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/round_edittext"
+                    android:layout_alignParentEnd="true">
+
+                    <EditText
+                        android:id="@+id/serach_et"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Search Store"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="50dp"
+                        android:inputType="none"
+                        android:maxLines="1"
+                        android:singleLine="true"
+                        android:backgroundTint="@color/colorTrans"
+                        android:background="@color/colorTrans"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="10sp"
+                        android:padding="10dp"
+                        ></EditText>
+
+                    <ImageButton
+                        android:id="@+id/serach_ib"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_search_black_24dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginRight="10dp"
+                        android:background="@color/colorTrans"
+                        android:layout_centerVertical="true"></ImageButton>
+
+
+                </RelativeLayout>
+
+            </RelativeLayout>
+
+        </androidx.appcompat.widget.Toolbar>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/toolbar">
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <com.estoreid.estoreid.views.utils.AppMapView
+                    android:layout_width="match_parent"
+                    android:layout_height="220dp"
+                    android:background="@color/colorBlack"
+                    android:id="@+id/mapview">
+
+                </com.estoreid.estoreid.views.utils.AppMapView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/location_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardBackgroundColor="@color/colorWhite"
+                    app:cardCornerRadius="25dp"
+                    app:cardElevation="10dp"
+                    android:layout_marginLeft="@dimen/xxmargin"
+                    android:layout_marginRight="@dimen/xxmargin"
+                    android:layout_marginTop="205dp">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="15dp">
+
+                        <TextView
+                            android:id="@+id/your_loc_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Your Location"
+                            android:textColor="#707070"
+                            android:textSize="8sp"></TextView>
+
+                        <TextView
+                            android:id="@+id/loaction_tv"
+                            android:text="current location"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/quicksandbold"
+                            android:textStyle="bold"
+                            android:textSize="12sp"
+                            android:layout_below="@id/your_loc_tv"></TextView>
+
+                        <TextView
+                            android:id="@+id/change_address"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/address"
+                            android:textColor="@color/colorTheme"
+                            android:textSize="8sp"
+                            android:fontFamily="@font/quicksand"
+                            android:layout_centerVertical="true"
+                            android:layout_alignParentRight="true"></TextView>
+
+                    </RelativeLayout>
+
+
+                </androidx.cardview.widget.CardView>
+
+                <RelativeLayout
+                    android:id="@+id/item_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="visible"
+                    android:layout_below="@id/location_view"
+                    android:layout_marginTop="@dimen/xxmargin">
+
+                    <View
+                        android:id="@+id/view1"
+                        android:layout_width="match_parent"
+                        android:layout_height="0.8dp"
+                        android:background="#EFEFEF"></View>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/view1"
+                        android:id="@+id/view2"
+                        android:orientation="horizontal"
+                        android:weightSum="3">
+
+                        <RelativeLayout
+                            android:id="@+id/sort_layout"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1.5"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/sortby_tv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:text="Sort by"
+                                android:gravity="center"
+                                android:layout_gravity="center_vertical"
+                                android:textColor="@color/colorBlack"
+                                android:textSize="@dimen/normaltext"
+                                android:layout_marginLeft="10dp"
+                                android:layout_toRightOf="@id/sortimage"
+                                android:fontFamily="@font/quicksand"></TextView>
+
+                            <ImageView
+                                android:id="@+id/sortimage"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/shortby"
+                                android:layout_centerVertical="true"></ImageView>
+
+                        </RelativeLayout>
+
+                        <View
+                            android:layout_width="0.8dp"
+                            android:layout_height="50dp"
+                            android:background="#EFEFEF"></View>
+
+                        <RelativeLayout
+                            android:id="@+id/filter_layout"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1.5"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/filter_tv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:text="Filter"
+                                android:layout_marginLeft="10dp"
+                                android:layout_toRightOf="@id/filterimage"
+                                android:layout_gravity="center_vertical"
+                                android:textColor="@color/colorBlack"
+                                android:textSize="@dimen/normaltext"
+                                android:fontFamily="@font/quicksand">
+
+                            </TextView>
+
+                            <ImageView
+                                android:id="@+id/filterimage"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/filter"
+                                android:layout_centerVertical="true"></ImageView>
+
+                        </RelativeLayout>
+                    </LinearLayout>
+
+                    <View
+                        android:id="@+id/view3"
+                        android:layout_width="match_parent"
+                        android:layout_height="0.8dp"
+                        android:layout_below="@id/view2"
+                        android:background="#EFEFEF">
+
+                    </View>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/dashboard_recylerview"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/colorWhite"
+                        android:layout_below="@id/view3"
+                        android:layout_marginTop="10dp">
+
+                    </androidx.recyclerview.widget.RecyclerView>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/location_view"
+                    android:visibility="gone"
+                    android:layout_marginTop="@dimen/xxmargin">
+
+
+                    <EditText
+                        android:id="@+id/houseno"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/xxmargin"
+                        android:layout_marginTop="@dimen/xxmargin"
+                        android:layout_marginRight="@dimen/xxmargin"
+                        android:backgroundTint="@color/colorTrans"
+                        android:drawablePadding="15dp"
+                        android:fontFamily="@font/latoregular"
+                        android:hint="House No."
+                        android:inputType="text"
+                        android:textColor="@color/colorBlack"
+                        android:textColorHint="@color/colorBlack"></EditText>
+
+                    <View
+                        android:id="@+id/add_view1"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_below="@id/houseno"
+                        android:layout_marginLeft="@dimen/xxmargin"
+                        android:layout_marginRight="@dimen/xxmargin"
+                        android:background="@color/colorBlack"></View>
+
+                    <EditText
+                        android:id="@+id/street"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/add_view1"
+                        android:layout_marginLeft="@dimen/xxmargin"
+                        android:layout_marginTop="@dimen/xxmargin"
+                        android:layout_marginRight="@dimen/xxmargin"
+                        android:backgroundTint="@color/colorTrans"
+                        android:drawablePadding="15dp"
+                        android:fontFamily="@font/latoregular"
+                        android:hint="Street"
+                        android:inputType="text"
+                        android:textColor="@color/colorBlack"
+                        android:textColorHint="@color/colorBlack"></EditText>
+
+                    <View
+                        android:id="@+id/add_view2"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_below="@id/street"
+                        android:layout_marginLeft="@dimen/xxmargin"
+                        android:layout_marginRight="@dimen/xxmargin"
+                        android:background="@color/colorBlack"></View>
+
+                    <EditText
+                        android:id="@+id/city"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/add_view2"
+                        android:layout_marginLeft="@dimen/xxmargin"
+                        android:layout_marginTop="@dimen/xxmargin"
+                        android:layout_marginRight="@dimen/xxmargin"
+                        android:backgroundTint="@color/colorTrans"
+                        android:drawablePadding="15dp"
+                        android:fontFamily="@font/latoregular"
+                        android:hint="City/State"
+                        android:inputType="text"
+                        android:textColor="@color/colorBlack"
+                        android:textColorHint="@color/colorBlack"></EditText>
+
+                    <View
+                        android:id="@+id/add_view3"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_below="@id/city"
+                        android:layout_marginLeft="@dimen/xxmargin"
+                        android:layout_marginRight="@dimen/xxmargin"
+                        android:background="@color/colorBlack"></View>
+
+                    <EditText
+                        android:id="@+id/pincode"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/add_view3"
+                        android:layout_marginLeft="@dimen/xxmargin"
+                        android:layout_marginTop="@dimen/xxmargin"
+                        android:layout_marginRight="@dimen/xxmargin"
+                        android:backgroundTint="@color/colorTrans"
+                        android:drawablePadding="15dp"
+                        android:fontFamily="@font/latoregular"
+                        android:hint="Pincode"
+                        android:inputType="text"
+                        android:textColor="@color/colorBlack"
+                        android:textColorHint="@color/colorBlack"></EditText>
+
+                    <View
+                        android:id="@+id/add_view4"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_below="@+id/pincode"
+                        android:layout_marginLeft="@dimen/xxmargin"
+                        android:layout_marginRight="@dimen/xxmargin"
+                        android:background="@color/colorBlack"></View>
+
+                </RelativeLayout>
+            </RelativeLayout>
+        </ScrollView>
+    </RelativeLayout>
+
+
+
+
+    <com.google.android.material.navigation.NavigationView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        app:headerLayout="@layout/header_layout"
+        app:menu="@menu/menu_items"
+        android:theme="@style/DrawerTheme"
+        app:itemTextColor="@color/colorBlack"
+        android:id="@+id/navigation_view"
+        tools:ignore="MissingConstraints"></com.google.android.material.navigation.NavigationView>
+
+</androidx.drawerlayout.widget.DrawerLayout>

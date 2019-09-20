@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorWhite"
+    tools:context=".views.QRActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <include layout="@layout/toolbar_cart" ></include>
+
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:id="@+id/qr_userimage"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/toolbar"
+                android:layout_marginTop="@dimen/xxmargin"
+                app:riv_border_width="2dp"
+                app:riv_border_color="@color/colorFB"
+                android:src="@drawable/shape"
+                app:riv_corner_radius="60dp"></com.makeramen.roundedimageview.RoundedImageView>
+
+
+            <TextView
+                android:id="@+id/qr_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Show this QR Code to Vendor"
+                android:textColor="@color/colorBlack"
+                android:layout_below="@id/qr_userimage"
+                android:layout_marginTop="@dimen/defaultmargin"
+                android:layout_centerHorizontal="true"
+                android:textSize="@dimen/normaltext"></TextView>
+
+            <TextView
+                android:id="@+id/qr_text1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s"
+                android:layout_below="@id/qr_text"
+                android:textAlignment="center"
+                android:layout_margin="@dimen/defaultmargin"
+                android:layout_centerHorizontal="true"
+                android:textSize="@dimen/normaltext"></TextView>
+
+
+            <ImageView
+                android:id="@+id/qr_image"
+                android:layout_width="220dp"
+                android:layout_height="220dp"
+                android:layout_below="@id/qr_text1"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/defaultmargin"
+                android:src="@drawable/qr"></ImageView>
+
+            <Button
+                android:id="@+id/qr_share"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/round_blue_bt"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/qr_image"
+                android:layout_marginTop="@dimen/defaultmargin"
+                android:text="@string/sharre"
+                android:textColor="@color/colorWhite"
+                android:padding="10dp"
+                android:textAllCaps="false"
+                android:drawableLeft="@drawable/ic_share"
+                android:drawablePadding="10dp"></Button>
+
+        </RelativeLayout>
+    </ScrollView>
+
+</RelativeLayout>

@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorWhite"
+    tools:context=".views.Product_Reviews">
+
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/reviews_toolbar">
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_chevron_left_black_24dp"
+            android:background="@color/colorTrans"
+            android:id="@+id/reviews_back"></ImageButton>
+    </androidx.appcompat.widget.Toolbar>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/reviews_toolbar">
+
+        <RelativeLayout
+            android:id="@+id/rating_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/defaultmargin">
+
+            <TextView
+                android:id="@+id/overallrating_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="4.3"
+                android:fontFamily="@font/quicksand"
+                android:layout_centerVertical="true"
+                android:textSize="@dimen/xlargetext"
+                android:layout_marginLeft="@dimen/defaultmargin"
+                android:textColor="@color/colorBlack"></TextView>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/overallrating_text"
+                android:layout_marginLeft="10dp">
+
+                <RatingBar
+                    android:id="@+id/product_rating"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/Widget.AppCompat.RatingBar.Small"
+                    ></RatingBar>
+
+                <TextView
+                    android:id="@+id/total_reviews"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Reviews (140)"
+                    android:textColor="@color/colorBlack"
+                    android:fontFamily="@font/quicksand"
+                    android:textSize="@dimen/normaltext"
+                    android:layout_below="@id/product_rating"></TextView>
+            </RelativeLayout>
+        </RelativeLayout>
+
+        <View
+            android:id="@+id/view1"
+            android:layout_width="match_parent"
+            android:layout_height="0.8dp"
+            android:background="@color/colorgrey"
+            android:layout_below="@+id/rating_layout"
+            android:layout_marginTop="@dimen/defaultmargin">
+
+        </View>
+
+        <LinearLayout
+            android:id="@+id/rating_layout_one"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/view1"
+            android:orientation="horizontal"
+            android:weightSum="5"
+            android:layout_margin="@dimen/defaultmargin">
+
+            <RatingBar
+                android:id="@+id/five_starrating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/Widget.AppCompat.RatingBar.Small"></RatingBar>
+
+            <ProgressBar
+                android:id="@+id/five_progress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="4"
+                android:layout_marginLeft="@dimen/defaultmargin"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"></ProgressBar>
+
+            <TextView
+                android:id="@+id/five_reviews"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/defaultmargin"
+                android:text="84"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textSize="@dimen/normaltext"
+                android:textColor="@color/colorBlack"
+                android:fontFamily="@font/quicksand"></TextView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/rating_layout_two"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/rating_layout_one"
+            android:orientation="horizontal"
+            android:weightSum="5"
+            android:layout_marginLeft="@dimen/defaultmargin"
+            android:layout_marginRight="@dimen/defaultmargin">
+
+            <RatingBar
+                android:id="@+id/four_starrating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/Widget.AppCompat.RatingBar.Small"></RatingBar>
+
+            <ProgressBar
+                android:id="@+id/four_progress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="4"
+                android:layout_marginLeft="@dimen/defaultmargin"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"></ProgressBar>
+
+            <TextView
+                android:id="@+id/four_reviews"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/defaultmargin"
+                android:text="84"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textSize="@dimen/normaltext"
+                android:textColor="@color/colorBlack"
+                android:fontFamily="@font/quicksand"></TextView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/rating_layout_three"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/rating_layout_two"
+            android:orientation="horizontal"
+            android:weightSum="5"
+            android:layout_margin="@dimen/defaultmargin">
+
+            <RatingBar
+                android:id="@+id/three_starrating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/Widget.AppCompat.RatingBar.Small"></RatingBar>
+
+            <ProgressBar
+                android:id="@+id/three_progress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="4"
+                android:layout_marginLeft="@dimen/defaultmargin"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"></ProgressBar>
+
+            <TextView
+                android:id="@+id/three_reviews"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/defaultmargin"
+                android:text="84"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textSize="@dimen/normaltext"
+                android:textColor="@color/colorBlack"
+                android:fontFamily="@font/quicksand"></TextView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/rating_layout_four"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/rating_layout_three"
+            android:orientation="horizontal"
+            android:weightSum="5"
+            android:layout_marginLeft="@dimen/defaultmargin"
+            android:layout_marginRight="@dimen/defaultmargin">
+
+            <RatingBar
+                android:id="@+id/two_starrating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/Widget.AppCompat.RatingBar.Small"></RatingBar>
+
+            <ProgressBar
+                android:id="@+id/two_progress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="4"
+                android:layout_marginLeft="@dimen/defaultmargin"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"></ProgressBar>
+
+            <TextView
+                android:id="@+id/two_reviews"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/defaultmargin"
+                android:text="84"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textSize="@dimen/normaltext"
+                android:textColor="@color/colorBlack"
+                android:fontFamily="@font/quicksand"></TextView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/rating_layout_five"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/rating_layout_four"
+            android:orientation="horizontal"
+            android:weightSum="5"
+            android:layout_margin="@dimen/defaultmargin">
+
+            <RatingBar
+                android:id="@+id/one_starrating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/Widget.AppCompat.RatingBar.Small"></RatingBar>
+
+            <ProgressBar
+                android:id="@+id/one_progress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="4"
+                android:layout_marginLeft="@dimen/defaultmargin"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"></ProgressBar>
+
+            <TextView
+                android:id="@+id/one_reviews"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/defaultmargin"
+                android:text="84"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textSize="@dimen/normaltext"
+                android:textColor="@color/colorBlack"
+                android:fontFamily="@font/quicksand"></TextView>
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/reviews_recyler"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/rating_layout_five"
+            android:layout_marginTop="@dimen/defaultmargin"></androidx.recyclerview.widget.RecyclerView>
+    </RelativeLayout>
+
+</RelativeLayout>

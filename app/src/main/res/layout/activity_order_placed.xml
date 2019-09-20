@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorWhite"
+    tools:context=".views.OrderPlaced">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/order_placed_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+       <RelativeLayout
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content">
+
+           <ImageButton
+               android:id="@+id/close_order_placed"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:background="@color/colorTrans"
+               android:src="@drawable/ic_close_black_24dp"
+               android:layout_alignParentRight="true"
+               android:layout_marginRight="10dp"
+               ></ImageButton>
+       </RelativeLayout>
+    </androidx.appcompat.widget.Toolbar>
+
+    <ImageView
+        android:id="@+id/order_placed_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/productplaced"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/order_placed_toolbar"
+        android:layout_marginTop="@dimen/xxmargin"></ImageView>
+
+    <TextView
+        android:id="@+id/orderplace_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Order Placed!"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/order_placed_image"
+        android:textSize="@dimen/xlargetext"
+        android:fontFamily="@font/quicksandbold"
+        android:textColor="@color/colorBlack"
+        android:layout_marginTop="@dimen/xmargin"></TextView>
+
+    <TextView
+        android:id="@+id/orderplace_decstext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/orderplace_text"
+        android:text="Your order was placed successfully. For more details, check All My Orders page under Profile tab"
+        android:layout_margin="@dimen/xxmargin"
+        android:textAlignment="center"
+        android:fontFamily="@font/quicksand"></TextView>
+
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/orderplace_decstext"
+        android:layout_marginTop="@dimen/defaultmargin"
+        android:background="@drawable/round_button_theam"
+        android:text="MY ORDERS"
+        android:drawablePadding="10dp"
+        android:paddingRight="10dp"
+        android:paddingLeft="10dp"
+        android:textColor="@color/colorWhite"
+        android:drawableRight="@drawable/ic_rectangle"></Button>
+
+
+</RelativeLayout>

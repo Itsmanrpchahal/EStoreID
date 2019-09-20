@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorTheme"
+    tools:context=".views.VerifyScreen">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:focusableInTouchMode="true"
+            android:clickable="true"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/verify_logo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="100dp"
+                app:srcCompat="@drawable/ic_logowhite"
+                tools:ignore="VectorDrawableCompat"></ImageView>
+
+            <TextView
+                android:id="@+id/verify_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/verify_logo"
+                android:layout_marginTop="@dimen/fiftymargin"
+                android:layout_centerHorizontal="true"
+                android:text="Verify Phone No."
+                android:textColor="@color/colorWhite"
+                android:fontFamily="@font/quicksand"
+                android:textStyle="bold"
+                android:textSize="24sp"></TextView>
+
+            <LinearLayout
+                android:id="@+id/otp_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="@drawable/round_button_white"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/verify_text"
+                android:padding="10dp"
+                android:layout_marginRight="@dimen/xxmargin"
+                android:layout_marginLeft="@dimen/xxmargin"
+                android:layout_marginTop="@dimen/xmargin"
+                android:weightSum="6">
+
+                <EditText
+                    android:id="@+id/opt_1"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint=" - "
+                    android:maxLength="1"
+                    android:background="@color/colorTrans"
+                    android:backgroundTint="@color/colorTrans"
+                    android:gravity="center"
+                    android:inputType="number"
+                    android:layout_marginLeft="10dp"
+                    android:textColorHint="@color/colorBlack"
+                    android:textSize="@dimen/largetext"></EditText>
+
+                <EditText
+                    android:id="@+id/opt_2"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint=" - "
+                    android:maxLength="1"
+                    android:inputType="number"
+                    android:background="@color/colorTrans"
+                    android:backgroundTint="@color/colorTrans"
+                    android:gravity="center"
+                    android:textColorHint="@color/colorBlack"
+                    android:textSize="@dimen/largetext"></EditText>
+
+                <EditText
+                    android:id="@+id/opt_3"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint=" - "
+                    android:maxLength="1"
+                    android:inputType="number"
+                    android:background="@color/colorTrans"
+                    android:backgroundTint="@color/colorTrans"
+                    android:gravity="center"
+                    android:textColorHint="@color/colorBlack"
+                    android:textSize="@dimen/largetext"></EditText>
+
+                <EditText
+                    android:id="@+id/opt_4"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint=" - "
+                    android:inputType="number"
+                    android:maxLength="1"
+                    android:background="@color/colorTrans"
+                    android:backgroundTint="@color/colorTrans"
+                    android:gravity="center"
+                    android:textColorHint="@color/colorBlack"
+                    android:textSize="@dimen/largetext"></EditText>
+
+                <EditText
+                    android:id="@+id/opt_5"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint=" - "
+                    android:inputType="number"
+                    android:maxLength="1"
+                    android:background="@color/colorTrans"
+                    android:backgroundTint="@color/colorTrans"
+                    android:gravity="center"
+                    android:textColorHint="@color/colorBlack"
+                    android:textSize="@dimen/largetext"></EditText>
+
+                <EditText
+                    android:id="@+id/opt_6"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:hint=" - "
+                    android:maxLength="1"
+                    android:inputType="number"
+                    android:background="@color/colorTrans"
+                    android:backgroundTint="@color/colorTrans"
+                    android:gravity="center"
+                    android:textColorHint="@color/colorBlack"
+                    android:textSize="@dimen/largetext"></EditText>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/verify_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/otp_layout"
+                android:layout_marginLeft="@dimen/xxmargin"
+                android:layout_marginRight="@dimen/xxmargin"
+                android:text="Please enter confirmation code here, you will received on you register email address"
+                android:textSize="@dimen/smalltext"
+                android:fontFamily="@font/quicksand"
+                android:textColor="@color/colorWhite"
+                android:layout_marginTop="@dimen/defaultmargin"
+                android:textAlignment="center">
+
+            </TextView>
+
+            <Button
+                android:id="@+id/verify_confirm_bt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/round_button"
+                android:layout_below="@id/verify_tv"
+                android:layout_marginLeft="@dimen/xxmargin"
+                android:layout_marginRight="@dimen/xxmargin"
+                android:layout_marginTop="@dimen/xxmargin"
+                android:text="Confirm"
+                android:textColor="@color/colorWhite"
+                android:textAllCaps="false"
+                android:textSize="@dimen/normaltext"
+                android:fontFamily="@font/quicksandbold"></Button>
+
+            <TextView
+                android:id="@+id/verify_cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cancel"
+                android:fontFamily="@font/quicksand"
+                android:textColor="@color/colorWhite"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/verify_confirm_bt"
+                android:layout_marginTop="@dimen/defaultmargin"
+                android:textSize="@dimen/smalltext"></TextView>
+
+        </RelativeLayout>
+    </ScrollView>
+
+</RelativeLayout>

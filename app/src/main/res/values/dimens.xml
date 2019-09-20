@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="defaultmargin">16dp</dimen>
+    <dimen name="xmargin">20dp</dimen>
+    <dimen name="xxmargin">30dp</dimen>
+    <dimen name="fiftymargin">50dp</dimen>
+    <dimen name="smalltext">16sp</dimen>
+    <dimen name="normaltext">18sp</dimen>
+    <dimen name="largetext">20sp</dimen>
+    <dimen name="xlargetext">32sp</dimen>
+
+</resources>

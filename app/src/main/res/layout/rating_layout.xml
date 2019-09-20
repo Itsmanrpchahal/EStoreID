@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorWhite">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/defaultmargin"
+        android:id="@+id/layout_one">
+
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/rating_user_image"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            app:riv_corner_radius="40dp"
+            android:src="@drawable/shape"
+            android:scaleType="centerCrop"/>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/rating_user_image"
+            android:layout_marginLeft="10dp"
+            android:layout_centerVertical="true">
+
+
+            <TextView
+                android:id="@+id/rating_user_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Juliet Oxygen"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/largetext"
+                android:fontFamily="@font/quicksand"
+                ></TextView>
+
+            <TextView
+                android:id="@+id/rating_day_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Day 1"
+                android:textSize="@dimen/normaltext"
+                android:textColor="@color/colorgrey"
+                android:layout_below="@id/rating_user_name"></TextView>
+
+            <androidx.appcompat.widget.AppCompatRatingBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/Widget.AppCompat.RatingBar.Small"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"></androidx.appcompat.widget.AppCompatRatingBar>
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/review_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/layout_one"
+        android:layout_margin="@dimen/defaultmargin"
+        android:text="@string/reviewtext"
+        android:textColor="@color/colorBlack"
+        android:textSize="@dimen/normaltext"
+        android:fontFamily="@font/quicksand"></TextView>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.8dp"
+        android:layout_below="@id/review_text"
+        android:background="@color/colorgrey"></View>
+
+</RelativeLayout>

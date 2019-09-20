@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/splash"
+    tools:context=".views.SplashScreen">
+
+
+    <ImageView
+        android:id="@+id/splash_logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ic_logo"
+        android:layout_centerInParent="true"></ImageView>
+
+    <TextView
+        android:id="@+id/splash_loadingtext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Loading..."
+        android:textSize="12sp"
+        android:layout_marginTop="60dp"
+        android:layout_below="@id/splash_logo"
+        android:layout_centerHorizontal="true"></TextView>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_below="@id/splash_loadingtext"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:max="100"
+        android:progressBackgroundTint="@color/colorPrimary"
+        android:background="@drawable/progressbar"
+        android:progressTint="@color/colorTheme"
+        android:secondaryProgressTint="@color/colorTheme"
+        style="@android:style/Widget.Holo.ProgressBar.Horizontal"
+        android:progress="10"
+        android:secondaryProgress="50"/>
+
+</RelativeLayout>
