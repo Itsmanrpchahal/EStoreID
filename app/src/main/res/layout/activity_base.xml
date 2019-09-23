@@ -4,19 +4,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    tools:context=".views.BaseActivity"
     android:id="@+id/drawer_layout"
-   tools:openDrawer="start">
+    android:fitsSystemWindows="true"
+    tools:openDrawer="start">
+
+
+    <include layout="@layout/toolbar_cart"></include>
 
     <com.google.android.material.navigation.NavigationView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:id="@+id/nav_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
         android:layout_gravity="start"
+        android:fitsSystemWindows="true"
         app:headerLayout="@layout/header_layout"
-        app:menu="@menu/menu_items"
-        android:theme="@style/DrawerTheme"
-        app:itemTextColor="@color/colorBlack"
-        android:id="@+id/navigation_view"
-        tools:ignore="MissingConstraints"></com.google.android.material.navigation.NavigationView>
-
+        app:menu="@menu/menu_items" />
 
 </androidx.drawerlayout.widget.DrawerLayout>

@@ -29,7 +29,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        Toast.makeText(context, "Type "+type, Toast.LENGTH_SHORT).show();
 
         View view = null;
         if (type.equals("list"))

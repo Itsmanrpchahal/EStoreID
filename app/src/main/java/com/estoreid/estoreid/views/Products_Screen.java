@@ -1,8 +1,12 @@
 package com.estoreid.estoreid.views;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
@@ -14,6 +18,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -25,7 +31,7 @@ import com.google.android.material.navigation.NavigationView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class Products_Screen extends AppCompatActivity {
+public class Products_Screen extends BaseActivity {
 
     ProductAdapter adapter;
     @BindView(R.id.product_tv)
@@ -45,12 +51,6 @@ public class Products_Screen extends AppCompatActivity {
     @BindView(R.id.items_recycler_view)
     RecyclerView itemsRecyclerView;
     String type = "list";
-    @BindView(R.id.serach_et)
-    EditText serachEt;
-    @BindView(R.id.serach_ib)
-    ImageButton serachIb;
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
 
     ActionBarDrawerToggle actionBarDrawerToggle;
 
@@ -59,15 +59,12 @@ public class Products_Screen extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_products__screen);
+        LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        //inflate your activity layout here!
+        @SuppressLint("InflateParams")
+        View contentView = inflater.inflate(R.layout.activity_products__screen, null, false);
+        drawer.addView(contentView, 0);
         ButterKnife.bind(this);
-
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
-        actionBarDrawerToggle = new ActionBarDrawerToggle(this, MainActivity.drawerLayout, toolbar, R.string.drawer_open, R.string.drawer_close);
-        MainActivity.drawerLayout.addDrawerListener(actionBarDrawerToggle);
-        actionBarDrawerToggle.syncState();
-        this.toolbar.setTitleTextColor(getResources().getColor(R.color.colorWhite));
         listeners();
 
         if (type.equals("list")) {
@@ -108,25 +105,22 @@ public class Products_Screen extends AppCompatActivity {
             }
         });
 
-        MainActivity.navigationView.setItemIconTintList(null);
-        MainActivity.navigationView.setVerticalScrollBarEnabled(false);
-        MainActivity.navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                return false;
-            }
-        });
     }
 
-    @SuppressLint("WrongConstant")
+
     @Override
     public void onBackPressed() {
-
-        if (MainActivity.drawerLayout.isDrawerOpen(Gravity.START)) {
-            MainActivity.drawerLayout.closeDrawer(Gravity.START);
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                finishAffinity();
+            } else {
+                super.onBackPressed();
+            }
         }
     }
+
 
 }

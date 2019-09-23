@@ -8,13 +8,17 @@
     tools:context=".views.Product_details">
 
 
-    <include layout="@layout/toolbar_cart" android:id="@+id/product_detail_toolbar"></include>
+    <include
+        layout="@layout/toolbar_cart"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="52dp"
-        android:layout_below="@id/product_detail_toolbar">
+        android:layout_marginTop="55dp">
 
         <RelativeLayout
             android:layout_width="match_parent"

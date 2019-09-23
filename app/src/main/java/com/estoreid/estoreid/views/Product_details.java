@@ -1,7 +1,11 @@
 package com.estoreid.estoreid.views;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -10,6 +14,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.viewpager.widget.ViewPager;
 
 import com.borjabravo.readmoretextview.ReadMoreTextView;
@@ -18,10 +24,8 @@ import com.estoreid.estoreid.R;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class Product_details extends AppCompatActivity {
+public class Product_details extends BaseActivity {
 
-    @BindView(R.id.cart_toolbar_navigate)
-    ImageButton cartToolbarNavigate;
     @BindView(R.id.cart_toolbar)
     ImageButton cartToolbar;
     @BindView(R.id.serach_toolbar)
@@ -78,9 +82,12 @@ public class Product_details extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_product_details);
+        LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        //inflate your activity layout here!
+        @SuppressLint("InflateParams")
+        View contentView = inflater.inflate(R.layout.activity_product_details, null, false);
+        drawer.addView(contentView, 0);
         ButterKnife.bind(this);
-
         listeners();
     }
 
@@ -94,5 +101,19 @@ public class Product_details extends AppCompatActivity {
 //                overridePendingTransition(R.anim.right_to_left,R.anim.left_to_right);
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                finishAffinity();
+            } else {
+                super.onBackPressed();
+            }
+        }
     }
 }

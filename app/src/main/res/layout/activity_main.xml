@@ -1,81 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".views.MainActivity"
-    tools:openDrawer="start"
-    android:id="@+id/drawer_layout"
-    android:background="@color/colorWhite">
-
+    android:background="@color/colorWhite"
+    tools:openDrawer="start">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.appcompat.widget.Toolbar
+        <include
+            layout="@layout/toolbar_cart"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/toolbar">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="40dp"
-                    android:layout_centerVertical="true"
-                    android:background="@drawable/round_edittext"
-                    android:layout_alignParentEnd="true">
-
-                    <EditText
-                        android:id="@+id/serach_et"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="Search Store"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="50dp"
-                        android:inputType="none"
-                        android:maxLines="1"
-                        android:singleLine="true"
-                        android:backgroundTint="@color/colorTrans"
-                        android:background="@color/colorTrans"
-                        android:textColor="@color/colorBlack"
-                        android:textSize="10sp"
-                        android:padding="10dp"
-                        ></EditText>
-
-                    <ImageButton
-                        android:id="@+id/serach_ib"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_search_black_24dp"
-                        android:layout_alignParentEnd="true"
-                        android:layout_marginRight="10dp"
-                        android:background="@color/colorTrans"
-                        android:layout_centerVertical="true"></ImageButton>
-
-
-                </RelativeLayout>
-
-            </RelativeLayout>
-
-        </androidx.appcompat.widget.Toolbar>
-
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@id/toolbar">
+           />
 
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:layout_marginTop="55dp">
 
                 <com.estoreid.estoreid.views.utils.AppMapView
                     android:layout_width="match_parent"
@@ -94,7 +41,7 @@
                     app:cardElevation="10dp"
                     android:layout_marginLeft="@dimen/xxmargin"
                     android:layout_marginRight="@dimen/xxmargin"
-                    android:layout_marginTop="205dp">
+                    android:layout_marginTop="190dp">
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -352,25 +299,12 @@
                         android:layout_below="@+id/pincode"
                         android:layout_marginLeft="@dimen/xxmargin"
                         android:layout_marginRight="@dimen/xxmargin"
-                        android:background="@color/colorBlack"></View>
+                        android:background="@color/colorBlack">
+
+                    </View>
 
                 </RelativeLayout>
             </RelativeLayout>
-        </ScrollView>
+
     </RelativeLayout>
-
-
-
-
-    <com.google.android.material.navigation.NavigationView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="start"
-        app:headerLayout="@layout/header_layout"
-        app:menu="@menu/menu_items"
-        android:theme="@style/DrawerTheme"
-        app:itemTextColor="@color/colorBlack"
-        android:id="@+id/navigation_view"
-        tools:ignore="MissingConstraints"></com.google.android.material.navigation.NavigationView>
-
-</androidx.drawerlayout.widget.DrawerLayout>
+</RelativeLayout>

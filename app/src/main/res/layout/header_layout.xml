@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="@color/colorWhite">
 
     <com.makeramen.roundedimageview.RoundedImageView
@@ -11,7 +11,7 @@
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/xxmargin"
+        android:layout_marginTop="60dp"
         android:src="@drawable/shape"
         app:riv_border_width="2dp"
         app:riv_border_color="@color/colorFB"
@@ -41,5 +41,6 @@
         android:drawablePadding="10dp"
         android:layout_below="@id/drawer_username"
         android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/defaultmargin"
         ></TextView>
 </RelativeLayout>
