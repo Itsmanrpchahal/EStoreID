@@ -13,7 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.viewpager.widget.ViewPager;
@@ -78,6 +78,12 @@ public class Product_details extends BaseActivity {
     Button sizeL;
     @BindView(R.id.size_XXL)
     Button sizeXXL;
+    @BindView(R.id.backontoolbar)
+    ImageButton backontoolbar;
+    @BindView(R.id.toolbartitle)
+    TextView toolbartitle;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,13 +98,16 @@ public class Product_details extends BaseActivity {
     }
 
     private void listeners() {
+
+        serachToolbar.setVisibility(View.VISIBLE);
+        cartToolbar.setVisibility(View.VISIBLE);
+
         productTotalReviews.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Product_details.this,Product_Reviews.class);
+                Intent intent = new Intent(Product_details.this, Product_Reviews.class);
                 startActivity(intent);
                 finish();
-//                overridePendingTransition(R.anim.right_to_left,R.anim.left_to_right);
             }
         });
     }

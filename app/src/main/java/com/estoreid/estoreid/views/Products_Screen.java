@@ -102,6 +102,11 @@ public class Products_Screen extends BaseActivity {
             @Override
             public void onClick(View v) {
                 type = "list";
+                GridLayoutManager gridLayoutManager = new GridLayoutManager(getApplicationContext(), 1);
+                itemsRecyclerView.setLayoutManager(gridLayoutManager); // set LayoutManager to RecyclerView
+                adapter = new ProductAdapter(getApplicationContext(), type);
+                itemsRecyclerView.setAdapter(adapter);
+                adapter.notifyDataSetChanged();
             }
         });
 

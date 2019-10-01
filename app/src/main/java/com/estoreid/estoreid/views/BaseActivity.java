@@ -45,6 +45,12 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         }
         else if (id == R.id.qrCode) {
             startAnimatedActivity(new Intent(getApplicationContext(), QRActivity.class));
+        }else if (id == R.id.settings)
+        {
+            startAnimatedActivity(new Intent(getApplicationContext(),SettingScreen.class));
+        }else if (id==R.id.myaccount)
+        {
+            startAnimatedActivity(new Intent(getApplicationContext(),ProfileScreen.class));
         }
 
         drawer.closeDrawer(GravityCompat.START);
