@@ -51,6 +51,12 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         }else if (id==R.id.myaccount)
         {
             startAnimatedActivity(new Intent(getApplicationContext(),ProfileScreen.class));
+        }else if (id==R.id.myorders)
+        {
+            startAnimatedActivity(new Intent(getApplicationContext(),MyOrderActivity.class));
+        }else if (id==R.id.myfavoritestore)
+        {
+            startAnimatedActivity(new Intent(getApplicationContext(),MyFavoriteStoreActivity.class));
         }
 
         drawer.closeDrawer(GravityCompat.START);

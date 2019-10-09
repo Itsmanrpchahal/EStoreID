@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorWhite"
+    tools:context=".views.CheckOutActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/include_toolbar">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:foreground="?android:attr/selectableItemBackground"
+                app:cardBackgroundColor="@color/colorWhite"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="4dp"
+                app:cardUseCompatPadding="true">
+
+                <RelativeLayout
+                    android:id="@+id/layout_main"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <Button
+                        android:id="@+id/btn_payment"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/layout_paymentMethod"
+                        android:layout_margin="@dimen/defaultmargin"
+                        android:background="@drawable/round_button_theam"
+                        android:text="@string/payment"
+                        android:textAllCaps="false"
+                        android:textColor="@color/colorWhite">
+
+                    </Button>
+
+                    <RelativeLayout
+                        android:id="@+id/layout_paymentMethod"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/layout_deliveryAddress"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="25dp"
+                        android:layout_marginRight="20dp"
+                        android:layout_marginBottom="25dp">
+
+                        <TextView
+                            android:id="@+id/tv_paymentMethod"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/quicksand"
+                            android:text="@string/payment_method"
+                            android:textColor="@color/colorBlack"
+                            android:textSize="16sp" />
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/payment_recyclerView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/tv_paymentMethod"
+                            android:layout_marginTop="15dp" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/layout_deliveryAddress"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="25dp"
+                        android:layout_marginRight="20dp"
+                        android:layout_marginBottom="25dp">
+
+                        <RelativeLayout
+                            android:id="@+id/layout_address"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/tv_deleveryAddress"
+                            android:layout_marginTop="18dp"
+                            android:background="@drawable/custome_theme_selected_bg">
+
+                            <ImageView
+                                android:id="@+id/img_checked"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
+                                android:layout_marginRight="15dp"
+                                android:padding="5dp"
+                                android:src="@drawable/ic_check_circle" />
+
+                            <TextView
+                                android:id="@+id/tv_placeAddress"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/placeAddress"
+                                android:layout_alignLeft="@+id/placeAddress"
+                                android:layout_marginTop="7dp"
+                                android:layout_marginBottom="12dp"
+                                android:layout_toLeftOf="@+id/img_checked"
+                                android:ellipsize="end"
+                                android:fontFamily="@font/quicksand"
+                                android:maxLines="1"
+                                android:text="Sahibzada Ajit Singh Nagar Mohali"
+                                android:textColor="@color/colorBlack"
+                                android:textSize="16sp" />
+
+
+                            <TextView
+                                android:id="@+id/placeAddress"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="12dp"
+                                android:layout_marginTop="12dp"
+                                android:fontFamily="@font/quicksand"
+                                android:text="@string/home_address"
+                                android:textColor="@color/colorTheme"
+                                android:textSize="14sp" />
+                        </RelativeLayout>
+
+                        <TextView
+                            android:id="@+id/tv_deleveryAddress"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/quicksand"
+                            android:text="@string/delivery_address"
+                            android:textColor="@color/colorBlack"
+                            android:textSize="16sp" />
+
+
+                    </RelativeLayout>
+                </RelativeLayout>
+            </androidx.cardview.widget.CardView>
+        </RelativeLayout>
+    </ScrollView>
+
+    <include
+        android:id="@+id/include_toolbar"
+        layout="@layout/toolbar_cart"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</RelativeLayout>

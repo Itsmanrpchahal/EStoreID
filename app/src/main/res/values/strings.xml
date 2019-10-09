@@ -12,5 +12,15 @@
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
     <string name="sharre"><u>Share QR Code</u></string>
+    <string name="checkout">Checkout</string>
+    <string name="payment">Payment</string>
+    <string name="payment_method">PAYMENT METHOD</string>
+    <string name="home_address">HOME ADDRESS</string>
+    <string name="delivery_address">DELIVERY ADDRESS</string>
+    <string name="unfollow">Unfollow</string>
+    <string name="favorite_store">My Favorite Store</string>
+    <string name="my_orders">My orders</string>
+    <string name="cancel_order">Are you sure you\nwant to cancel\norder #401215</string>
+    <string name="order_delete">If you deleted it will not appeare in\n your order list anymore.</string>
 </resources>
 

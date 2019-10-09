@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:id="@+id/layout_methods"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_paymentMethod"
+        android:layout_marginTop="18dp"
+        android:background="@drawable/custom_theme_unselected_bg">
+
+        <ImageView
+            android:id="@+id/img_cardChecked"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15dp"
+            android:padding="5dp"
+            android:visibility="invisible"
+            android:src="@drawable/ic_check_circle"
+            android:layout_marginTop="22dp"/>
+
+
+        <ImageView
+            android:id="@+id/img_card"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:padding="5dp"
+            android:layout_marginLeft="15dp"
+            android:src="@drawable/ic_img_card"
+            android:layout_marginTop="22dp"/>
+
+        <TextView
+            android:id="@+id/tv_cardName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginBottom="12dp"
+            android:layout_marginLeft="5dp"
+            android:layout_toLeftOf="@+id/img_cardChecked"
+            android:layout_toRightOf="@+id/img_card"
+            android:ellipsize="end"
+            android:fontFamily="@font/quicksand"
+            android:maxLines="1"
+            android:text="**** **** **** 4012"
+            android:textColor="@color/colorBlack"
+            android:textSize="16sp"
+            android:layout_marginTop="22dp"/>
+
+    </RelativeLayout>C
+</RelativeLayout>

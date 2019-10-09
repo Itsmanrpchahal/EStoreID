@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".views.SendFeedbackActivity">
+    <include
+        android:id="@+id/include_toolbar"
+        layout="@layout/toolbar_cart"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/include_toolbar"
+        android:layout_margin="25dp">
+
+
+        <TextView
+            android:id="@+id/tv_cancel_Order"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/quicksand"
+            android:gravity="center"
+            android:lineSpacingExtra="10dp"
+            android:text="Send Feedback"
+            android:textColor="@color/colorBlack"
+            android:textSize="22sp" />
+
+        <TextView
+            android:id="@+id/tv_alertMsg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_cancel_Order"
+            android:layout_marginTop="25dp"
+            android:fontFamily="@font/quicksand"
+            android:text="Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs. "
+            android:textColor="@color/colorBlack"
+            android:textSize="15sp" />
+
+
+        <EditText
+            android:layout_below="@+id/tv_alertMsg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:textSize="16sp"
+            android:inputType="textImeMultiLine"
+            android:textColor="@color/colorBlack"
+            android:hint="Write feedback"/>
+
+
+        <TextView
+            android:id="@+id/btn_noCancel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="12dp"
+            android:gravity="center"
+            android:padding="12dp"
+            android:background="@drawable/round_button_theam"
+            android:text="Submit"
+            android:textAllCaps="false"
+            android:fontFamily="@font/quicksandbold"
+            android:textColor="@color/colorWhite"
+            android:layout_marginBottom="15dp">
+
+        </TextView>
+    </RelativeLayout>
+</RelativeLayout>

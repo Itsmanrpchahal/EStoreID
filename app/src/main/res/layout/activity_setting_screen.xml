@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorWhite"
+    tools:context=".views.SettingScreen">
+
+    <include
+        layout="@layout/toolbar_cart"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="55dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/userimagelayout"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:background="#F0EFEF">
+
+                <com.makeramen.roundedimageview.RoundedImageView
+                    android:id="@+id/setting_user_image"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_centerInParent="true"
+                    app:riv_corner_radius="5dp"
+                    android:src="@drawable/shape"
+                    ></com.makeramen.roundedimageview.RoundedImageView>
+            </RelativeLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/setting_user_image"
+                android:layout_margin="@dimen/defaultmargin"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/defaultmargin"
+                    android:text="Username"></TextView>
+
+               <EditText
+                   android:id="@+id/setting_username"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:hint="Username"
+                   android:textColor="@color/colorBlack"
+                   android:fontFamily="@font/latoregular"
+                   android:textSize="@dimen/normaltext"
+                   android:inputType="textPersonName"
+                   android:layout_marginTop="@dimen/defaultmargin"
+                   android:background="@color/colorTrans"></EditText>
+
+
+                <View
+                    android:id="@+id/setting_view1"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_below="@id/email_et"
+                    android:layout_marginTop="5dp"
+                    android:background="@color/colorgrey"></View>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/defaultmargin"
+                    android:text="Email"></TextView>
+
+                <EditText
+                    android:id="@+id/setting_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="email@gmail.com"
+                    android:textColor="@color/colorBlack"
+                    android:inputType="textEmailAddress"
+                    android:fontFamily="@font/latoregular"
+                    android:textSize="@dimen/normaltext"
+                    android:layout_marginTop="@dimen/defaultmargin"
+                    android:background="@color/colorTrans"></EditText>
+
+
+                <View
+                    android:id="@+id/setting_view2"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_below="@id/email_et"
+                    android:layout_marginTop="5dp"
+                    android:background="@color/colorgrey"></View>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/defaultmargin"
+                    android:text="Phone"></TextView>
+
+                <EditText
+                    android:id="@+id/setting_phnno"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="+5151161"
+                    android:textColor="@color/colorBlack"
+                    android:fontFamily="@font/latoregular"
+                    android:textSize="@dimen/normaltext"
+                    android:inputType="number"
+                    android:layout_marginTop="@dimen/defaultmargin"
+                    android:background="@color/colorTrans"></EditText>
+
+
+                <View
+                    android:id="@+id/setting_view3"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_below="@id/email_et"
+                    android:layout_marginTop="5dp"
+                    android:background="@color/colorgrey"></View>
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/defaultmargin"
+                    android:text="Gender"></TextView>
+
+                <EditText
+                    android:id="@+id/setting_gender"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Gender"
+                    android:textColor="@color/colorBlack"
+                    android:fontFamily="@font/latoregular"
+                    android:textSize="@dimen/normaltext"
+                    android:inputType="number"
+                    android:layout_marginTop="@dimen/defaultmargin"
+                    android:background="@color/colorTrans"></EditText>
+
+
+                <View
+                    android:id="@+id/setting_view4"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_below="@id/email_et"
+                    android:layout_marginTop="5dp"
+                    android:background="@color/colorgrey"></View>
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/defaultmargin"
+                    android:text="Date of birth"></TextView>
+
+                <EditText
+                    android:id="@+id/setting_dob"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Date of birth"
+                    android:textColor="@color/colorBlack"
+                    android:fontFamily="@font/latoregular"
+                    android:textSize="@dimen/normaltext"
+                    android:inputType="number"
+                    android:layout_marginTop="@dimen/defaultmargin"
+                    android:background="@color/colorTrans"></EditText>
+
+
+                <View
+                    android:id="@+id/setting_view5"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_below="@id/email_et"
+                    android:layout_marginTop="5dp"
+                    android:background="@color/colorgrey"></View>
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/defaultmargin"
+                    android:text="Change Password"></TextView>
+
+                <EditText
+                    android:id="@+id/setting_changepassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Change Password"
+                    android:textColor="@color/colorBlack"
+                    android:fontFamily="@font/latoregular"
+                    android:textSize="@dimen/normaltext"
+                    android:inputType="textPassword"
+                    android:layout_marginTop="@dimen/defaultmargin"
+                    android:background="@color/colorTrans"></EditText>
+
+
+                <View
+                    android:id="@+id/setting_view6"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_below="@id/email_et"
+                    android:layout_marginTop="5dp"
+                    android:background="@color/colorgrey"></View>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/defaultmargin"
+                    android:text="Confirm password"></TextView>
+
+                <EditText
+                    android:id="@+id/setting_confirmpassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="**********"
+                    android:textColor="@color/colorBlack"
+                    android:fontFamily="@font/latoregular"
+                    android:textSize="@dimen/normaltext"
+                    android:inputType="textPassword"
+                    android:layout_marginTop="@dimen/defaultmargin"
+                    android:background="@color/colorTrans"></EditText>
+
+
+                <View
+                    android:id="@+id/setting_view7"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_below="@id/email_et"
+                    android:layout_marginTop="5dp"
+                    android:background="@color/colorgrey"></View>
+
+                <Button
+                    android:id="@+id/setting_save"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/defaultmargin"
+                    android:background="@drawable/round_button_theam"
+                    android:textColor="@color/colorWhite"
+                    android:text="Save"
+                    android:textAllCaps="false"
+                    ></Button>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>

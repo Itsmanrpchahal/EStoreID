@@ -9,7 +9,13 @@
         android:roundIcon="@drawable/ic_appicon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".views.ProfileScreen"></activity>
+        <activity android:name=".views.SendFeedbackActivity"></activity>
+         <activity android:name=".views.CancelOrderActivity"></activity> 
+        <activity android:name=".views.MyOrderDetailsActivity" />
+        <activity android:name=".views.MyOrderActivity" />
+        <activity android:name=".views.MyFavoriteStoreActivity" />
+        <activity android:name=".views.CheckOutActivity" />
+        <activity android:name=".views.ProfileScreen" />
         <activity android:name=".views.SettingScreen" />
         <activity android:name=".views.BaseActivity" />
         <activity android:name=".views.Cart_Activity" />
