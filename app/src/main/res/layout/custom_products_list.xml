@@ -37,7 +37,7 @@
                     android:text="Nike Shoe"
                     android:fontFamily="@font/quicksand"
                     android:textColor="@color/colorBlack"
-                    android:textSize="@dimen/normaltext"
+                    android:textSize="@dimen/textsize_sp16"
                     ></TextView>
 
                 <TextView
@@ -47,7 +47,7 @@
                     android:text="Nike"
                     android:fontFamily="@font/quicksand"
                     android:layout_below="@id/product_name"
-                    android:textSize="@dimen/smalltext"
+                    android:textSize="@dimen/textsize_sp14"
                     android:textColor="@color/colorgrey"></TextView>
 
                 <androidx.appcompat.widget.AppCompatRatingBar
@@ -67,6 +67,7 @@
                     android:fontFamily="@font/quicksand"
                     android:layout_marginTop="2dp"
                     android:layout_marginLeft="5dp"
+                    android:textSize="@dimen/textsize_sp12"
                     android:layout_toRightOf="@id/product_rating"
                     android:layout_below="@id/product_brand"></TextView>
 
@@ -79,7 +80,7 @@
                     android:fontFamily="@font/quicksandbold"
                     android:layout_marginTop="2dp"
                     android:textColor="@color/colorBlack"
-                    android:textSize="@dimen/normaltext"
+                    android:textSize="@dimen/textsize_sp14"
                     ></TextView>
 
                 <TextView
@@ -89,7 +90,7 @@
                     android:fontFamily="@font/quicksand"
                     android:layout_marginTop="2dp"
                     android:text="$120.95"
-                    android:textSize="@dimen/normaltext"
+                    android:textSize="@dimen/textsize_sp14"
                     android:textColor="@color/colorgrey"
                     android:layout_below="@id/product_rating"
                     android:layout_toRightOf="@id/product_price"
@@ -99,7 +100,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="50% off"
-                    android:textSize="@dimen/smalltext"
+                    android:textSize="@dimen/textsize_sp14"
                     android:textColor="@color/colorgreen"
                     android:layout_below="@id/product_rating"
                     android:layout_toRightOf="@id/product_original_price"

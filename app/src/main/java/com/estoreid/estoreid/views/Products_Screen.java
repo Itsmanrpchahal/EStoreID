@@ -4,19 +4,14 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -26,7 +21,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.estoreid.estoreid.R;
 import com.estoreid.estoreid.views.adapter.ProductAdapter;
-import com.google.android.material.navigation.NavigationView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -53,6 +47,18 @@ public class Products_Screen extends BaseActivity {
     String type = "list";
 
     ActionBarDrawerToggle actionBarDrawerToggle;
+    @BindView(R.id.search_et)
+    EditText searchEt;
+    @BindView(R.id.backontoolbar)
+    ImageButton backontoolbar;
+    @BindView(R.id.cart_toolbar)
+    ImageButton cartToolbar;
+    @BindView(R.id.serach_toolbar)
+    ImageButton serachToolbar;
+    @BindView(R.id.toolbartitle)
+    TextView toolbartitle;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
 
 
     @SuppressLint("WrongConstant")
@@ -65,6 +71,7 @@ public class Products_Screen extends BaseActivity {
         View contentView = inflater.inflate(R.layout.activity_products__screen, null, false);
         drawer.addView(contentView, 0);
         ButterKnife.bind(this);
+        searchEt.setVisibility(View.GONE);
         listeners();
 
         if (type.equals("list")) {
@@ -90,6 +97,8 @@ public class Products_Screen extends BaseActivity {
             @Override
             public void onClick(View v) {
                 type = "grid";
+                productListview.setImageDrawable(getResources().getDrawable(R.drawable.listview));
+                productGrid.setImageDrawable(getResources().getDrawable(R.drawable.grid_active));
                 GridLayoutManager gridLayoutManager = new GridLayoutManager(getApplicationContext(), 2);
                 itemsRecyclerView.setLayoutManager(gridLayoutManager); // set LayoutManager to RecyclerView
                 adapter = new ProductAdapter(getApplicationContext(), type);
@@ -102,6 +111,8 @@ public class Products_Screen extends BaseActivity {
             @Override
             public void onClick(View v) {
                 type = "list";
+                productListview.setImageDrawable(getResources().getDrawable(R.drawable.listview_active));
+                productGrid.setImageDrawable(getResources().getDrawable(R.drawable.grid));
                 GridLayoutManager gridLayoutManager = new GridLayoutManager(getApplicationContext(), 1);
                 itemsRecyclerView.setLayoutManager(gridLayoutManager); // set LayoutManager to RecyclerView
                 adapter = new ProductAdapter(getApplicationContext(), type);

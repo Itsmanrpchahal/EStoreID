@@ -16,6 +16,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+            <EditText
+                android:id="@+id/search_et"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/round_edittext"
+                android:layout_marginLeft="@dimen/defaultmargin"
+                android:layout_marginRight="@dimen/defaultmargin"
+                android:drawableRight="@drawable/ic_search_black_24dp"
+                android:padding="@dimen/padding_dp5"
+                android:hint="Search Store"
+                android:visibility="gone"
+                android:drawablePadding="@dimen/padding_dp10"></EditText>
+
             <ImageButton
                 android:id="@+id/backontoolbar"
                 android:layout_width="wrap_content"

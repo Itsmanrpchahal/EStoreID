@@ -59,6 +59,8 @@
 
 <!--    </androidx.appcompat.widget.Toolbar>-->
 
+    <include layout="@layout/toolbar_cart"></include>
+
     <TextView
         android:id="@+id/product_tv"
         android:layout_width="wrap_content"
@@ -107,7 +109,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@color/colorTrans"
-            android:src="@drawable/listview"
+            android:src="@drawable/listview_active"
             android:layout_gravity="center"
             android:layout_weight="1"></ImageButton>
 
@@ -121,7 +123,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@color/colorTrans"
-            android:src="@drawable/grid_active"
+            android:src="@drawable/grid"
             android:layout_gravity="center"
             android:layout_weight="1"></ImageButton>
 

@@ -5,7 +5,6 @@ import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -27,7 +26,6 @@ import com.estoreid.estoreid.R;
 import com.estoreid.estoreid.views.adapter.DashBoardShopAdapter;
 import com.estoreid.estoreid.views.utils.AppMapView;
 import com.estoreid.estoreid.views.utils.Utils;
-import com.google.android.material.navigation.NavigationView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -92,6 +90,12 @@ public class MainActivity extends BaseActivity {
     EditText pincode;
     @BindView(R.id.add_view4)
     View addView4;
+    @BindView(R.id.search_et)
+    EditText searchEt;
+    @BindView(R.id.backontoolbar)
+    ImageButton backontoolbar;
+    @BindView(R.id.toolbartitle)
+    TextView toolbartitle;
 
 
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -104,10 +108,12 @@ public class MainActivity extends BaseActivity {
         View contentView = inflater.inflate(R.layout.activity_main, null, false);
         drawer.addView(contentView, 0);
         ButterKnife.bind(this);
-//        Utils.abc(serachEt, MainActivity.this);
-
+        Utils.abc(searchEt, MainActivity.this);
+        searchEt.setVisibility(View.VISIBLE);
         setAdapter();
     }
+
+
 
 
     @SuppressLint("WrongConstant")
