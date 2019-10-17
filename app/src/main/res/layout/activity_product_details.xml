@@ -8,11 +8,42 @@
     tools:context=".views.Product_details">
 
 
-    <include
-        layout="@layout/toolbar_cart"
+    <androidx.appcompat.widget.Toolbar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        />
+        >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageButton
+                android:id="@+id/product_detial_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/colorTrans"
+                android:src="@drawable/ic_arrow_back_black_24dp"></ImageButton>
+
+            <ImageButton
+                android:id="@+id/product_detail_search"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/colorTrans"
+                android:layout_toLeftOf="@id/product_detail_cart"
+                android:layout_marginRight="@dimen/defaultmargin"
+                android:src="@drawable/ic_search_black_24dp"></ImageButton>
+
+            <ImageButton
+                android:id="@+id/product_detail_cart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/colorTrans"
+                android:src="@drawable/ic_cart_inactive"
+                android:layout_marginRight="@dimen/defaultmargin"
+                android:layout_alignParentRight="true"></ImageButton>
+        </RelativeLayout>
+
+
+    </androidx.appcompat.widget.Toolbar>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -297,6 +328,7 @@
             android:layout_height="wrap_content"
             android:background="@color/colorTheme"
             android:text="Add to cart"
+            android:textSize="@dimen/margin_dp10"
             android:textColor="@color/colorWhite"
             android:fontFamily="@font/quicksand"
             android:layout_weight="1"></Button>
@@ -307,6 +339,7 @@
             android:layout_height="wrap_content"
             android:background="@color/colorBlack"
             android:text="Add to wishlist"
+            android:textSize="@dimen/margin_dp10"
             android:textColor="@color/colorWhite"
             android:fontFamily="@font/quicksand"
             android:layout_weight="1"></Button>

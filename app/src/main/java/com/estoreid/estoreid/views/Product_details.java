@@ -1,9 +1,7 @@
 package com.estoreid.estoreid.views;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,9 +11,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.viewpager.widget.ViewPager;
 
 import com.borjabravo.readmoretextview.ReadMoreTextView;
@@ -26,10 +21,6 @@ import butterknife.ButterKnife;
 
 public class Product_details extends BaseActivity {
 
-    @BindView(R.id.cart_toolbar)
-    ImageButton cartToolbar;
-    @BindView(R.id.serach_toolbar)
-    ImageButton serachToolbar;
     @BindView(R.id.product_detial_viewpager)
     ViewPager productDetialViewpager;
     @BindView(R.id.product_detail_dotlayout)
@@ -78,51 +69,42 @@ public class Product_details extends BaseActivity {
     Button sizeL;
     @BindView(R.id.size_XXL)
     Button sizeXXL;
-    @BindView(R.id.backontoolbar)
-    ImageButton backontoolbar;
-    @BindView(R.id.toolbartitle)
-    TextView toolbartitle;
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
+    @BindView(R.id.product_detial_back)
+    ImageButton productDetialBack;
+    String type;
+    Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         //inflate your activity layout here!
-        @SuppressLint("InflateParams")
-        View contentView = inflater.inflate(R.layout.activity_product_details, null, false);
-        drawer.addView(contentView, 0);
+        setContentView(R.layout.activity_product_details);
+        type=getIntent().getStringExtra("type");
         ButterKnife.bind(this);
         listeners();
     }
 
     private void listeners() {
 
-        serachToolbar.setVisibility(View.VISIBLE);
-        cartToolbar.setVisibility(View.VISIBLE);
-
         productTotalReviews.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Product_details.this, Product_Reviews.class);
+                intent.putExtra("type",type);
                 startActivity(intent);
                 finish();
             }
         });
-    }
 
-    @Override
-    public void onBackPressed() {
-        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                finishAffinity();
-            } else {
-                super.onBackPressed();
+        productDetialBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Product_details.this,Products_Screen.class);
+                intent.putExtra("type",type);
+                startActivity(intent);
+                finish();
             }
-        }
+        });
     }
 }

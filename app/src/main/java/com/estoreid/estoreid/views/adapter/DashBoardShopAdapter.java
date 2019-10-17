@@ -37,6 +37,7 @@ public class DashBoardShopAdapter extends RecyclerView.Adapter<DashBoardShopAdap
             public void onClick(View v) {
 
                 Intent intent = new Intent(context, Products_Screen.class);
+
                 context.startActivity(intent);
             }
         });

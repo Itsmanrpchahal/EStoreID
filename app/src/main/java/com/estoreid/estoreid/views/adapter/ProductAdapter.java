@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.estoreid.estoreid.R;
 import com.estoreid.estoreid.views.Product_details;
+import com.estoreid.estoreid.views.Products_Screen;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder>{
 
@@ -50,6 +51,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, Product_details.class);
+                intent.putExtra("type",type);
                 context.startActivity(intent);
 
             }

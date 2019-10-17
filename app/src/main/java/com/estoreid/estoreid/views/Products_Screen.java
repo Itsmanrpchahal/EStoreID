@@ -2,6 +2,7 @@ package com.estoreid.estoreid.views;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.widget.Toolbar;
@@ -44,8 +46,6 @@ public class Products_Screen extends BaseActivity {
     View view3;
     @BindView(R.id.items_recycler_view)
     RecyclerView itemsRecyclerView;
-    String type = "list";
-
     ActionBarDrawerToggle actionBarDrawerToggle;
     @BindView(R.id.search_et)
     EditText searchEt;
@@ -59,7 +59,8 @@ public class Products_Screen extends BaseActivity {
     TextView toolbartitle;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
-
+    Intent intent;
+    String type = "list";
 
     @SuppressLint("WrongConstant")
     @Override
@@ -72,10 +73,21 @@ public class Products_Screen extends BaseActivity {
         drawer.addView(contentView, 0);
         ButterKnife.bind(this);
         searchEt.setVisibility(View.GONE);
+        productTv.setFocusable(true);
+        itemsRecyclerView.setFocusable(false);
         listeners();
+        intent = getIntent();
+
+        if( getIntent().getExtras() != null)
+        {
+            type = intent.getStringExtra("type");
+        }
 
         if (type.equals("list")) {
             LinearLayoutManager linearLayout = new LinearLayoutManager(this);
+            productListview.setImageDrawable(getResources().getDrawable(R.drawable.listview_active));
+            productGrid.setImageDrawable(getResources().getDrawable(R.drawable.grid));
+
             linearLayout.setOrientation(LinearLayout.VERTICAL);
             itemsRecyclerView.setHasFixedSize(true);
             itemsRecyclerView.setLayoutManager(linearLayout);
@@ -83,6 +95,9 @@ public class Products_Screen extends BaseActivity {
             itemsRecyclerView.setAdapter(adapter);
             adapter.notifyDataSetChanged();
         } else {
+            productListview.setImageDrawable(getResources().getDrawable(R.drawable.listview));
+            productGrid.setImageDrawable(getResources().getDrawable(R.drawable.grid_active));
+
             GridLayoutManager gridLayoutManager = new GridLayoutManager(getApplicationContext(), 2);
             itemsRecyclerView.setLayoutManager(gridLayoutManager); // set LayoutManager to RecyclerView
             adapter = new ProductAdapter(this, type);

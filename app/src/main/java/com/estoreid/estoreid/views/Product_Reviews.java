@@ -3,7 +3,9 @@ package com.estoreid.estoreid.views;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RatingBar;
@@ -16,7 +18,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.estoreid.estoreid.R;
-import com.estoreid.estoreid.views.adapter.ProductAdapter;
 import com.estoreid.estoreid.views.adapter.Product_ReviewAdapter;
 
 import butterknife.BindView;
@@ -82,12 +83,26 @@ public class Product_Reviews extends AppCompatActivity {
     RecyclerView reviewsRecyler;
 
     Product_ReviewAdapter adapter;
+    @BindView(R.id.addreview_image)
+    ImageView addreviewImage;
+    @BindView(R.id.writereview)
+    EditText writereview;
+    @BindView(R.id.sendreview)
+    ImageView sendreview;
+    @BindView(R.id.sendreviewlayout)
+    RelativeLayout sendreviewlayout;
+    String type;
+    Intent intent;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product__reviews);
-
         ButterKnife.bind(this);
+        ratingLayout.setFocusable(true);
+        reviewsRecyler.setFocusable(false);
+        intent = getIntent();
+        type = intent.getStringExtra("type");
 
         listeners();
         setAdapter();
@@ -109,6 +124,7 @@ public class Product_Reviews extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Product_Reviews.this, Product_details.class);
+                intent.putExtra("type",type);
                 startActivity(intent);
                 overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
             }

@@ -8,6 +8,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.Intent;
+import android.net.wifi.hotspot2.pps.HomeSp;
 import android.os.Bundle;
 import android.view.MenuItem;
 
@@ -40,10 +41,12 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.cart) {
-            startAnimatedActivity(new Intent(getApplicationContext(), Cart_Activity.class));
+        if (id == R.id.homet) {
+            startAnimatedActivity(new Intent(getApplicationContext(), MainActivity.class));
         }
-        else if (id == R.id.qrCode) {
+        else if (id == R.id.cart) {
+            startAnimatedActivity(new Intent(getApplicationContext(), Cart_Activity.class));
+        } else if (id == R.id.qrCode) {
             startAnimatedActivity(new Intent(getApplicationContext(), QRActivity.class));
         }else if (id == R.id.settings)
         {

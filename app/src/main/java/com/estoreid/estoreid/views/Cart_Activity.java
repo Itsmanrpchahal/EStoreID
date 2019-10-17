@@ -83,8 +83,7 @@ public class Cart_Activity extends BaseActivity {
         View contentView = inflater.inflate(R.layout.activity_cart_, null, false);
         drawer.addView(contentView, 0);
         ButterKnife.bind(this);
-
-
+        additemRecyclerviw.setFocusable(false);
         setAdapter();
         listeners();
     }

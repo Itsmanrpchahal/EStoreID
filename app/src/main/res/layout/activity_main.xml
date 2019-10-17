@@ -8,15 +8,19 @@
     android:background="@color/colorWhite"
     tools:openDrawer="start">
 
-    <RelativeLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <include
-            layout="@layout/toolbar_cart"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-           />
+            android:layout_height="match_parent">
+
+            <include
+                layout="@layout/toolbar_cart"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                />
 
 
             <RelativeLayout
@@ -195,6 +199,7 @@
                 </RelativeLayout>
 
                 <RelativeLayout
+                    android:id="@+id/adress_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/location_view"
@@ -303,8 +308,52 @@
 
                     </View>
 
+                    <RadioGroup
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/add_view4"
+                        android:orientation="horizontal"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="@dimen/xxmargin"
+                        android:layout_marginLeft="@dimen/xxmargin"
+                        android:layout_marginRight="@dimen/xxmargin">
+
+                            <RadioButton
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:backgroundTint="@color/colorTheme"
+                                android:textColor="@color/colorBlack"
+                                android:buttonTint="@color/colorTheme"
+                                android:fontFamily="@font/latoregular"
+                                android:text="Home"></RadioButton>
+
+                            <RadioButton
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:buttonTint="@color/colorTheme"
+                                android:backgroundTint="@color/colorTheme"
+                                android:textColor="@color/colorBlack"
+                                android:fontFamily="@font/latoregular"
+                                android:text="Office"></RadioButton>
+
+                            <RadioButton
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:buttonTint="@color/colorTheme"
+                                android:backgroundTint="@color/colorTheme"
+                                android:textColor="@color/colorBlack"
+                                android:fontFamily="@font/latoregular"
+                                android:text="Other"></RadioButton>
+
+
+
+                    </RadioGroup>
+
                 </RelativeLayout>
             </RelativeLayout>
 
-    </RelativeLayout>
+        </RelativeLayout>
+    </ScrollView>
+
+
 </RelativeLayout>

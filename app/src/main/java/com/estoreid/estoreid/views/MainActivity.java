@@ -14,7 +14,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
 import androidx.core.view.GravityCompat;
@@ -31,9 +30,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MainActivity extends BaseActivity {
-
-    public static ActionBarDrawerToggle actionBarDrawerToggle;
-
 
     DashBoardShopAdapter adapter;
     @BindView(R.id.cart_toolbar)
@@ -96,6 +92,8 @@ public class MainActivity extends BaseActivity {
     ImageButton backontoolbar;
     @BindView(R.id.toolbartitle)
     TextView toolbartitle;
+    @BindView(R.id.adress_layout)
+    RelativeLayout adressLayout;
 
 
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -111,9 +109,19 @@ public class MainActivity extends BaseActivity {
         Utils.abc(searchEt, MainActivity.this);
         searchEt.setVisibility(View.VISIBLE);
         setAdapter();
+        listerners();
     }
 
-
+    private void listerners() {
+        changeAddress.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dashboardRecylerview.setVisibility(View.GONE);
+                adressLayout.setVisibility(View.VISIBLE);
+                view2.setVisibility(View.GONE);
+            }
+        });
+    }
 
 
     @SuppressLint("WrongConstant")

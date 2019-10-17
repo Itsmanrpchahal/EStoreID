@@ -7,6 +7,116 @@
     android:background="@color/colorWhite"
     tools:context=".views.Products_Screen">
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <include layout="@layout/toolbar_cart"></include>
+
+            <TextView
+                android:id="@+id/product_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Products"
+                android:textSize="@dimen/xlargetext"
+                android:textColor="@color/colorBlack"
+                android:layout_marginLeft="@dimen/defaultmargin"
+                android:layout_marginTop="61dp"
+                android:fontFamily="@font/quicksandbold"
+                ></TextView>
+
+            <View
+                android:id="@+id/view1"
+                android:layout_width="match_parent"
+                android:layout_height="0.8dp"
+                android:layout_below="@id/product_tv"
+                android:layout_marginTop="10dp"
+                android:background="#EFEFEF"></View>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/view1"
+                android:id="@+id/view2"
+                android:orientation="horizontal"
+                android:weightSum="5">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:text="67"
+                    android:gravity="center_vertical"
+                    android:layout_gravity="center"
+                    android:textAlignment="center"
+                    android:textColor="@color/colorgrey"></TextView>
+
+                <View
+                    android:layout_width="0.8dp"
+                    android:layout_height="50dp"
+                    android:background="#EFEFEF"></View>
+
+                <ImageButton
+                    android:id="@+id/product_listview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorTrans"
+                    android:src="@drawable/listview_active"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"></ImageButton>
+
+                <View
+                    android:layout_width="0.8dp"
+                    android:layout_height="50dp"
+                    android:background="#EFEFEF"></View>
+
+                <ImageButton
+                    android:id="@+id/product_grid"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorTrans"
+                    android:src="@drawable/grid"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"></ImageButton>
+
+                <View
+                    android:layout_width="0.8dp"
+                    android:layout_height="50dp"
+                    android:background="#EFEFEF"></View>
+
+                <ImageButton
+                    android:id="@+id/product_sort"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorTrans"
+                    android:src="@drawable/sort"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"></ImageButton>
+
+            </LinearLayout>
+
+            <View
+                android:id="@+id/view3"
+                android:layout_width="match_parent"
+                android:layout_height="0.8dp"
+                android:layout_below="@id/view2"
+                android:background="#EFEFEF"></View>
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/items_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/view3"
+                android:layout_marginTop="@dimen/defaultmargin"></androidx.recyclerview.widget.RecyclerView>
+
+        </RelativeLayout>
+    </ScrollView>
 <!--    <androidx.appcompat.widget.Toolbar-->
 <!--        android:layout_width="match_parent"-->
 <!--        android:layout_height="wrap_content"-->
@@ -59,103 +169,5 @@
 
 <!--    </androidx.appcompat.widget.Toolbar>-->
 
-    <include layout="@layout/toolbar_cart"></include>
-
-    <TextView
-        android:id="@+id/product_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Products"
-        android:textSize="@dimen/xlargetext"
-        android:textColor="@color/colorBlack"
-        android:layout_marginLeft="@dimen/defaultmargin"
-        android:layout_marginTop="61dp"
-        android:fontFamily="@font/quicksandbold"
-        ></TextView>
-
-    <View
-        android:id="@+id/view1"
-        android:layout_width="match_parent"
-        android:layout_height="0.8dp"
-        android:layout_below="@id/product_tv"
-        android:layout_marginTop="10dp"
-        android:background="#EFEFEF"></View>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/view1"
-        android:id="@+id/view2"
-        android:orientation="horizontal"
-        android:weightSum="5">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:text="67"
-            android:gravity="center_vertical"
-            android:layout_gravity="center"
-            android:textAlignment="center"
-            android:textColor="@color/colorgrey"></TextView>
-
-        <View
-            android:layout_width="0.8dp"
-            android:layout_height="50dp"
-            android:background="#EFEFEF"></View>
-
-        <ImageButton
-            android:id="@+id/product_listview"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@color/colorTrans"
-            android:src="@drawable/listview_active"
-            android:layout_gravity="center"
-            android:layout_weight="1"></ImageButton>
-
-        <View
-            android:layout_width="0.8dp"
-            android:layout_height="50dp"
-            android:background="#EFEFEF"></View>
-
-        <ImageButton
-            android:id="@+id/product_grid"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@color/colorTrans"
-            android:src="@drawable/grid"
-            android:layout_gravity="center"
-            android:layout_weight="1"></ImageButton>
-
-        <View
-            android:layout_width="0.8dp"
-            android:layout_height="50dp"
-            android:background="#EFEFEF"></View>
-
-        <ImageButton
-            android:id="@+id/product_sort"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@color/colorTrans"
-            android:src="@drawable/sort"
-            android:layout_gravity="center"
-            android:layout_weight="1"></ImageButton>
-
-    </LinearLayout>
-
-    <View
-        android:id="@+id/view3"
-        android:layout_width="match_parent"
-        android:layout_height="0.8dp"
-        android:layout_below="@id/view2"
-        android:background="#EFEFEF"></View>
-
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/items_recycler_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/view3"
-        android:layout_marginTop="@dimen/defaultmargin"></androidx.recyclerview.widget.RecyclerView>
 
 </RelativeLayout>

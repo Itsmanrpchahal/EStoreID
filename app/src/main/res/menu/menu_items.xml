@@ -1,66 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:id="@+id/myaccount"
-        android:title="My Account"
-        android:icon="@drawable/ic_myacount_inactive"
-        />
+    <group android:checkableBehavior="single">
 
-    <item android:id="@+id/cart"
-        android:title="Cart"
-        android:icon="@drawable/ic_cart_inactive"
-        />
+        <item
+            android:id="@+id/homet"
+            android:icon="@drawable/ic_myacount_inactive"
+            android:title="Home" />
+        <item
+            android:id="@+id/myaccount"
+            android:icon="@drawable/ic_myacount_inactive"
+            android:title="My Account" />
 
-    <item android:id="@+id/Location"
-        android:title="Location"
-        android:icon="@drawable/ic_location_inactive"
-        />
+        <item
+            android:id="@+id/cart"
+            android:icon="@drawable/ic_cart_inactive"
+            android:title="Cart" />
 
-    <item android:id="@+id/myorders"
-        android:title="My orders"
-        android:icon="@drawable/ic_myorder_inactive"
-        />
+        <item
+            android:id="@+id/Location"
+            android:icon="@drawable/ic_location_inactive"
+            android:title="Location" />
 
- <item android:id="@+id/myfavoritestore"
-        android:title="My favorite store"
-        android:icon="@drawable/ic_fav_inactive"
-        />
+        <item
+            android:id="@+id/myorders"
+            android:icon="@drawable/ic_myorder_inactive"
+            android:title="My orders" />
 
-    <item android:id="@+id/settings"
-        android:title="Settings"
-        android:icon="@drawable/ic_setting_inactive"
-        />
+        <item
+            android:id="@+id/myfavoritestore"
+            android:icon="@drawable/ic_fav_inactive"
+            android:title="My favorite store" />
 
-    <item android:id="@+id/qrCode"
-        android:title="OR Code"
-        android:icon="@drawable/ic_qr_inactive"
-        />
+        <item
+            android:id="@+id/settings"
+            android:icon="@drawable/ic_setting_inactive"
+            android:title="Settings" />
 
-    <item android:id="@+id/rewardcoinzone"
-        android:title="Reward coin zone"
-        android:icon="@drawable/ic_reward_inactive"
-        />
+        <item
+            android:id="@+id/qrCode"
+            android:icon="@drawable/ic_qr_inactive"
+            android:title="OR Code" />
 
-
-    <item android:id="@+id/offerzone"
-        android:title="Offer Zone"
-        android:icon="@drawable/ic_offer_inactive"
-        />
-
-    <item android:id="@+id/language"
-        android:title="Language"
-        android:icon="@drawable/ic_language_inactive"
-        />
+        <item
+            android:id="@+id/rewardcoinzone"
+            android:icon="@drawable/ic_reward_inactive"
+            android:title="Reward coin zone" />
 
 
-    <item android:id="@+id/job"
-        android:title="Job"
-        android:icon="@drawable/ic_job_inactive"
-        />
+        <item
+            android:id="@+id/offerzone"
+            android:icon="@drawable/ic_offer_inactive"
+            android:title="Offer Zone" />
 
-    <item android:id="@+id/logout"
-        android:title="Log out"
-        android:icon="@drawable/ic_logout_inactive"
-        />
+        <item
+            android:id="@+id/language"
+            android:icon="@drawable/ic_language_inactive"
+            android:title="Language" />
+
+
+        <item
+            android:id="@+id/job"
+            android:icon="@drawable/ic_job_inactive"
+            android:title="Job" />
+
+        <item
+            android:id="@+id/logout"
+            android:icon="@drawable/ic_logout_inactive"
+            android:title="Log out" />
+    </group>
+
 
 </menu>

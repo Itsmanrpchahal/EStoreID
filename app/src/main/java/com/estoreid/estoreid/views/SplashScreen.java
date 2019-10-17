@@ -50,13 +50,13 @@ public class SplashScreen extends AppCompatActivity {
                         public void run() {
                             // TODO Auto-generated method stub
                             progressBar.setProgress(pStatus);
-                            progressBar.setSecondaryProgress(pStatus+15);
+                            progressBar.setSecondaryProgress(pStatus+25);
                         }
                     });
                     try {
                         // Sleep for 200 milliseconds.
                         // Just to display the progress slowly
-                        Thread.sleep(100); //thread will take approx 3 seconds to finish
+                        Thread.sleep(50); //thread will take approx 3 seconds to finish
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
