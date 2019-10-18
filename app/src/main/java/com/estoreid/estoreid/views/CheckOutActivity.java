@@ -1,8 +1,13 @@
 package com.estoreid.estoreid.views;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -31,6 +36,32 @@ public class CheckOutActivity extends AppCompatActivity {
     TextView toolbartitle;
 
     PaymentMethodAdapter paymentMethodAdapter;
+    @BindView(R.id.btn_payment)
+    Button btnPayment;
+    @BindView(R.id.tv_paymentMethod)
+    TextView tvPaymentMethod;
+    @BindView(R.id.layout_paymentMethod)
+    RelativeLayout layoutPaymentMethod;
+    @BindView(R.id.img_checked)
+    ImageView imgChecked;
+    @BindView(R.id.tv_placeAddress)
+    TextView tvPlaceAddress;
+    @BindView(R.id.placeAddress)
+    TextView placeAddress;
+    @BindView(R.id.layout_address)
+    RelativeLayout layoutAddress;
+    @BindView(R.id.tv_deleveryAddress)
+    TextView tvDeleveryAddress;
+    @BindView(R.id.layout_deliveryAddress)
+    RelativeLayout layoutDeliveryAddress;
+    @BindView(R.id.layout_main)
+    RelativeLayout layoutMain;
+    @BindView(R.id.search_et)
+    EditText searchEt;
+    @BindView(R.id.cart_toolbar)
+    ImageButton cartToolbar;
+    @BindView(R.id.serach_toolbar)
+    ImageButton serachToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,9 +74,22 @@ public class CheckOutActivity extends AppCompatActivity {
         toolbartitle.setText(R.string.checkout);
 
 
-        paymentMethodAdapter=new PaymentMethodAdapter(this);
+        paymentMethodAdapter = new PaymentMethodAdapter(this);
         paymentRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         paymentRecyclerView.setAdapter(paymentMethodAdapter);
 
+
+        listeners();
+
+    }
+
+    private void listeners() {
+        btnPayment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(CheckOutActivity.this,OrderPlaced.class);
+                startActivity(intent);
+            }
+        });
     }
 }

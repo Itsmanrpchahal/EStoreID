@@ -37,6 +37,11 @@
                     app:riv_corner_radius="5dp"
                     android:src="@drawable/shape"
                     ></com.makeramen.roundedimageview.RoundedImageView>
+
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src=""></ImageButton>
             </RelativeLayout>
 
 

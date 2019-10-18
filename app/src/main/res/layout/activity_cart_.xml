@@ -9,12 +9,6 @@
     tools:context=".views.Cart_Activity">
 
 
-    <include
-        layout="@layout/toolbar_cart"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        />
-
     <ScrollView
         android:id="@+id/scrollview"
         android:layout_width="match_parent"
@@ -24,6 +18,21 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
+            <androidx.appcompat.widget.Toolbar
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageButton
+                    android:id="@+id/toolbar_back"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorTrans"
+                    android:src="@drawable/ic_chevron_left_black_24dp">
+
+                </ImageButton>
+
+            </androidx.appcompat.widget.Toolbar>
 
 
 
@@ -152,11 +161,25 @@
                 android:layout_below="@id/total_tv"
                 android:layout_margin="@dimen/defaultmargin"></View>
 
+            <Button
+                android:id="@+id/placeorder"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/round_button_theam"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/view3"
+                android:layout_margin="@dimen/defaultmargin"
+                android:text="Checkout"
+                android:textSize="@dimen/normaltext"
+                android:textColor="@color/colorWhite"
+                android:padding="15dp"
+                android:textAllCaps="false"></Button>
+
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/view3"
+                android:layout_below="@id/placeorder"
                 android:layout_margin="@dimen/defaultmargin">
 
 
@@ -184,19 +207,6 @@
             </androidx.cardview.widget.CardView>
 
 
-            <Button
-                android:id="@+id/placeorder"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/round_button_theam"
-                android:layout_centerHorizontal="true"
-                android:layout_below="@id/cardview"
-                android:layout_margin="@dimen/defaultmargin"
-                android:text="Place Order"
-                android:textSize="@dimen/normaltext"
-                android:textColor="@color/colorWhite"
-                android:padding="15dp"
-                android:textAllCaps="false"></Button>
 
         </RelativeLayout>
     </ScrollView>

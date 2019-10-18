@@ -9,7 +9,7 @@
             android:title="Home" />
         <item
             android:id="@+id/myaccount"
-            android:icon="@drawable/ic_myacount_inactive"
+            android:icon="@drawable/myaccount_selector"
             android:title="My Account" />
 
         <item

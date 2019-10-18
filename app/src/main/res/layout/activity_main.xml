@@ -53,6 +53,16 @@
                         android:padding="15dp">
 
                         <TextView
+                            android:id="@+id/select_current_loc"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/selectcurloc"
+                            android:textAlignment="center"
+                            android:visibility="gone"
+                            android:layout_centerHorizontal="true"
+                            android:textColor="@color/colorTheme"></TextView>
+
+                        <TextView
                             android:id="@+id/your_loc_tv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -309,7 +319,8 @@
                     </View>
 
                     <RadioGroup
-                        android:layout_width="match_parent"
+                        android:id="@+id/radio_group"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/add_view4"
                         android:orientation="horizontal"
@@ -322,7 +333,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:backgroundTint="@color/colorTheme"
-                                android:textColor="@color/colorBlack"
+                                android:textColor="@color/colorgrey"
                                 android:buttonTint="@color/colorTheme"
                                 android:fontFamily="@font/latoregular"
                                 android:text="Home"></RadioButton>
@@ -332,7 +343,7 @@
                                 android:layout_height="wrap_content"
                                 android:buttonTint="@color/colorTheme"
                                 android:backgroundTint="@color/colorTheme"
-                                android:textColor="@color/colorBlack"
+                                android:textColor="@color/colorgrey"
                                 android:fontFamily="@font/latoregular"
                                 android:text="Office"></RadioButton>
 
@@ -341,13 +352,24 @@
                                 android:layout_height="wrap_content"
                                 android:buttonTint="@color/colorTheme"
                                 android:backgroundTint="@color/colorTheme"
-                                android:textColor="@color/colorBlack"
+                                android:textColor="@color/colorgrey"
                                 android:fontFamily="@font/latoregular"
                                 android:text="Other"></RadioButton>
 
 
 
                     </RadioGroup>
+
+                    <Button
+                        android:id="@+id/save_new_address"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/radio_group"
+                        android:textAllCaps="false"
+                        android:background="@drawable/theam_button"
+                        android:layout_margin="@dimen/defaultmargin"
+                        android:text="Save"
+                        android:textColor="@color/colorWhite"></Button>
 
                 </RelativeLayout>
             </RelativeLayout>

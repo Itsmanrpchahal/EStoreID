@@ -1,11 +1,8 @@
 package com.estoreid.estoreid.views;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -13,10 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -29,12 +23,9 @@ import butterknife.ButterKnife;
 
 public class Cart_Activity extends BaseActivity {
 
-    @BindView(R.id.cart_toolbar)
-    ImageButton cartToolbar;
-    @BindView(R.id.serach_toolbar)
-    ImageButton serachToolbar;
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
+
+    @BindView(R.id.toolbar_back)
+    ImageButton toolbarBack;
     @BindView(R.id.carttext)
     TextView carttext;
     @BindView(R.id.view1)
@@ -65,23 +56,18 @@ public class Cart_Activity extends BaseActivity {
     RecyclerView relatedItemRecyclerview;
     @BindView(R.id.cardview)
     CardView cardview;
-    CartAddedItemAdapter adapter;
-    ReletedProductAdpater reletedProductAdpater;
     @BindView(R.id.placeorder)
     Button placeorder;
-    @BindView(R.id.safetext)
-    TextView safetext;
     @BindView(R.id.scrollview)
     ScrollView scrollview;
-
+    @BindView(R.id.safetext)
+    TextView safetext;
+    ReletedProductAdpater reletedProductAdpater;
+    CartAddedItemAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        //inflate your activity layout here!
-        @SuppressLint("InflateParams")
-        View contentView = inflater.inflate(R.layout.activity_cart_, null, false);
-        drawer.addView(contentView, 0);
+        setContentView(R.layout.activity_cart_);
         ButterKnife.bind(this);
         additemRecyclerviw.setFocusable(false);
         setAdapter();
@@ -92,26 +78,19 @@ public class Cart_Activity extends BaseActivity {
         placeorder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Cart_Activity.this, OrderPlaced.class);
+                Intent intent = new Intent(Cart_Activity.this, CheckOutActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        toolbarBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
             }
         });
     }
 
-
-    @Override
-    public void onBackPressed() {
-        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                finishAffinity();
-            } else {
-                super.onBackPressed();
-            }
-        }
-    }
 
     @SuppressLint("WrongConstant")
     private void setAdapter() {

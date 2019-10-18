@@ -35,7 +35,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Location"
-        android:textSize="@dimen/normaltext"
+        android:textSize="@dimen/textsize_sp14"
         android:textColor="@color/colorgrey"
         android:drawableLeft="@drawable/ic_location_inactive"
         android:drawablePadding="10dp"

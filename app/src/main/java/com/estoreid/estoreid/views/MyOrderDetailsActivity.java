@@ -23,6 +23,25 @@ import butterknife.ButterKnife;
 public class MyOrderDetailsActivity extends AppCompatActivity {
 
     String text_string = "";
+
+
+    OrderDiscountAdapter orderDiscountAdapter;
+    @BindView(R.id.orderCancel)
+    Button orderCancel;
+    @BindView(R.id.layout_main)
+    RelativeLayout layoutMain;
+    @BindView(R.id.tv_OrderName)
+    TextView tvOrderName;
+    @BindView(R.id.tv_OrderPrice)
+    TextView tvOrderPrice;
+    @BindView(R.id.tv_devlerStatus)
+    TextView tvDevlerStatus;
+    @BindView(R.id.tv_orderTimming)
+    TextView tvOrderTimming;
+    @BindView(R.id.tv_total)
+    TextView tvTotal;
+    @BindView(R.id.tv_totalPrice)
+    TextView tvTotalPrice;
     @BindView(R.id.tv_OrderID)
     TextView tvOrderID;
     @BindView(R.id.tv_orderStatus)
@@ -31,22 +50,12 @@ public class MyOrderDetailsActivity extends AppCompatActivity {
     TextView tvOrderTiming;
     @BindView(R.id.recycler_order)
     RecyclerView recyclerOrder;
-    @BindView(R.id.backontoolbar)
-    ImageButton backontoolbar;
-    @BindView(R.id.toolbartitle)
-    TextView toolbartitle;
-    @BindView(R.id.cart_toolbar)
-    ImageButton cartToolbar;
-    @BindView(R.id.serach_toolbar)
-    ImageButton serachToolbar;
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
-
-    OrderDiscountAdapter orderDiscountAdapter;
-    @BindView(R.id.orderCancel)
-    Button orderCancel;
-    @BindView(R.id.layout_main)
-    RelativeLayout layoutMain;
+    @BindView(R.id.orders_recyclerview)
+    RelativeLayout ordersRecyclerview;
+    @BindView(R.id.profile_back)
+    ImageButton profileBack;
+    @BindView(R.id.include_toolbar)
+    Toolbar includeToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +63,7 @@ public class MyOrderDetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_my_order_details);
         ButterKnife.bind(this);
 
-        backontoolbar.setVisibility(View.VISIBLE);
+        profileBack.setVisibility(View.VISIBLE);
 
         text_string = getIntent().getStringExtra("text_string");
         tvOrderStatus.setText(text_string);
@@ -72,7 +81,7 @@ public class MyOrderDetailsActivity extends AppCompatActivity {
         recyclerOrder.setLayoutManager(new LinearLayoutManager(this));
         recyclerOrder.setAdapter(orderDiscountAdapter);
 
-        backontoolbar.setOnClickListener(new View.OnClickListener() {
+        profileBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onBackPressed();

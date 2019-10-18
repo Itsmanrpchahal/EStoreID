@@ -7,34 +7,36 @@
     android:background="@color/colorWhite"
     tools:context=".views.ProfileScreen">
 
-    <androidx.appcompat.widget.Toolbar
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <ImageButton
-            android:id="@+id/profile_back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@color/colorTrans"
-            android:src="@drawable/ic_arrow_back_black_24dp">
-
-        </ImageButton>
-
-    </androidx.appcompat.widget.Toolbar>
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="55dp">
+        android:layout_height="match_parent">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageButton
+                    android:id="@+id/profile_back"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorTrans"
+                    android:src="@drawable/ic_chevron_left_black_24dp">
+
+                </ImageButton>
+
+            </androidx.appcompat.widget.Toolbar>
+
             <com.makeramen.roundedimageview.RoundedImageView
                 android:id="@+id/profile_userimage"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
+                android:layout_below="@id/toolbar"
                 android:layout_centerHorizontal="true"
                 android:layout_margin="@dimen/defaultmargin"
                 android:src="@drawable/shape"
@@ -80,7 +82,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="123 following"
-                    android:layout_margin="@dimen/defaultmargin"
+                    android:layout_margin="@dimen/textsize_sp12"
                     android:textAllCaps="false"
                     android:textSize="12sp"
                     android:background="@drawable/round_greybt"></Button>
@@ -94,7 +96,7 @@
                     android:textColor="@color/colorWhite"
                     android:textSize="12sp"
                     android:background="@drawable/round_blue_bt"
-                    android:layout_margin="@dimen/defaultmargin"></Button>
+                    android:layout_margin="@dimen/textsize_sp12"></Button>
             </LinearLayout>
 
             <View
@@ -127,7 +129,7 @@
                     android:fontFamily="@font/latoregular"
                     android:textSize="@dimen/normaltext"
                     android:inputType="textPersonName"
-                    android:layout_marginTop="@dimen/defaultmargin"
+                    android:layout_marginTop="@dimen/margin_dp6"
                     android:background="@color/colorTrans"></EditText>
 
 
@@ -154,7 +156,7 @@
                     android:inputType="textEmailAddress"
                     android:fontFamily="@font/latoregular"
                     android:textSize="@dimen/normaltext"
-                    android:layout_marginTop="@dimen/defaultmargin"
+                    android:layout_marginTop="@dimen/margin_dp6"
                     android:background="@color/colorTrans"></EditText>
 
 
@@ -181,7 +183,7 @@
                     android:fontFamily="@font/latoregular"
                     android:textSize="@dimen/normaltext"
                     android:inputType="number"
-                    android:layout_marginTop="@dimen/defaultmargin"
+                    android:layout_marginTop="@dimen/margin_dp6"
                     android:background="@color/colorTrans"></EditText>
 
 
@@ -209,7 +211,7 @@
                     android:fontFamily="@font/latoregular"
                     android:textSize="@dimen/normaltext"
                     android:inputType="number"
-                    android:layout_marginTop="@dimen/defaultmargin"
+                    android:layout_marginTop="@dimen/margin_dp6"
                     android:background="@color/colorTrans"></EditText>
 
 
@@ -237,7 +239,7 @@
                     android:fontFamily="@font/latoregular"
                     android:textSize="@dimen/normaltext"
                     android:inputType="number"
-                    android:layout_marginTop="@dimen/defaultmargin"
+                    android:layout_marginTop="@dimen/margin_dp6"
                     android:background="@color/colorTrans"></EditText>
 
 
@@ -249,59 +251,6 @@
                     android:layout_marginTop="5dp"
                     android:background="@color/colorgrey"></View>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/defaultmargin"
-                    android:text="Change Password"></TextView>
-
-                <EditText
-                    android:id="@+id/setting_changepassword"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Change Password"
-                    android:textColor="@color/colorBlack"
-                    android:fontFamily="@font/latoregular"
-                    android:textSize="@dimen/normaltext"
-                    android:inputType="textPassword"
-                    android:layout_marginTop="@dimen/defaultmargin"
-                    android:background="@color/colorTrans"></EditText>
-
-                <View
-                    android:id="@+id/setting_view7"
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_below="@id/email_et"
-                    android:layout_marginTop="5dp"
-                    android:background="@color/colorgrey"></View>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/defaultmargin"
-                    android:text="Confirm Password"></TextView>
-
-                <EditText
-                    android:id="@+id/setting_confirmpassword"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Confirm Password"
-                    android:textColor="@color/colorBlack"
-                    android:fontFamily="@font/latoregular"
-                    android:textSize="@dimen/normaltext"
-                    android:inputType="textPassword"
-                    android:layout_marginTop="@dimen/defaultmargin"
-                    android:background="@color/colorTrans">
-
-                </EditText>
-
-                <View
-                    android:id="@+id/setting_view5"
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_below="@id/email_et"
-                    android:layout_marginTop="5dp"
-                    android:background="@color/colorgrey"></View>
 
                 <Button
                     android:id="@+id/profile_logout"
@@ -315,7 +264,6 @@
 
                 </Button>
             </LinearLayout>
-
 
         </RelativeLayout>
 

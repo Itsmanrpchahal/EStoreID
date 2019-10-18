@@ -3,6 +3,7 @@ package com.estoreid.estoreid.views;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -15,12 +16,16 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.borjabravo.readmoretextview.ReadMoreTextView;
 import com.estoreid.estoreid.R;
+import com.estoreid.estoreid.views.adapter.Product_Detail_images_Adapter;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class Product_details extends BaseActivity {
 
+    private TextView[] dots;
     @BindView(R.id.product_detial_viewpager)
     ViewPager productDetialViewpager;
     @BindView(R.id.product_detail_dotlayout)
@@ -73,6 +78,9 @@ public class Product_details extends BaseActivity {
     ImageButton productDetialBack;
     String type;
     Intent intent;
+    ArrayList<String> images = new ArrayList<>();
+    Product_Detail_images_Adapter adapter;
+    int CurrentPage =0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +91,40 @@ public class Product_details extends BaseActivity {
         type=getIntent().getStringExtra("type");
         ButterKnife.bind(this);
         listeners();
+
+        productDetialViewpager.setOffscreenPageLimit(1);
+        adapter = new Product_Detail_images_Adapter(Product_details.this, images);
+        productDetialViewpager.setAdapter(adapter);
+        addBottomDots(0);
+        //indicator.setViewPager(viewPager);
+        productDetialViewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+
+
+            @Override
+            public void onPageScrolled(int i, float v, int i1) {
+                CurrentPage = i;
+            }
+
+            @Override
+            public void onPageSelected(int i) {
+                addBottomDots(i);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int i) {
+
+                if (i == ViewPager.SCROLL_STATE_IDLE) {
+
+                    int pagecount = 5;
+
+                    if (CurrentPage == pagecount) {
+                        productDetialViewpager.setCurrentItem(pagecount, true);
+                    } else
+                        CurrentPage++;
+                }
+
+            }
+        });
     }
 
     private void listeners() {
@@ -106,5 +148,26 @@ public class Product_details extends BaseActivity {
                 finish();
             }
         });
+    }
+
+
+    //add dots at bottom
+    private void addBottomDots(int currentPage) {
+
+        dots = new TextView[5];
+        productDetailDotlayout.removeAllViews();
+        for (int i = 0; i < dots.length; i++) {
+
+            dots[i] = new TextView(Product_details.this);
+            dots[i].setText(Html.fromHtml("&#8226;"));
+            dots[i].setTextSize(20);
+            dots[i].setTextColor(getResources().getColor(R.color.colorWhite));
+            productDetailDotlayout.addView(dots[i]);
+
+        }
+
+        if (dots.length > 0) {
+            dots[currentPage].setTextColor(getResources().getColor(R.color.colorTheme));
+        }
     }
 }

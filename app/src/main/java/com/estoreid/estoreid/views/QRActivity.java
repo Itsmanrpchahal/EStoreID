@@ -1,44 +1,49 @@
 package com.estoreid.estoreid.views;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-
-import android.annotation.SuppressLint;
-import android.content.Context;
-import android.os.Build;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.estoreid.estoreid.R;
+import com.makeramen.roundedimageview.RoundedImageView;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class QRActivity extends BaseActivity {
 
+    @BindView(R.id.qr_back)
+    ImageButton qrBack;
+    @BindView(R.id.qr_userimage)
+    RoundedImageView qrUserimage;
+    @BindView(R.id.qr_text)
+    TextView qrText;
+    @BindView(R.id.qr_text1)
+    TextView qrText1;
+    @BindView(R.id.qr_image)
+    ImageView qrImage;
+    @BindView(R.id.qr_share)
+    Button qrShare;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        //inflate your activity layout here!
-        @SuppressLint("InflateParams")
-        View contentView = inflater.inflate(R.layout.activity_qr, null, false);
-        drawer.addView(contentView, 0);
+        setContentView(R.layout.activity_qr);
         ButterKnife.bind(this);
+
+        listeners();
     }
 
-    @Override
-    public void onBackPressed() {
-        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                finishAffinity();
-            } else {
-                super.onBackPressed();
+    private void listeners() {
+        qrBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
             }
-        }
+        });
     }
+
 }

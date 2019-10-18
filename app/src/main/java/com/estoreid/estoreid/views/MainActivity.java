@@ -6,10 +6,12 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -94,6 +96,12 @@ public class MainActivity extends BaseActivity {
     TextView toolbartitle;
     @BindView(R.id.adress_layout)
     RelativeLayout adressLayout;
+    @BindView(R.id.select_current_loc)
+    TextView selectCurrentLoc;
+    @BindView(R.id.radio_group)
+    RadioGroup radioGroup;
+    @BindView(R.id.save_new_address)
+    Button saveNewAddress;
 
 
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -119,6 +127,22 @@ public class MainActivity extends BaseActivity {
                 dashboardRecylerview.setVisibility(View.GONE);
                 adressLayout.setVisibility(View.VISIBLE);
                 view2.setVisibility(View.GONE);
+                selectCurrentLoc.setVisibility(View.VISIBLE);
+                yourLocTv.setVisibility(View.GONE);
+                loactionTv.setVisibility(View.GONE);
+                changeAddress.setVisibility(View.GONE);
+            }
+        });
+        saveNewAddress.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                adressLayout.setVisibility(View.GONE);
+                view2.setVisibility(View.VISIBLE);
+                dashboardRecylerview.setVisibility(View.VISIBLE);
+                selectCurrentLoc.setVisibility(View.GONE);
+                yourLocTv.setVisibility(View.VISIBLE);
+                loactionTv.setVisibility(View.VISIBLE);
+                changeAddress.setVisibility(View.VISIBLE);
             }
         });
     }

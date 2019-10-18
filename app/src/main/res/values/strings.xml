@@ -22,5 +22,6 @@
     <string name="my_orders">My orders</string>
     <string name="cancel_order">Are you sure you\nwant to cancel\norder #401215</string>
     <string name="order_delete">If you deleted it will not appeare in\n your order list anymore.</string>
+    <string name="selectcurloc"><u>Select Current Loaction</u></string>
 </resources>
 

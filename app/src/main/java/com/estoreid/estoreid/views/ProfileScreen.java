@@ -1,6 +1,5 @@
 package com.estoreid.estoreid.views;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -19,6 +18,7 @@ import butterknife.ButterKnife;
 
 public class ProfileScreen extends AppCompatActivity {
 
+
     @BindView(R.id.profile_back)
     ImageButton profileBack;
     @BindView(R.id.profile_userimage)
@@ -35,6 +35,10 @@ public class ProfileScreen extends AppCompatActivity {
     LinearLayout layoutOne;
     @BindView(R.id.profile_view1)
     View profileView1;
+    @BindView(R.id.profile_usernameet)
+    EditText profileUsernameet;
+    @BindView(R.id.profile_view11)
+    View profileView11;
     @BindView(R.id.profile_email)
     EditText profileEmail;
     @BindView(R.id.profile_view2)
@@ -49,8 +53,8 @@ public class ProfileScreen extends AppCompatActivity {
     View profileView4;
     @BindView(R.id.profile_dob)
     EditText profileDob;
-    @BindView(R.id.setting_view5)
-    View settingView5;
+    @BindView(R.id.setting_view6)
+    View settingView6;
     @BindView(R.id.profile_logout)
     Button profileLogout;
 

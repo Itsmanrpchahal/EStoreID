@@ -36,12 +36,10 @@ public class PaymentMethodAdapter extends RecyclerView.Adapter<PaymentMethodAdap
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
-        if (position==1){
+        if (position==0){
             holder.layout_methods.setBackgroundResource(R.drawable.custome_theme_selected_bg);
             holder.img_cardChecked.setVisibility(View.VISIBLE);
         }
-
-
     }
 
     @Override
