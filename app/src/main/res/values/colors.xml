@@ -7,8 +7,9 @@
     <color name="colorWhite">#ffffff</color>
     <color name="colorTrans">#00FFFFFF</color>
     <color name="colorgrey">#ACA7A7</color>
+    <color name="colorgreylight">#EEE9E9</color>
     <color name="colorBlack">#000000</color>
-    <color name="colorFB">#5158EE</color>
+    <color name="colorFB">#2974F0</color>
     <color name="colorFGmail">#E62727</color>
     <color name="colorgreen">#63BB56</color>
 </resources>

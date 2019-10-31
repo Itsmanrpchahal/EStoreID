@@ -1,15 +1,20 @@
 package com.estoreid.estoreid.views;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -24,8 +29,24 @@ import butterknife.ButterKnife;
 public class Cart_Activity extends BaseActivity {
 
 
-    @BindView(R.id.toolbar_back)
-    ImageButton toolbarBack;
+    ReletedProductAdpater reletedProductAdpater;
+    CartAddedItemAdapter adapter;
+    @BindView(R.id.search_et)
+    EditText searchEt;
+    @BindView(R.id.backontoolbar)
+    ImageButton backontoolbar;
+    @BindView(R.id.cart_toolbar)
+    ImageButton cartToolbar;
+    @BindView(R.id.serach_toolbar)
+    ImageButton serachToolbar;
+    @BindView(R.id.toolbartitle)
+    TextView toolbartitle;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+    @BindView(R.id.product_serach)
+    ImageButton productSerach;
+    @BindView(R.id.toolbar_layout)
+    RelativeLayout toolbarLayout;
     @BindView(R.id.carttext)
     TextView carttext;
     @BindView(R.id.view1)
@@ -50,24 +71,25 @@ public class Cart_Activity extends BaseActivity {
     TextView totalTv1;
     @BindView(R.id.view3)
     View view3;
+    @BindView(R.id.placeorder)
+    Button placeorder;
     @BindView(R.id.relatedproduct_tv)
     TextView relatedproductTv;
     @BindView(R.id.related_item_recyclerview)
     RecyclerView relatedItemRecyclerview;
     @BindView(R.id.cardview)
     CardView cardview;
-    @BindView(R.id.placeorder)
-    Button placeorder;
     @BindView(R.id.scrollview)
     ScrollView scrollview;
     @BindView(R.id.safetext)
     TextView safetext;
-    ReletedProductAdpater reletedProductAdpater;
-    CartAddedItemAdapter adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_cart_);
+        LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View contentView = inflater.inflate(R.layout.activity_cart_, null, false);
+        drawer.addView(contentView, 0);
         ButterKnife.bind(this);
         additemRecyclerviw.setFocusable(false);
         setAdapter();
@@ -83,12 +105,6 @@ public class Cart_Activity extends BaseActivity {
             }
         });
 
-        toolbarBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
     }
 
 

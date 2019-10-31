@@ -54,4 +54,7 @@ dependencies {
     // Glide v4 uses this new annotation processor -- see https://bumptech.github.io/glide/doc/generatedapi.html
     annotationProcessor 'com.github.bumptech.glide:compiler:4.7.1'
 
+    //range seekbar
+    implementation 'com.github.Jay-Goo:RangeSeekBar:v3.0.0'
+
 }

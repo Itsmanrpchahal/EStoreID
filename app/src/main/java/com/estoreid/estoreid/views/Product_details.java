@@ -2,16 +2,21 @@ package com.estoreid.estoreid.views;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.viewpager.widget.ViewPager;
 
 import com.borjabravo.readmoretextview.ReadMoreTextView;
@@ -25,7 +30,24 @@ import butterknife.ButterKnife;
 
 public class Product_details extends BaseActivity {
 
-    private TextView[] dots;
+    @BindView(R.id.search_et)
+    EditText searchEt;
+    @BindView(R.id.backontoolbar)
+    ImageButton backontoolbar;
+    @BindView(R.id.cart_toolbar)
+    ImageButton cartToolbar;
+    @BindView(R.id.serach_toolbar)
+    ImageButton serachToolbar;
+    @BindView(R.id.toolbartitle)
+    TextView toolbartitle;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+    @BindView(R.id.product_serach)
+    ImageButton productSerach;
+    @BindView(R.id.product_cart)
+    ImageButton productCart;
+    @BindView(R.id.toolbar_layout)
+    RelativeLayout toolbarLayout;
     @BindView(R.id.product_detial_viewpager)
     ViewPager productDetialViewpager;
     @BindView(R.id.product_detail_dotlayout)
@@ -74,21 +96,21 @@ public class Product_details extends BaseActivity {
     Button sizeL;
     @BindView(R.id.size_XXL)
     Button sizeXXL;
-    @BindView(R.id.product_detial_back)
-    ImageButton productDetialBack;
+    private TextView[] dots;
     String type;
     Intent intent;
     ArrayList<String> images = new ArrayList<>();
     Product_Detail_images_Adapter adapter;
-    int CurrentPage =0;
+    int CurrentPage = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         //inflate your activity layout here!
-        setContentView(R.layout.activity_product_details);
-        type=getIntent().getStringExtra("type");
+        View contentView = inflater.inflate(R.layout.activity_product_details, null, false);
+        drawer.addView(contentView, 0);
+        type = getIntent().getStringExtra("type");
         ButterKnife.bind(this);
         listeners();
 
@@ -133,21 +155,21 @@ public class Product_details extends BaseActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Product_details.this, Product_Reviews.class);
-                intent.putExtra("type",type);
+                intent.putExtra("type", type);
                 startActivity(intent);
                 finish();
             }
         });
 
-        productDetialBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Product_details.this,Products_Screen.class);
-                intent.putExtra("type",type);
-                startActivity(intent);
-                finish();
-            }
-        });
+//        productDetialBack.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(Product_details.this, Products_Screen.class);
+//                intent.putExtra("type", type);
+//                startActivity(intent);
+//                finish();
+//            }
+//        });
     }
 
 
@@ -168,6 +190,20 @@ public class Product_details extends BaseActivity {
 
         if (dots.length > 0) {
             dots[currentPage].setTextColor(getResources().getColor(R.color.colorTheme));
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                finishAffinity();
+            } else {
+                super.onBackPressed();
+            }
         }
     }
 }

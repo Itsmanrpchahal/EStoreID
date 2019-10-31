@@ -4,14 +4,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -23,23 +21,13 @@ import butterknife.ButterKnife;
 
 public class CheckOutActivity extends AppCompatActivity {
 
-    @BindView(R.id.payment_recyclerView)
-    RecyclerView paymentRecyclerView;
 
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
-
-    @BindView(R.id.backontoolbar)
-    ImageButton backontoolbar;
-
-    @BindView(R.id.toolbartitle)
-    TextView toolbartitle;
-
-    PaymentMethodAdapter paymentMethodAdapter;
     @BindView(R.id.btn_payment)
     Button btnPayment;
     @BindView(R.id.tv_paymentMethod)
     TextView tvPaymentMethod;
+    @BindView(R.id.payment_recyclerView)
+    RecyclerView paymentRecyclerView;
     @BindView(R.id.layout_paymentMethod)
     RelativeLayout layoutPaymentMethod;
     @BindView(R.id.img_checked)
@@ -56,22 +44,17 @@ public class CheckOutActivity extends AppCompatActivity {
     RelativeLayout layoutDeliveryAddress;
     @BindView(R.id.layout_main)
     RelativeLayout layoutMain;
-    @BindView(R.id.search_et)
-    EditText searchEt;
-    @BindView(R.id.cart_toolbar)
-    ImageButton cartToolbar;
-    @BindView(R.id.serach_toolbar)
-    ImageButton serachToolbar;
+    @BindView(R.id.include_toolbar)
+    RelativeLayout includeToolbar;
+    PaymentMethodAdapter paymentMethodAdapter;
+    @BindView(R.id.back_checkout)
+    ImageButton backCheckout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_check_out);
         ButterKnife.bind(this);
-
-        backontoolbar.setVisibility(View.VISIBLE);
-        toolbartitle.setVisibility(View.VISIBLE);
-        toolbartitle.setText(R.string.checkout);
 
 
         paymentMethodAdapter = new PaymentMethodAdapter(this);
@@ -87,8 +70,15 @@ public class CheckOutActivity extends AppCompatActivity {
         btnPayment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(CheckOutActivity.this,OrderPlaced.class);
+                Intent intent = new Intent(CheckOutActivity.this, OrderPlaced.class);
                 startActivity(intent);
+            }
+        });
+
+        backCheckout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
             }
         });
     }

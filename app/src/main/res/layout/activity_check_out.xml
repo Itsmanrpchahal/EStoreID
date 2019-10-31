@@ -144,9 +144,28 @@
         </RelativeLayout>
     </ScrollView>
 
-    <include
+    <RelativeLayout
         android:id="@+id/include_toolbar"
-        layout="@layout/toolbar_cart"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="@dimen/margin_dp55">
+
+        <ImageButton
+            android:id="@+id/back_checkout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/colorTrans"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/defaultmargin"
+            android:src="@drawable/ic_chevron_left_black_24dp"></ImageButton>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Checkout"
+            android:fontFamily="@font/latoregular"
+            android:textSize="@dimen/normaltext"
+            android:textColor="@color/colorBlack"
+            android:layout_centerInParent="true"></TextView>
+    </RelativeLayout>
+
 </RelativeLayout>

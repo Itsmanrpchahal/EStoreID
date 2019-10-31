@@ -16,17 +16,30 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <include
-                layout="@layout/toolbar_cart"
+            <RelativeLayout
+                android:id="@+id/toolbar_layout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                />
+                android:layout_height="56dp"
+                android:layout_marginLeft="@dimen/margin_dp55">
 
+                <EditText
+                    android:id="@+id/search_et"
+                    android:layout_width="match_parent"
+                    android:layout_centerInParent="true"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/round_edittext"
+                    android:layout_marginRight="@dimen/defaultmargin"
+                    android:drawableRight="@drawable/ic_search_black_24dp"
+                    android:padding="@dimen/padding_dp5"
+                    android:hint="Search Store"
+                    android:visibility="visible"
+                    android:drawablePadding="@dimen/padding_dp10"></EditText>
+            </RelativeLayout>
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="55dp">
+                android:layout_marginTop="56dp">
 
                 <com.estoreid.estoreid.views.utils.AppMapView
                     android:layout_width="match_parent"

@@ -1,9 +1,121 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".views.filter.FilterScreen">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <RelativeLayout
+                android:id="@+id/layout1"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/margin_dp55"
+                android:background="@color/colorWhite">
+
+                <ImageButton
+                    android:id="@+id/close_filter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_close_blk_24dp"
+                    android:background="@color/colorTrans"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/defaultmargin"></ImageButton>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Filters"
+                    android:textSize="@dimen/normaltext"
+                    android:textColor="@color/colorBlack"
+                    android:fontFamily="@font/latoregular"
+                    android:layout_centerInParent="true"></TextView>
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/brandtext"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/margin_dp45"
+                android:layout_below="@id/layout1"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/normaltext"
+                android:text="Brand"
+                android:gravity="center_vertical"
+                android:background="@color/colorgreylight"
+                android:fontFamily="@font/latoregular"
+                android:padding="@dimen/margin_dp10"></TextView>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/brandrecycler"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/brandtext"
+                ></androidx.recyclerview.widget.RecyclerView>
+
+            <TextView
+                android:id="@+id/categories"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/margin_dp45"
+                android:layout_below="@id/brandrecycler"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/normaltext"
+                android:text="Categories"
+                android:gravity="center_vertical"
+                android:layout_marginTop="@dimen/margin_dp10"
+                android:background="@color/colorgreylight"
+                android:fontFamily="@font/latoregular"
+                android:padding="@dimen/margin_dp10"></TextView>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/categoriesrecycler"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/categories"
+                ></androidx.recyclerview.widget.RecyclerView>
+
+            <TextView
+                android:id="@+id/colors"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/margin_dp45"
+                android:layout_below="@id/categoriesrecycler"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/normaltext"
+                android:text="Colors"
+                android:gravity="center_vertical"
+                android:layout_marginTop="@dimen/margin_dp10"
+                android:background="@color/colorgreylight"
+                android:fontFamily="@font/latoregular"
+                android:padding="@dimen/margin_dp10"></TextView>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/colorsrecycler"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/colors"
+                ></androidx.recyclerview.widget.RecyclerView>
+
+            <TextView
+                android:id="@+id/pricerange"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/margin_dp45"
+                android:layout_below="@id/colorsrecycler"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/normaltext"
+                android:text="Price range"
+                android:gravity="center_vertical"
+                android:layout_marginTop="@dimen/margin_dp10"
+                android:background="@color/colorgreylight"
+                android:fontFamily="@font/latoregular"
+                android:padding="@dimen/margin_dp10"></TextView>
+
+       </RelativeLayout>
+    </ScrollView>
+
+</RelativeLayout>

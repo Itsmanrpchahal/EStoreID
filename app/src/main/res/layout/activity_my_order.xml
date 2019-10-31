@@ -10,12 +10,30 @@
         android:id="@+id/recycler_order"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/include_toolbar"
+        android:layout_below="@+id/toolbar"
         android:layout_marginTop="25dp" />
 
-    <include
-        android:id="@+id/include_toolbar"
-        layout="@layout/toolbar_cart"
+    <RelativeLayout
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="@dimen/margin_dp55">
+
+        <ImageButton
+            android:id="@+id/back_onfav_store"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/defaultmargin"
+            android:src="@drawable/ic_chevron_left_black_24dp"
+            android:background="@color/colorTrans"
+            android:layout_centerVertical="true"></ImageButton>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorBlack"
+            android:fontFamily="@font/latoregular"
+            android:textSize="@dimen/normaltext"
+            android:text="My Orders"
+            android:layout_centerInParent="true"></TextView>
+    </RelativeLayout>
 </RelativeLayout>

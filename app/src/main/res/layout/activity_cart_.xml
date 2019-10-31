@@ -15,24 +15,33 @@
         android:layout_height="match_parent"
         android:layout_above="@id/safetext">
 
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <androidx.appcompat.widget.Toolbar
+
+            <include layout="@layout/toolbar_cart"></include>
+
+            <RelativeLayout
+                android:id="@+id/toolbar_layout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="@dimen/margin_dp55">
 
                 <ImageButton
-                    android:id="@+id/toolbar_back"
+                    android:id="@+id/product_serach"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/defaultmargin"
                     android:background="@color/colorTrans"
-                    android:src="@drawable/ic_chevron_left_black_24dp">
+                    android:src="@drawable/ic_search_black_24dp"
+                    android:visibility="visible"></ImageButton>
 
-                </ImageButton>
 
-            </androidx.appcompat.widget.Toolbar>
+
+            </RelativeLayout>
 
 
 

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+    <RelativeLayout
+        android:id="@+id/layout_methods"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margin_dp10"
+        android:layout_marginRight="@dimen/margin_dp10"
+        android:layout_marginTop="@dimen/margin_dp10"
+        android:background="@drawable/custom_theme_unselected_bg">
+
+        <TextView
+            android:id="@+id/img_card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:paddingLeft="@dimen/margin_dp15"
+            android:paddingRight="@dimen/margin_dp15"
+            android:paddingTop="@dimen/margin_dp7"
+            android:paddingBottom="@dimen/margin_dp7"
+            android:text="NIKE"
+            android:textAlignment="center"
+            android:textColor="@color/colorgrey"/>
+
+
+    </RelativeLayout>
+</RelativeLayout>

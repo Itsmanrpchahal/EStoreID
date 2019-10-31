@@ -11,6 +11,8 @@ import android.content.Intent;
 import android.net.wifi.hotspot2.pps.HomeSp;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.EditText;
 
 import com.estoreid.estoreid.R;
 import com.google.android.material.navigation.NavigationView;
@@ -19,6 +21,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
 
     DrawerLayout drawer;
     NavigationView navigationView;
+    EditText search;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +30,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        search = toolbar.findViewById(R.id.search_et);
 
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(

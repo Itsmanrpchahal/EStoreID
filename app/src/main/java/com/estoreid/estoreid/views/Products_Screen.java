@@ -10,10 +10,9 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -30,6 +29,26 @@ import butterknife.ButterKnife;
 public class Products_Screen extends BaseActivity {
 
     ProductAdapter adapter;
+    Intent intent;
+    String type = "list";
+    @BindView(R.id.search_et)
+    EditText searchEt;
+    @BindView(R.id.backontoolbar)
+    ImageButton backontoolbar;
+    @BindView(R.id.cart_toolbar)
+    ImageButton cartToolbar;
+    @BindView(R.id.serach_toolbar)
+    ImageButton serachToolbar;
+    @BindView(R.id.toolbartitle)
+    TextView toolbartitle;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+    @BindView(R.id.product_serach)
+    ImageButton productSerach;
+    @BindView(R.id.product_cart)
+    ImageButton productCart;
+    @BindView(R.id.toolbar_layout)
+    RelativeLayout toolbarLayout;
     @BindView(R.id.product_tv)
     TextView productTv;
     @BindView(R.id.view1)
@@ -46,21 +65,7 @@ public class Products_Screen extends BaseActivity {
     View view3;
     @BindView(R.id.items_recycler_view)
     RecyclerView itemsRecyclerView;
-    ActionBarDrawerToggle actionBarDrawerToggle;
-    @BindView(R.id.search_et)
-    EditText searchEt;
-    @BindView(R.id.backontoolbar)
-    ImageButton backontoolbar;
-    @BindView(R.id.cart_toolbar)
-    ImageButton cartToolbar;
-    @BindView(R.id.serach_toolbar)
-    ImageButton serachToolbar;
-    @BindView(R.id.toolbartitle)
-    TextView toolbartitle;
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
-    Intent intent;
-    String type = "list";
+
 
     @SuppressLint("WrongConstant")
     @Override
@@ -72,14 +77,13 @@ public class Products_Screen extends BaseActivity {
         View contentView = inflater.inflate(R.layout.activity_products__screen, null, false);
         drawer.addView(contentView, 0);
         ButterKnife.bind(this);
-        searchEt.setVisibility(View.GONE);
         productTv.setFocusable(true);
         itemsRecyclerView.setFocusable(false);
+        searchEt.setVisibility(View.GONE);
         listeners();
         intent = getIntent();
 
-        if( getIntent().getExtras() != null)
-        {
+        if (getIntent().getExtras() != null) {
             type = intent.getStringExtra("type");
         }
 

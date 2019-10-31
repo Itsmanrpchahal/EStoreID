@@ -126,7 +126,7 @@ public class Product_Reviews extends AppCompatActivity {
                 Intent intent = new Intent(Product_Reviews.this, Product_details.class);
                 intent.putExtra("type",type);
                 startActivity(intent);
-                overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
+                //overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
             }
         });
     }

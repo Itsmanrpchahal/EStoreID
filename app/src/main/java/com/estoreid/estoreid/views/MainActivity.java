@@ -2,13 +2,13 @@ package com.estoreid.estoreid.views;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
@@ -16,7 +16,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -25,8 +24,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.estoreid.estoreid.R;
 import com.estoreid.estoreid.views.adapter.DashBoardShopAdapter;
+import com.estoreid.estoreid.views.filter.FilterScreen;
 import com.estoreid.estoreid.views.utils.AppMapView;
-import com.estoreid.estoreid.views.utils.Utils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -34,14 +33,14 @@ import butterknife.ButterKnife;
 public class MainActivity extends BaseActivity {
 
     DashBoardShopAdapter adapter;
-    @BindView(R.id.cart_toolbar)
-    ImageButton cartToolbar;
-    @BindView(R.id.serach_toolbar)
-    ImageButton serachToolbar;
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
+    @BindView(R.id.search_et)
+    EditText searchEt;
+    @BindView(R.id.toolbar_layout)
+    RelativeLayout toolbarLayout;
     @BindView(R.id.mapview)
     AppMapView mapview;
+    @BindView(R.id.select_current_loc)
+    TextView selectCurrentLoc;
     @BindView(R.id.your_loc_tv)
     TextView yourLocTv;
     @BindView(R.id.loaction_tv)
@@ -88,20 +87,12 @@ public class MainActivity extends BaseActivity {
     EditText pincode;
     @BindView(R.id.add_view4)
     View addView4;
-    @BindView(R.id.search_et)
-    EditText searchEt;
-    @BindView(R.id.backontoolbar)
-    ImageButton backontoolbar;
-    @BindView(R.id.toolbartitle)
-    TextView toolbartitle;
-    @BindView(R.id.adress_layout)
-    RelativeLayout adressLayout;
-    @BindView(R.id.select_current_loc)
-    TextView selectCurrentLoc;
     @BindView(R.id.radio_group)
     RadioGroup radioGroup;
     @BindView(R.id.save_new_address)
     Button saveNewAddress;
+    @BindView(R.id.adress_layout)
+    RelativeLayout adressLayout;
 
 
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -114,13 +105,19 @@ public class MainActivity extends BaseActivity {
         View contentView = inflater.inflate(R.layout.activity_main, null, false);
         drawer.addView(contentView, 0);
         ButterKnife.bind(this);
-        Utils.abc(searchEt, MainActivity.this);
+//        Utils.abc(searchEt, MainActivity.this);
         searchEt.setVisibility(View.VISIBLE);
         setAdapter();
         listerners();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
     private void listerners() {
+
         changeAddress.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -143,6 +140,14 @@ public class MainActivity extends BaseActivity {
                 yourLocTv.setVisibility(View.VISIBLE);
                 loactionTv.setVisibility(View.VISIBLE);
                 changeAddress.setVisibility(View.VISIBLE);
+            }
+        });
+
+        filterTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, FilterScreen.class);
+                startActivity(intent);
             }
         });
     }
