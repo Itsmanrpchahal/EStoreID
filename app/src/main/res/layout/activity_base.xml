@@ -19,6 +19,8 @@
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/header_layout"
-        app:menu="@menu/menu_items" />
+        app:menu="@menu/menu_items"
+        android:contextClickable="true"
+        app:itemBackground="@drawable/drawer_selected_item"/>
 
 </androidx.drawerlayout.widget.DrawerLayout>

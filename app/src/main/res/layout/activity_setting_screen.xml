@@ -7,11 +7,29 @@
     android:background="@color/colorWhite"
     tools:context=".views.SettingScreen">
 
-    <include
-        layout="@layout/toolbar_cart"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        />
+        android:layout_height="56dp">
+
+        <ImageButton
+            android:id="@+id/back_setting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_chevron_left_black_24dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/defaultmargin"
+            android:background="@color/colorTrans"
+            ></ImageButton>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Setting"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/normaltext"
+            android:layout_centerInParent="true"></TextView>
+    </RelativeLayout>
+
 
     <ScrollView
         android:layout_width="match_parent"

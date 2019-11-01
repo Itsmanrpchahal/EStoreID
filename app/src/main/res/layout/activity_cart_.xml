@@ -9,40 +9,34 @@
     tools:context=".views.Cart_Activity">
 
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="56dp">
+
+            <ImageButton
+                android:id="@+id/product_serach"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/defaultmargin"
+                android:background="@color/colorTrans"
+                android:src="@drawable/ic_search_black_24dp"
+                android:visibility="visible"></ImageButton>
+
+        </RelativeLayout>
+
+
     <ScrollView
         android:id="@+id/scrollview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/safetext">
-
+        android:layout_marginTop="56dp">
 
         <RelativeLayout
+            android:id="@+id/toolbar_layout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-
-            <include layout="@layout/toolbar_cart"></include>
-
-            <RelativeLayout
-                android:id="@+id/toolbar_layout"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/margin_dp55">
-
-                <ImageButton
-                    android:id="@+id/product_serach"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="@dimen/defaultmargin"
-                    android:background="@color/colorTrans"
-                    android:src="@drawable/ic_search_black_24dp"
-                    android:visibility="visible"></ImageButton>
-
-
-
-            </RelativeLayout>
-
+            android:layout_height="@dimen/margin_dp55">
 
 
             <TextView
@@ -53,7 +47,6 @@
                 android:textColor="@color/colorBlack"
                 android:textSize="@dimen/xlargetext"
                 android:fontFamily="@font/quicksandbold"
-                android:layout_marginTop="61dp"
                 android:layout_marginLeft="@dimen/defaultmargin"></TextView>
 
 

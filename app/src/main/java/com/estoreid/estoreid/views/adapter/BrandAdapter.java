@@ -18,6 +18,7 @@ import butterknife.ButterKnife;
 public class BrandAdapter extends RecyclerView.Adapter<BrandAdapter.ViewHolder> {
 
     Context context;
+    private int selectedPosition = -1;
 
     public BrandAdapter(Context context) {
         this.context = context;
@@ -33,16 +34,24 @@ public class BrandAdapter extends RecyclerView.Adapter<BrandAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        if (position == 0) {
+
+        if (selectedPosition == position) {
+            holder.itemView.setSelected(true); //using selector drawable
             holder.layoutMethods.setBackgroundResource(R.drawable.custome_theme_selected_bg);
+        } else {
+            holder.itemView.setSelected(false);
+            holder.layoutMethods.setBackgroundResource(R.drawable.grey_border);
         }
 
-//        holder.itemView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                holder.layoutMethods.setBackgroundResource(R.drawable.custome_theme_selected_bg);
-//            }
-//        });
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (selectedPosition >= 0)
+                    notifyItemChanged(selectedPosition);
+                selectedPosition = holder.getAdapterPosition();
+                notifyItemChanged(selectedPosition);
+            }
+        });
     }
 
     @Override

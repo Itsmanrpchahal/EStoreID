@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <group android:checkableBehavior="single">
 
         <item
             android:id="@+id/homet"
             android:icon="@drawable/ic_myacount_inactive"
-            android:title="Home" />
+            android:title="Home"
+            />
         <item
             android:id="@+id/myaccount"
-            android:icon="@drawable/myaccount_selector"
+            android:icon="@drawable/ic_myacount_inactive"
             android:title="My Account" />
 
         <item
@@ -38,11 +38,6 @@
             android:title="Settings" />
 
         <item
-            android:id="@+id/qrCode"
-            android:icon="@drawable/ic_qr_inactive"
-            android:title="OR Code" />
-
-        <item
             android:id="@+id/rewardcoinzone"
             android:icon="@drawable/ic_reward_inactive"
             android:title="Reward coin zone" />
@@ -68,7 +63,4 @@
             android:id="@+id/logout"
             android:icon="@drawable/ic_logout_inactive"
             android:title="Log out" />
-    </group>
-
-
 </menu>

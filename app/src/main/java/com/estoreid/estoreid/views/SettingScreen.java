@@ -6,10 +6,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
 import com.estoreid.estoreid.R;
 import com.makeramen.roundedimageview.RoundedImageView;
@@ -19,16 +17,9 @@ import butterknife.ButterKnife;
 
 public class SettingScreen extends AppCompatActivity {
 
-    @BindView(R.id.backontoolbar)
-    ImageButton backontoolbar;
-    @BindView(R.id.toolbartitle)
-    TextView toolbartitle;
-    @BindView(R.id.cart_toolbar)
-    ImageButton cartToolbar;
-    @BindView(R.id.serach_toolbar)
-    ImageButton serachToolbar;
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
+
+    @BindView(R.id.back_setting)
+    ImageButton backSetting;
     @BindView(R.id.setting_user_image)
     RoundedImageView settingUserImage;
     @BindView(R.id.userimagelayout)
@@ -77,12 +68,8 @@ public class SettingScreen extends AppCompatActivity {
     }
 
     private void listerners() {
-        backontoolbar.setVisibility(View.VISIBLE);
-        serachToolbar.setVisibility(View.GONE);
-        cartToolbar.setVisibility(View.GONE);
-        toolbartitle.setVisibility(View.VISIBLE);
-        toolbartitle.setText("Setting");
-        backontoolbar.setOnClickListener(new View.OnClickListener() {
+
+        backSetting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onBackPressed();

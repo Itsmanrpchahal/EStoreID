@@ -24,19 +24,19 @@
                     android:id="@+id/close_filter"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_close_blk_24dp"
-                    android:background="@color/colorTrans"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="@dimen/defaultmargin"></ImageButton>
+                    android:layout_marginLeft="@dimen/defaultmargin"
+                    android:background="@color/colorTrans"
+                    android:src="@drawable/ic_close_blk_24dp"></ImageButton>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Filters"
-                    android:textSize="@dimen/normaltext"
-                    android:textColor="@color/colorBlack"
+                    android:layout_centerInParent="true"
                     android:fontFamily="@font/latoregular"
-                    android:layout_centerInParent="true"></TextView>
+                    android:text="Filters"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/normaltext"></TextView>
             </RelativeLayout>
 
             <TextView
@@ -44,78 +44,128 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/margin_dp45"
                 android:layout_below="@id/layout1"
-                android:textColor="@color/colorBlack"
-                android:textSize="@dimen/normaltext"
-                android:text="Brand"
-                android:gravity="center_vertical"
                 android:background="@color/colorgreylight"
                 android:fontFamily="@font/latoregular"
-                android:padding="@dimen/margin_dp10"></TextView>
+                android:gravity="center_vertical"
+                android:padding="@dimen/margin_dp10"
+                android:text="Brand"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/normaltext"></TextView>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/brandrecycler"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/brandtext"
-                ></androidx.recyclerview.widget.RecyclerView>
+                android:layout_below="@id/brandtext"></androidx.recyclerview.widget.RecyclerView>
 
             <TextView
                 android:id="@+id/categories"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/margin_dp45"
                 android:layout_below="@id/brandrecycler"
-                android:textColor="@color/colorBlack"
-                android:textSize="@dimen/normaltext"
-                android:text="Categories"
-                android:gravity="center_vertical"
                 android:layout_marginTop="@dimen/margin_dp10"
                 android:background="@color/colorgreylight"
                 android:fontFamily="@font/latoregular"
-                android:padding="@dimen/margin_dp10"></TextView>
+                android:gravity="center_vertical"
+                android:padding="@dimen/margin_dp10"
+                android:text="Categories"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/normaltext"></TextView>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/categoriesrecycler"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/categories"
-                ></androidx.recyclerview.widget.RecyclerView>
+                android:layout_below="@id/categories"></androidx.recyclerview.widget.RecyclerView>
 
             <TextView
                 android:id="@+id/colors"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/margin_dp45"
                 android:layout_below="@id/categoriesrecycler"
-                android:textColor="@color/colorBlack"
-                android:textSize="@dimen/normaltext"
-                android:text="Colors"
-                android:gravity="center_vertical"
                 android:layout_marginTop="@dimen/margin_dp10"
                 android:background="@color/colorgreylight"
                 android:fontFamily="@font/latoregular"
-                android:padding="@dimen/margin_dp10"></TextView>
+                android:gravity="center_vertical"
+                android:padding="@dimen/margin_dp10"
+                android:text="Colors"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/normaltext"></TextView>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/colorsrecycler"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/colors"
-                ></androidx.recyclerview.widget.RecyclerView>
+                android:layout_below="@id/colors"></androidx.recyclerview.widget.RecyclerView>
 
             <TextView
                 android:id="@+id/pricerange"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/margin_dp45"
                 android:layout_below="@id/colorsrecycler"
-                android:textColor="@color/colorBlack"
-                android:textSize="@dimen/normaltext"
-                android:text="Price range"
-                android:gravity="center_vertical"
                 android:layout_marginTop="@dimen/margin_dp10"
                 android:background="@color/colorgreylight"
                 android:fontFamily="@font/latoregular"
-                android:padding="@dimen/margin_dp10"></TextView>
+                android:gravity="center_vertical"
+                android:padding="@dimen/margin_dp10"
+                android:text="Price range"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/normaltext"></TextView>
 
-       </RelativeLayout>
+            <com.jaygoo.widget.RangeSeekBar
+                android:id="@+id/rangeseekbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/pricerange"
+                app:rsb_max="100"
+                app:rsb_min="0"
+                app:rsb_progress_color="@color/colorTheme"
+                app:rsb_thumb_drawable="@drawable/circle_backgroundtheme"
+                android:layout_marginTop="@dimen/defaultmargin"
+                ></com.jaygoo.widget.RangeSeekBar>
+
+            <TextView
+                android:id="@+id/filter_startprice"
+                android:layout_below="@id/rangeseekbar"
+                android:layout_marginLeft="@dimen/defaultmargin"
+                android:layout_alignParentStart="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="$1"
+                android:textColor="@color/colorgrey"></TextView>
+
+            <TextView
+                android:id="@+id/filter_endprice"
+                android:layout_below="@id/rangeseekbar"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/defaultmargin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="$100"
+                android:textColor="@color/colorgrey"></TextView>
+
+
+            <Button
+                android:id="@+id/applyfilterbt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/round_theam_button1"
+                android:text="Apply filters"
+                android:textColor="@color/colorWhite"
+                android:textAllCaps="false"
+                android:layout_margin="@dimen/defaultmargin"
+                android:layout_below="@id/filter_startprice"></Button>
+
+            <Button
+                android:id="@+id/clearfilterbt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/round_button_white"
+                android:layout_margin="@dimen/defaultmargin"
+                android:text="Clear filters"
+                android:textAllCaps="false"
+                android:textColor="@color/colorgrey"
+                android:layout_below="@id/applyfilterbt"></Button>
+        </RelativeLayout>
     </ScrollView>
-
 </RelativeLayout>

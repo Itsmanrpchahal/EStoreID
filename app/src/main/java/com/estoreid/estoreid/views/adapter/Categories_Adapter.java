@@ -20,6 +20,7 @@ import butterknife.ButterKnife;
 public class Categories_Adapter extends RecyclerView.Adapter<Categories_Adapter.ViewHolder> {
     Context context;
     ArrayList<String> arrayList;
+    private int selectedPosition = -1;
 
 
     public Categories_Adapter(Context context, ArrayList<String> arrayList) {

@@ -7,11 +7,17 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.wifi.hotspot2.pps.HomeSp;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.EditText;
 
 import com.estoreid.estoreid.R;
@@ -22,6 +28,8 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
     DrawerLayout drawer;
     NavigationView navigationView;
     EditText search;
+    Dialog popup;
+    Button OK,CANCEL;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,19 +48,19 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
 
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
     }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.homet) {
+
             startAnimatedActivity(new Intent(getApplicationContext(), MainActivity.class));
         }
         else if (id == R.id.cart) {
             startAnimatedActivity(new Intent(getApplicationContext(), Cart_Activity.class));
-        } else if (id == R.id.qrCode) {
-            startAnimatedActivity(new Intent(getApplicationContext(), QRActivity.class));
-        }else if (id == R.id.settings)
+        } else if (id == R.id.settings)
         {
             startAnimatedActivity(new Intent(getApplicationContext(),SettingScreen.class));
         }else if (id==R.id.myaccount)
@@ -64,6 +72,9 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         }else if (id==R.id.myfavoritestore)
         {
             startAnimatedActivity(new Intent(getApplicationContext(),MyFavoriteStoreActivity.class));
+        }else if (id == R.id.logout)
+        {
+            dialog();
         }
 
         drawer.closeDrawer(GravityCompat.START);
@@ -73,5 +84,35 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
     protected void startAnimatedActivity(Intent intent) {
         startActivity(intent);
         overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+    }
+
+    private void dialog() {
+        popup = new Dialog (BaseActivity.this);
+        Window window = popup.getWindow();
+        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+        popup.setContentView(R.layout.logoutdialog);
+        popup.setCancelable(true);
+        popup.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        popup.show();
+
+        OK = popup.findViewById(R.id.oklogout);
+        CANCEL = popup.findViewById(R.id.cancellogout);
+
+        OK.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(BaseActivity.this, Login.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        CANCEL.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                popup.dismiss();
+            }
+        });
     }
 }

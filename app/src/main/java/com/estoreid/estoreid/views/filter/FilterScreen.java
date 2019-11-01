@@ -2,6 +2,8 @@ package com.estoreid.estoreid.views.filter;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -17,6 +19,7 @@ import com.estoreid.estoreid.R;
 import com.estoreid.estoreid.views.adapter.BrandAdapter;
 import com.estoreid.estoreid.views.adapter.Categories_Adapter;
 import com.estoreid.estoreid.views.adapter.ColorsAdapter;
+import com.jaygoo.widget.RangeSeekBar;
 
 import java.util.ArrayList;
 
@@ -45,6 +48,18 @@ public class FilterScreen extends AppCompatActivity {
     TextView colors;
     @BindView(R.id.colorsrecycler)
     RecyclerView colorsrecycler;
+    @BindView(R.id.pricerange)
+    TextView pricerange;
+    @BindView(R.id.rangeseekbar)
+    RangeSeekBar rangeseekbar;
+    @BindView(R.id.filter_startprice)
+    TextView filterStartprice;
+    @BindView(R.id.filter_endprice)
+    TextView filterEndprice;
+    @BindView(R.id.applyfilterbt)
+    Button applyfilterbt;
+    @BindView(R.id.clearfilterbt)
+    Button clearfilterbt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +80,16 @@ public class FilterScreen extends AppCompatActivity {
         setBrandAdapter();
         setCategoriesAdpater(arrayList);
         setColorsAdapter();
+        listerners();
+    }
+
+    private void listerners() {
+        closeFilter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
     }
 
     @SuppressLint("WrongConstant")
