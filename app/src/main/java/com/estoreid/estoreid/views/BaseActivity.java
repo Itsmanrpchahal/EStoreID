@@ -57,27 +57,38 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         if (id == R.id.homet) {
 
             startAnimatedActivity(new Intent(getApplicationContext(), MainActivity.class));
+            drawer.closeDrawer(GravityCompat.START);
         }
         else if (id == R.id.cart) {
             startAnimatedActivity(new Intent(getApplicationContext(), Cart_Activity.class));
+            drawer.closeDrawer(GravityCompat.START);
         } else if (id == R.id.settings)
         {
             startAnimatedActivity(new Intent(getApplicationContext(),SettingScreen.class));
+            drawer.closeDrawer(GravityCompat.START);
         }else if (id==R.id.myaccount)
         {
             startAnimatedActivity(new Intent(getApplicationContext(),ProfileScreen.class));
+            drawer.closeDrawer(GravityCompat.START);
         }else if (id==R.id.myorders)
         {
             startAnimatedActivity(new Intent(getApplicationContext(),MyOrderActivity.class));
+            drawer.closeDrawer(GravityCompat.START);
         }else if (id==R.id.myfavoritestore)
         {
             startAnimatedActivity(new Intent(getApplicationContext(),MyFavoriteStoreActivity.class));
+            drawer.closeDrawer(GravityCompat.START);
         }else if (id == R.id.logout)
         {
             dialog();
+
+        }else if (id == R.id.offerzone)
+        {
+            startAnimatedActivity(new Intent(getApplicationContext(),OfferZone.class));
+            drawer.closeDrawer(GravityCompat.START);
         }
 
-        drawer.closeDrawer(GravityCompat.START);
+
         return true;
     }
 

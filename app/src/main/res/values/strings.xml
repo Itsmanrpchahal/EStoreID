@@ -23,5 +23,11 @@
     <string name="cancel_order">Are you sure you\nwant to cancel\norder #401215</string>
     <string name="order_delete">If you deleted it will not appeare in\n your order list anymore.</string>
     <string name="selectcurloc"><u>Select Current Loaction</u></string>
+    <string name="tc">View T&amp;C</string>
+
+
+    <string name="facebook_app_id">548824479018750</string>
+    <string name="fb_login_protocol_scheme">fb548824479018750</string>
+
 </resources>
 

@@ -57,4 +57,19 @@ dependencies {
     //range seekbar
     implementation 'com.github.Jay-Goo:RangeSeekBar:v3.0.0'
 
+
+    //facebook and gmail
+    implementation 'com.facebook.android:facebook-android-sdk:5.5.1'
+    implementation 'com.google.android.gms:play-services-auth:16.0.1'
+    implementation 'com.google.android.gms:play-services-vision:17.0.2'
+
+
+    //Retrofit
+    implementation 'com.squareup.retrofit2:converter-gson:2.6.1'
+    implementation 'com.squareup.retrofit2:retrofit:2.6.1'
+    implementation 'com.squareup.retrofit2:converter-gson:2.6.1'
+
+    //progress loading
+    implementation 'com.wang.avi:library:2.1.3'
+
 }
