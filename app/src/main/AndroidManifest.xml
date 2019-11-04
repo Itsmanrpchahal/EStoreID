@@ -91,6 +91,7 @@
             android:name=".views.MainActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
+
         <activity
             android:name=".views.SplashScreen"
             android:screenOrientation="portrait">

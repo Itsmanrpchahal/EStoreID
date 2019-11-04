@@ -1,175 +1,103 @@
 package com.estoreid.estoreid.views;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.chaos.view.PinView;
 import com.estoreid.estoreid.R;
+import com.estoreid.estoreid.views.apiResponseModel.VerifyAPIReponse;
+import com.estoreid.estoreid.views.controller.Controller;
+import com.estoreid.estoreid.views.utils.Utils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import retrofit2.Response;
 
-public class VerifyScreen extends AppCompatActivity {
+public class VerifyScreen extends AppCompatActivity implements Controller.VerifyAPI {
 
-    EditText opt_1, opt_2;
-    Button verify_confirm_bt;
+
     @BindView(R.id.verify_logo)
     ImageView verifyLogo;
     @BindView(R.id.verify_text)
     TextView verifyText;
-    @BindView(R.id.opt_1)
-    EditText opt1;
-    @BindView(R.id.opt_2)
-    EditText opt2;
-    @BindView(R.id.opt_3)
-    EditText opt3;
-    @BindView(R.id.opt_4)
-    EditText opt4;
-    @BindView(R.id.opt_5)
-    EditText opt5;
-    @BindView(R.id.opt_6)
-    EditText opt6;
-    @BindView(R.id.otp_layout)
-    LinearLayout otpLayout;
+    @BindView(R.id.otpedittext)
+    PinView otpedittext;
     @BindView(R.id.verify_tv)
     TextView verifyTv;
     @BindView(R.id.verify_confirm_bt)
     Button verifyConfirmBt;
     @BindView(R.id.verify_cancel)
     TextView verifyCancel;
+    android.app.Dialog Dialog;
+    Intent intent;
+    String user_id="",otp;
+    Controller controller;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_verify_screen);
         ButterKnife.bind(this);
-
+        controller = new Controller(this);
+        Dialog = Utils.showDialog(this);
+        Dialog.dismiss();
         listeners();
     }
 
     private void listeners() {
+        intent = getIntent();
+        if (intent!=null)
+        {
+            user_id = intent.getStringExtra("user_id");
+        }
+
         verifyConfirmBt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(VerifyScreen.this, MainActivity.class);
-                startActivity(intent);
-            }
-        });
-
-
-        opt1.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-               if (count==1)
-               {
-                   opt2.requestFocus();
-               }
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-                Toast.makeText(VerifyScreen.this, ""+s.length(), Toast.LENGTH_SHORT).show();
-
-            }
-        });
-
-        opt2.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (count==1)
+                otp = otpedittext.getText().toString();
+                if (Utils.isOnline()!=false)
                 {
-                    opt3.requestFocus();
+                    if (!otp.equals(""))
+                    {
+                        Dialog.show();
+                        controller.setVerifyAPI(user_id,otp);
+                    }else {
+                        Utils.showToastMessage(VerifyScreen.this,"Enter OTP to continue",getResources().getDrawable(R.drawable.ic_error_black_24dp));
+                    }
+
+                }else {
+                    Utils.showToastMessage(VerifyScreen.this,"No Internet connection",getResources().getDrawable(R.drawable.ic_nointernet));
                 }
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
-
-        opt3.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (count==1)
-                {
-                    opt4.requestFocus();
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
-
-        opt4.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (count==1)
-                {
-                    opt5.requestFocus();
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
-
-        opt5.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if(count==1)
-                {
-                    opt6.requestFocus();
-                }
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
             }
         });
     }
 
+    @Override
+    public void onSucess(Response<VerifyAPIReponse> verifyAPIResponse) {
 
+        if (verifyAPIResponse.body().getStatus()==200)
+        {
+            Intent intent = new Intent(VerifyScreen.this, Login.class);
+            startActivity(intent);
+        }else {
+            Utils.showToastMessage(this,""+verifyAPIResponse.message(),getResources().getDrawable(
+                    R.drawable.ic_error_black_24dp
+            ));
+        }
+    }
+
+    @Override
+    public void onError(String error) {
+        Dialog.dismiss();
+            Utils.showToastMessage(this,""+error,getResources().getDrawable(R.drawable.ic_error_black_24dp));
+    }
 }

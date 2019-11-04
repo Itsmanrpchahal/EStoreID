@@ -65,7 +65,7 @@ public class SignUp extends AppCompatActivity implements Controller.RegisterAPI 
     Button signup_bt;
     @BindView(R.id.allready_account_tv)
     TextView allreadyAccountTv;
-    String firstname,lastname,email,mobile,password,cpassword;
+    String firstname,lastname,email,mobile,password,cpassword,user_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -155,10 +155,15 @@ public class SignUp extends AppCompatActivity implements Controller.RegisterAPI 
             Dialog.dismiss();
         if (registerAPIReponseResponse.body().getStatus()==200)
         {
+            user_id = String.valueOf(registerAPIReponseResponse.body().getData().getUserId());
             Intent intent = new Intent(SignUp.this, VerifyScreen.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+            intent.putExtra("user_id",user_id);
             startActivity(intent);
+        }else {
+            Dialog.dismiss();
+            Utils.showToastMessage(SignUp.this,""+registerAPIReponseResponse.body().getMessage(),getResources().getDrawable(R.drawable.ic_error_black_24dp));
         }
 
     }

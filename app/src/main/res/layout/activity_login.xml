@@ -45,7 +45,7 @@
                 android:drawablePadding="15dp"
                 android:fontFamily="@font/latoregular"
                 android:textSize="@dimen/normaltext"
-                android:text="email/mobile number"
+                android:hint="email/mobile number"
                 android:inputType="textEmailAddress"
                 android:textColor="@color/colorWhite"
                 android:textColorHint="@color/colorWhite"></EditText>
@@ -83,6 +83,7 @@
                     android:textColorHint="@color/colorWhite"></EditText>
 
                 <TextView
+                    android:id="@+id/forgotpassowrd"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"

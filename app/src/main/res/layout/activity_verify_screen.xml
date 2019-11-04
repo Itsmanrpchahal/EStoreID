@@ -39,112 +39,40 @@
                 android:textStyle="bold"
                 android:textSize="24sp"></TextView>
 
-            <LinearLayout
-                android:id="@+id/otp_layout"
-                android:layout_width="match_parent"
+            <com.chaos.view.PinView
+                android:id="@+id/otpedittext"
+                android:layout_below="@+id/verify_text"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:background="@drawable/round_button_white"
+                android:cursorVisible="true"
+                android:layout_gravity="center_horizontal"
+                android:textColorHint="@color/colorWhite"
+                android:inputType="number"
+                android:clickable="true"
+                android:gravity="center"
+                android:layout_marginTop="@dimen/defaultmargin"
                 android:layout_centerHorizontal="true"
-                android:layout_below="@id/verify_text"
-                android:padding="10dp"
-                android:layout_marginRight="@dimen/xxmargin"
-                android:layout_marginLeft="@dimen/xxmargin"
-                android:layout_marginTop="@dimen/xmargin"
-                android:weightSum="6">
-
-                <EditText
-                    android:id="@+id/opt_1"
-                    android:layout_weight="1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:hint=" - "
-                    android:maxLength="1"
-                    android:background="@color/colorTrans"
-                    android:backgroundTint="@color/colorTrans"
-                    android:gravity="center"
-                    android:inputType="number"
-                    android:layout_marginLeft="10dp"
-                    android:textColorHint="@color/colorBlack"
-                    android:textSize="@dimen/largetext"></EditText>
-
-                <EditText
-                    android:id="@+id/opt_2"
-                    android:layout_weight="1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:hint=" - "
-                    android:maxLength="1"
-                    android:inputType="number"
-                    android:background="@color/colorTrans"
-                    android:backgroundTint="@color/colorTrans"
-                    android:gravity="center"
-                    android:textColorHint="@color/colorBlack"
-                    android:textSize="@dimen/largetext"></EditText>
-
-                <EditText
-                    android:id="@+id/opt_3"
-                    android:layout_weight="1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:hint=" - "
-                    android:maxLength="1"
-                    android:inputType="number"
-                    android:background="@color/colorTrans"
-                    android:backgroundTint="@color/colorTrans"
-                    android:gravity="center"
-                    android:textColorHint="@color/colorBlack"
-                    android:textSize="@dimen/largetext"></EditText>
-
-                <EditText
-                    android:id="@+id/opt_4"
-                    android:layout_weight="1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:hint=" - "
-                    android:inputType="number"
-                    android:maxLength="1"
-                    android:background="@color/colorTrans"
-                    android:backgroundTint="@color/colorTrans"
-                    android:gravity="center"
-                    android:textColorHint="@color/colorBlack"
-                    android:textSize="@dimen/largetext"></EditText>
-
-                <EditText
-                    android:id="@+id/opt_5"
-                    android:layout_weight="1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:hint=" - "
-                    android:inputType="number"
-                    android:maxLength="1"
-                    android:background="@color/colorTrans"
-                    android:backgroundTint="@color/colorTrans"
-                    android:gravity="center"
-                    android:textColorHint="@color/colorBlack"
-                    android:textSize="@dimen/largetext"></EditText>
-
-                <EditText
-                    android:id="@+id/opt_6"
-                    android:layout_weight="1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="10dp"
-                    android:hint=" - "
-                    android:maxLength="1"
-                    android:inputType="number"
-                    android:background="@color/colorTrans"
-                    android:backgroundTint="@color/colorTrans"
-                    android:gravity="center"
-                    android:textColorHint="@color/colorBlack"
-                    android:textSize="@dimen/largetext"></EditText>
-            </LinearLayout>
+                android:fontFamily="@font/latoregular"
+                app:cursorColor="@color/colorWhite"
+                android:padding="5dp"
+                android:textColor="@color/colorWhite"
+                android:textStyle="bold"
+                app:itemCount="6"
+                android:focusableInTouchMode="true"
+                android:focusable="true"
+                app:itemHeight="48dp"
+                app:itemRadius="4dp"
+                app:itemSpacing="2dp"
+                app:itemWidth="48dp"
+                app:lineColor="@color/colorWhite"
+                app:lineWidth="2dp"
+                app:viewType="rectangle"/>
 
             <TextView
                 android:id="@+id/verify_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/otp_layout"
+                android:layout_below="@id/otpedittext"
                 android:layout_marginLeft="@dimen/xxmargin"
                 android:layout_marginRight="@dimen/xxmargin"
                 android:text="Please enter confirmation code here, you will received on you register email address"
