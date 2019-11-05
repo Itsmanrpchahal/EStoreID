@@ -1,10 +1,8 @@
-package com.estoreid.estoreid.views;
+package com.estoreid.estoreid.views.signup;
 
-import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,11 +15,11 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.estoreid.estoreid.R;
+import com.estoreid.estoreid.views.VerifyScreen;
 import com.estoreid.estoreid.views.apiResponseModel.RegisterAPIReponse;
 import com.estoreid.estoreid.views.controller.Controller;
+import com.estoreid.estoreid.views.login.Login;
 import com.estoreid.estoreid.views.utils.Utils;
-
-import java.util.regex.Pattern;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -88,6 +86,9 @@ public class SignUp extends AppCompatActivity implements Controller.RegisterAPI 
                 startActivity(intent);
             }
         });
+
+
+
 
         signup_bt.setOnClickListener(new View.OnClickListener() {
             @Override

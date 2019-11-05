@@ -1,14 +1,11 @@
 package com.estoreid.estoreid.views;
 
-import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -16,6 +13,7 @@ import com.chaos.view.PinView;
 import com.estoreid.estoreid.R;
 import com.estoreid.estoreid.views.apiResponseModel.VerifyAPIReponse;
 import com.estoreid.estoreid.views.controller.Controller;
+import com.estoreid.estoreid.views.login.Login;
 import com.estoreid.estoreid.views.utils.Utils;
 
 import butterknife.BindView;

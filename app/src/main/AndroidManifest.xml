@@ -3,6 +3,9 @@
     package="com.estoreid.estoreid">
 
     <uses-permission android:name="android.permission.INTERNET"></uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <application
         android:allowBackup="true"
         android:label="@string/app_name"
@@ -76,11 +79,11 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".views.SignUp"
+            android:name=".views.signup.SignUp"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".views.Login"
+            android:name=".views.login.Login"
             android:screenOrientation="portrait"
             />
 
@@ -92,8 +95,12 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
 
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/googleclientId" />
+
         <activity
-            android:name=".views.SplashScreen"
+            android:name=".views.splash.SplashScreen"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

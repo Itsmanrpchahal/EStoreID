@@ -2,6 +2,9 @@ package com.estoreid.estoreid.views.webApi;
 
 import com.estoreid.estoreid.views.apiResponseModel.LoginAPIReponse;
 import com.estoreid.estoreid.views.apiResponseModel.RegisterAPIReponse;
+import com.estoreid.estoreid.views.apiResponseModel.ResetAPIReponse;
+import com.estoreid.estoreid.views.apiResponseModel.SetNewPasswordAPIReponse;
+import com.estoreid.estoreid.views.apiResponseModel.SocailLoginAPIResponse;
 import com.estoreid.estoreid.views.apiResponseModel.VerifyAPIReponse;
 
 import retrofit2.Call;
@@ -34,6 +37,32 @@ public interface ApiInterface {
     @POST("login")
     Call<LoginAPIReponse> login(
             @Field("email") String email,
+            @Field("password") String password,
+            @Field("device_token") String device_token
+    );
+
+    @FormUrlEncoded
+    @POST("forget_password")
+    Call<ResetAPIReponse> forget_password(
+            @Field("email") String forget_password
+    );
+
+    @FormUrlEncoded
+    @POST("set_password")
+    Call<SetNewPasswordAPIReponse> setNewPassword(
+            @Field("otp") String otp,
+            @Field("email") String email,
             @Field("password") String password
     );
+
+    @FormUrlEncoded
+    @POST("social_login")
+    Call<SocailLoginAPIResponse> socialLogin(
+            @Field("email") String email,
+            @Field("device_token") String device_token,
+            @Field("first_name") String first_name,
+            @Field("social_id") String social_id,
+            @Field("type") String type
+    );
+
 }

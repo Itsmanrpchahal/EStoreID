@@ -11,7 +11,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="start"
-        app:headerLayout="@layout/header_layout"
         app:menu="@menu/menu_items"
         android:theme="@style/DrawerTheme"
         app:itemTextColor="@color/colorBlack"

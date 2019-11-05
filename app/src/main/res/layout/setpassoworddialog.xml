@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layout_centerInParent="true"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!-- The following View represent the content. Note the margin -->
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/margin_dp12"
+        android:layout_centerInParent="true">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="@dimen/margin_dp10"
+            app:cardElevation="@dimen/margin_dp6"
+            android:layout_centerInParent="true"
+            app:cardBackgroundColor="@color/colorWhite">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/defaultmargin">
+
+                <TextView
+                    android:id="@+id/setpassowrdtv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="OPT sent on register mobile no."
+                    android:textColor="@color/colorTheme"
+                    android:textSize="@dimen/normaltext"
+                    android:layout_centerHorizontal="true"
+                    ></TextView>
+
+                <EditText
+                    android:id="@+id/enterotp"
+                    android:layout_below="@id/setpassowrdtv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/roundedittextgrey"
+                    android:layout_marginTop="@dimen/defaultmargin"
+                    android:layout_marginBottom="@dimen/defaultmargin"
+                    android:hint="Enter Otp"
+                    android:inputType="number"
+                    android:padding="@dimen/padding_dp5"
+                    android:maxLength="4"
+                    android:textColor="@color/colorTheme"
+                    android:fontFamily="@font/latoregular"></EditText>
+
+
+                <EditText
+                    android:id="@+id/enternewpassword"
+                    android:layout_below="@id/enterotp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/roundedittextgrey"
+                    android:layout_marginBottom="@dimen/defaultmargin"
+                    android:hint="New Password"
+                    android:inputType="textPassword"
+                    android:padding="@dimen/padding_dp5"
+                    android:textColor="@color/colorTheme"
+                    android:fontFamily="@font/latoregular"></EditText>
+
+                <EditText
+                    android:id="@+id/enterconfirmpassword"
+                    android:layout_below="@id/enternewpassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/roundedittextgrey"
+                    android:layout_marginBottom="@dimen/defaultmargin"
+                    android:hint="Confirm Password"
+                    android:inputType="textPassword"
+                    android:padding="@dimen/padding_dp5"
+                    android:textColor="@color/colorTheme"
+                    android:fontFamily="@font/latoregular"></EditText>
+
+
+                <Button
+                    android:id="@+id/forgotpassworddone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/round_theam_button1"
+                    android:layout_below="@id/enterconfirmpassword"
+                    android:text="Done"
+                    android:textColor="@color/colorWhite"
+                    android:textAllCaps="false"
+                    android:textSize="@dimen/normaltext"></Button>
+
+            </RelativeLayout>
+
+
+        </androidx.cardview.widget.CardView>
+    </RelativeLayout>
+    <ImageButton
+        android:id="@+id/closedilog"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_gravity="top|right"
+        android:src="@drawable/ic_closetheme"
+        android:background="@color/colorTrans"
+        />
+</FrameLayout>

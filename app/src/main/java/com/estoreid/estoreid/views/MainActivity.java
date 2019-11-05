@@ -1,10 +1,21 @@
 package com.estoreid.estoreid.views;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -14,9 +25,13 @@ import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.cardview.widget.CardView;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -25,20 +40,53 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.estoreid.estoreid.R;
 import com.estoreid.estoreid.views.adapter.DashBoardShopAdapter;
 import com.estoreid.estoreid.views.filter.FilterScreen;
-import com.estoreid.estoreid.views.utils.AppMapView;
+import com.estoreid.estoreid.views.login.Login;
+import com.estoreid.estoreid.views.utils.Utils;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.MapsInitializer;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.widget.Autocomplete;
+import com.google.android.libraries.places.widget.AutocompleteActivity;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseActivity implements OnMapReadyCallback {
 
+    public static final int MY_PERMISSIONS_REQUEST_READ_LOCATION = 121;
     DashBoardShopAdapter adapter;
+    String lat = "20.5937";
+    String lng = "78.9629", citystr;
+    GoogleMap Gmap;
+    int AUTOCOMPLETE_REQUEST_CODE = 1;
+    List<Place.Field> fields = Arrays.asList(Place.Field.ID, Place.Field.NAME);
     @BindView(R.id.search_et)
     EditText searchEt;
     @BindView(R.id.toolbar_layout)
     RelativeLayout toolbarLayout;
     @BindView(R.id.mapview)
-    AppMapView mapview;
+    MapView mapview;
     @BindView(R.id.select_current_loc)
     TextView selectCurrentLoc;
     @BindView(R.id.your_loc_tv)
@@ -93,6 +141,8 @@ public class MainActivity extends BaseActivity {
     Button saveNewAddress;
     @BindView(R.id.adress_layout)
     RelativeLayout adressLayout;
+    MapView mapView;
+    ArrayList<LatLng> locations = new ArrayList();
 
 
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -105,15 +155,25 @@ public class MainActivity extends BaseActivity {
         View contentView = inflater.inflate(R.layout.activity_main, null, false);
         drawer.addView(contentView, 0);
         ButterKnife.bind(this);
-//        Utils.abc(searchEt, MainActivity.this);
+        mapView = findViewById(R.id.mapview);
+        Places.initialize(this, getResources().getString(R.string.googleclientId));
         searchEt.setVisibility(View.VISIBLE);
         setAdapter();
         listerners();
+        Utils.checkPermissions(MainActivity.this);
+        mapView.onCreate(savedInstanceState);
+        mapView.getMapAsync(this);
+        MapsInitializer.initialize(this);
+        location("30.712408","76.708060");
+        location("30.714926","76.709530");
+        location("30.710242","76.706413");
+
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        statusCheck();
     }
 
     private void listerners() {
@@ -178,4 +238,237 @@ public class MainActivity extends BaseActivity {
         }
     }
 
+    public void statusCheck() {
+        final LocationManager manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        if (!manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            buildAlertMessageNoGps();
+        } else {
+            CurrentLocation();
+        }
+    }
+
+    private void buildAlertMessageNoGps() {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Your GPS seems to be disabled, do you want to enable it?")
+                .setCancelable(false)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(final DialogInterface dialog, final int id) {
+                        dialog.dismiss();
+                        startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    public void onClick(final DialogInterface dialog, final int id) {
+                        dialog.cancel();
+                    }
+                });
+        final AlertDialog alert = builder.create();
+        alert.show();
+    }
+
+
+    private void CurrentLocation() {
+        final FusedLocationProviderClient client = LocationServices.getFusedLocationProviderClient(this);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
+            return;
+        } else {
+            Task<Location> locationTask = client.getLastLocation();
+            if (locationTask != null) {
+                locationTask.addOnCompleteListener(new OnCompleteListener<Location>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Location> task) {
+
+                        task.addOnSuccessListener(new OnSuccessListener<Location>() {
+                            @Override
+                            public void onSuccess(Location location) {
+                                // location(String.valueOf(location.getLatitude()), String.valueOf(location.getLongitude()));
+
+                                if (location == null) {
+                                    statusCheck();
+                                    Toast.makeText(MainActivity.this, "Unable to get Location", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    lat = String.valueOf(location.getLatitude());
+                                    lng = String.valueOf(location.getLongitude());
+                                }
+
+                                Log.d("Location", "" + lat + "" + lng);
+                                Geocoder geocoder = new Geocoder(MainActivity.this, Locale.getDefault());
+                                try {
+                                    List<Address> address = (List<Address>) geocoder.getFromLocation(Double.parseDouble(lat), Double.parseDouble(lng), 1);
+
+                                    if (address != null) {
+                                        //citystr = address.get(0).getAdminArea();
+                                        //cityname.setText(address.get(0).getLocality());
+                                    } else {
+                                        //cityname.setText("Address not found");
+                                    }
+
+                                    if (mapView != null) {
+                                        mapView.onCreate(null);
+                                        mapView.onResume();
+                                        mapView.getMapAsync(MainActivity.this);
+                                    }
+
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        });
+
+                        task.addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(MainActivity.this, "Location Not Found...,Enter Location Manually...", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                });
+
+            }
+        }
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        Gmap = googleMap;
+        Gmap.getUiSettings().setMyLocationButtonEnabled(true);
+        Gmap.getUiSettings().setZoomControlsEnabled(true);
+
+
+        CameraPosition cameraPosition = CameraPosition.builder().target(new LatLng(Double.parseDouble(lat), Double.parseDouble(lng))).zoom(15).bearing(0).tilt(40).build();
+        Gmap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        Gmap.setMyLocationEnabled(true);
+
+
+        if (lat != null && lng != null) {
+            Gmap.setOnCameraIdleListener(new GoogleMap.OnCameraIdleListener() {
+                @Override
+                public void onCameraIdle() {
+                    LatLng midLatLng = Gmap.getCameraPosition().target;
+
+                    String latt = String.valueOf(midLatLng.latitude);
+                    String lnng = String.valueOf(midLatLng.longitude);
+
+                    Log.d("cameralatlong", "" + latt + "    " + lnng);
+                }
+            });
+        }
+
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST_READ_LOCATION: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                        Toast.makeText(this, "Permission granted", Toast.LENGTH_SHORT).show();
+
+                    }
+                } else {
+                    Toast.makeText(this, "No permission Granted", Toast.LENGTH_SHORT).show();
+
+                }
+                return;
+            }
+
+        }
+
+    }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == AUTOCOMPLETE_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+                Place place = Autocomplete.getPlaceFromIntent(data);
+                String puneet = String.valueOf(place).subSequence(String.valueOf(place).indexOf("name") + 5, String.valueOf(place).length()).toString();
+                String[] puni = puneet.split(",");
+                Log.d("checkplace", "" + String.valueOf(place));
+                Log.d("checkplace", "" + String.valueOf(place).subSequence(String.valueOf(place).indexOf("name") + 5, String.valueOf(place).length()));
+                Log.d("checkplace", "" + puni[0]);
+                //cityname.setText(puni[0]);
+                //Toast.makeText(getContext(), ""+cityname.getText().toString(), Toast.LENGTH_SHORT).show();
+
+                String loc = String.valueOf(place);
+                Geocoder geocoder = new Geocoder(this);
+                try {
+                    List<Address> addresses = geocoder.getFromLocationName(loc, 5);
+                    List<LatLng> latLngs = new ArrayList<LatLng>(addresses.size());
+
+                    if (addresses != null) {
+                        citystr = addresses.get(0).getAddressLine(0);
+                        // cityname.setText(addresses.get(0).getAddressLine(0).toString());
+                    } else {
+                        //cityname.setText("Address not found");
+                    }
+
+
+                    for (Address a : addresses) {
+                        if (a.hasLatitude() && a.hasLongitude()) {
+                            latLngs.add(new LatLng(a.getLatitude(), a.getLongitude()));
+
+                            lat = String.valueOf(a.getLatitude());
+                            lng = String.valueOf(a.getLongitude());
+                            location(lat, lng);
+                            Log.d("checkplace", "" + String.valueOf(a.getLatitude()));
+                        }
+
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+
+            } else if (resultCode == AutocompleteActivity.RESULT_ERROR) {
+
+                Status status = Autocomplete.getStatusFromIntent(data);
+                Log.i("Hello", status.getStatusMessage());
+            } else if (resultCode == RESULT_CANCELED) {
+                // The user canceled the operation.
+            }
+        }
+    }
+
+    private void location(String lat, String lng) {
+
+
+        Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+        try {
+            List<Address> address = (List<Address>) geocoder.getFromLocation(Double.valueOf(lat), Double.valueOf(lng), 1);
+            citystr = address.get(0).getLocality();
+
+            if (address != null) {
+                citystr = address.get(0).getAddressLine(0);
+                // cityname.setText(city);
+            } else {
+                // cityname.setText("Address not found");
+            }
+
+
+            if (mapView != null) {
+                mapView.onCreate(null);
+                mapView.onResume();
+                mapView.getMapAsync(MainActivity.this);
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

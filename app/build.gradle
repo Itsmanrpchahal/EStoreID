@@ -38,11 +38,13 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.0.0'
 
     //Map View
-    implementation 'com.google.android.gms:play-services-auth:17.0.0'
-    implementation 'com.google.android.gms:play-services-vision:18.0.0'
-    implementation 'com.google.android.gms:play-services-places:17.0.0'
-    implementation 'com.google.android.gms:play-services-auth:17.0.0'
-    implementation 'com.google.maps.android:android-maps-utils:0.5'
+    implementation 'com.google.android.gms:play-services-auth:16.0.1'
+    implementation 'com.google.android.gms:play-services-vision:17.0.2'
+    implementation 'com.google.android.gms:play-services-vision:17.0.2'
+    implementation 'com.google.android.gms:play-services-location:16.0.0'
+    implementation 'com.google.android.gms:play-services-maps:16.1.0'
+    implementation 'com.google.android.gms:play-services-places:16.1.0'
+    implementation 'com.google.android.gms:play-services-auth:16.0.0'
 
     //readmoretext
     implementation 'com.borjabravo:readmoretextview:2.0.1'
@@ -60,7 +62,13 @@ dependencies {
 
     //facebook and gmail
     implementation 'com.facebook.android:facebook-android-sdk:5.5.1'
-    implementation 'com.google.android.gms:play-services-auth:16.0.1'
+
+    //gms
+    implementation 'com.google.android.gms:play-services-location:17.0.0'
+    implementation 'com.google.android.gms:play-services-maps:17.0.0'
+    implementation 'com.google.android.libraries.places:places:2.0.0'
+    implementation 'com.google.android.gms:play-services-places:17.0.0'
+    implementation 'com.google.android.gms:play-services-auth:16.0.0'
     implementation 'com.google.android.gms:play-services-vision:17.0.2'
 
 
@@ -76,3 +84,4 @@ dependencies {
     implementation 'com.chaos.view:pinview:1.4.3'
 
 }
+

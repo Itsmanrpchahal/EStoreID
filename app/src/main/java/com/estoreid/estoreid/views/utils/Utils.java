@@ -1,9 +1,11 @@
 package com.estoreid.estoreid.views.utils;
 
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -17,11 +19,28 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
 import com.estoreid.estoreid.R;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class Utils {
+
+    private static final int MULTIPLE_PERMISSIONS = 10;
+    //permissions
+public static String[] permissions = new String[]{
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.CAMERA,
+            Manifest.permission.ACCESS_COARSE_LOCATION,
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.READ_CONTACTS};
+
 
     /*###################Code to Close the keyboard when your touch anywhere############*/
     public static void abc(final EditText relativeLayout, final Context activity) {
@@ -81,6 +100,23 @@ public class Utils {
         dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
 
         return dialog;
+    }
+
+    public static boolean checkPermissions(Context context) {
+        int result;
+        List<String> listPermissionsNeeded = new ArrayList<>();
+        for (String p : permissions) {
+            result = ContextCompat.checkSelfPermission(context, p);
+            if (result != PackageManager.PERMISSION_GRANTED) {
+                listPermissionsNeeded.add(p);
+            }
+        }
+        if (!listPermissionsNeeded.isEmpty()) {
+            ActivityCompat.requestPermissions((Activity) context, listPermissionsNeeded.toArray(new String[listPermissionsNeeded.size()]), MULTIPLE_PERMISSIONS);
+            return false;
+        } else {
+        }
+        return true;
     }
 
    /* public static Dialog dialog(final Context context) {

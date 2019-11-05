@@ -2,6 +2,9 @@ package com.estoreid.estoreid.views.controller;
 
 import com.estoreid.estoreid.views.apiResponseModel.LoginAPIReponse;
 import com.estoreid.estoreid.views.apiResponseModel.RegisterAPIReponse;
+import com.estoreid.estoreid.views.apiResponseModel.ResetAPIReponse;
+import com.estoreid.estoreid.views.apiResponseModel.SetNewPasswordAPIReponse;
+import com.estoreid.estoreid.views.apiResponseModel.SocailLoginAPIResponse;
 import com.estoreid.estoreid.views.apiResponseModel.VerifyAPIReponse;
 import com.estoreid.estoreid.views.webApi.WebAPI;
 
@@ -15,6 +18,9 @@ public class Controller {
     public RegisterAPI registerAPI;
     public VerifyAPI verifyAPI;
     public LoginAPI loginAPI;
+    public ForgotPassword forgotPassword;
+    public SetNewPassword setNewPassword;
+    public setSocailLogin setSocailLogin;
 
     //registerAPI
     public Controller(RegisterAPI registerAPI1) {
@@ -29,12 +35,17 @@ public class Controller {
         webAPI = new WebAPI();
     }
 
-    //loginAPI
-    public Controller(LoginAPI loginAPI1)
+    //loginAPI ----- forgotPasswordApi ------ SocialLogin
+    public Controller(LoginAPI loginAPI1,ForgotPassword forgotPassword1,SetNewPassword setNewPassword1,setSocailLogin setSocailLogin1)
     {
         loginAPI = loginAPI1;
+        forgotPassword = forgotPassword1;
+        setNewPassword = setNewPassword1;
+        setSocailLogin = setSocailLogin1;
         webAPI = new WebAPI();
     }
+
+
 
 
     //rest  API's
@@ -76,9 +87,9 @@ public class Controller {
         });
     }
 
-    public void setLoginAPI(String email,String password)
+    public void setLoginAPI(String email,String password,String device_token)
     {
-        webAPI.getApi().login(email, password).enqueue(new Callback<LoginAPIReponse>() {
+        webAPI.getApi().login(email, password,device_token).enqueue(new Callback<LoginAPIReponse>() {
             @Override
             public void onResponse(Call<LoginAPIReponse> call, Response<LoginAPIReponse> response) {
                 if (response!=null)
@@ -91,6 +102,63 @@ public class Controller {
             @Override
             public void onFailure(Call<LoginAPIReponse> call, Throwable t) {
                 loginAPI.onError(t.getMessage());
+            }
+        });
+    }
+
+    public void setForgotPassword(String email)
+    {
+        webAPI.getApi().forget_password(email).enqueue(new Callback<ResetAPIReponse>() {
+            @Override
+            public void onResponse(Call<ResetAPIReponse> call, Response<ResetAPIReponse> response) {
+                if (response !=null)
+                {
+                    Response<ResetAPIReponse> resetAPIReponseResponse = response;
+                    forgotPassword.onSucessForgot(resetAPIReponseResponse);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResetAPIReponse> call, Throwable t) {
+                    forgotPassword.onError(t.getMessage());
+            }
+        });
+    }
+
+    public void setSetNewPassword(String email,String otp,String password)
+    {
+        webAPI.getApi().setNewPassword(otp,email,password).enqueue(new Callback<SetNewPasswordAPIReponse>() {
+            @Override
+            public void onResponse(Call<SetNewPasswordAPIReponse> call, Response<SetNewPasswordAPIReponse> response) {
+                if (response!=null)
+                {
+                    Response<SetNewPasswordAPIReponse> newPasswordAPIReponseResponse = response;
+                    setNewPassword.onSuccessSetNewPassowrd(newPasswordAPIReponseResponse);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<SetNewPasswordAPIReponse> call, Throwable t) {
+                    setNewPassword.onError(t.getMessage());
+            }
+        });
+    }
+
+    public void setSetSocailLogin(String email,String device_token, String firstname,String socialId,String type)
+    {
+        webAPI.getApi().socialLogin(email,device_token,firstname,socialId,type).enqueue(new Callback<SocailLoginAPIResponse>() {
+            @Override
+            public void onResponse(Call<SocailLoginAPIResponse> call, Response<SocailLoginAPIResponse> response) {
+                if (response!=null)
+                {
+                    Response<SocailLoginAPIResponse> socailLoginAPIResponseResponse = response;
+                    setSocailLogin.onSuccessSocialLogin(socailLoginAPIResponseResponse);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<SocailLoginAPIResponse> call, Throwable t) {
+                setSocailLogin.onError(t.getMessage());
             }
         });
     }
@@ -109,6 +177,21 @@ public class Controller {
 
     public interface LoginAPI{
         void onSucess(Response<LoginAPIReponse> loginAPIReponseResponse);
+        void onError(String error);
+    }
+
+    public interface ForgotPassword{
+        void onSucessForgot(Response<ResetAPIReponse> forgotPasswordResponse);
+        void onError(String error);
+    }
+
+    public interface SetNewPassword{
+        void onSuccessSetNewPassowrd(Response<SetNewPasswordAPIReponse> newPasswordAPIReponseResponse);
+        void onError(String error);
+    }
+
+    public interface setSocailLogin{
+        void onSuccessSocialLogin(Response<SocailLoginAPIResponse> socailLoginAPIResponseResponse);
         void onError(String error);
     }
 }

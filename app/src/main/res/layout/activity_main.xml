@@ -42,13 +42,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <com.estoreid.estoreid.views.utils.AppMapView
+                <com.google.android.gms.maps.MapView
                     android:layout_width="match_parent"
                     android:layout_height="220dp"
                     android:background="@color/colorBlack"
                     android:id="@+id/mapview">
 
-                </com.estoreid.estoreid.views.utils.AppMapView>
+                </com.google.android.gms.maps.MapView>
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/location_view"

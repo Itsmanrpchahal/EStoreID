@@ -10,13 +10,16 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.bumptech.glide.Glide;
 import com.estoreid.estoreid.R;
+import com.estoreid.estoreid.views.baseclass.BaseClass;
+import com.estoreid.estoreid.views.utils.Constants;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class ProfileScreen extends AppCompatActivity {
+public class ProfileScreen extends BaseClass {
 
 
     @BindView(R.id.profile_back)
@@ -64,6 +67,16 @@ public class ProfileScreen extends AppCompatActivity {
         setContentView(R.layout.activity_profile_screen);
         ButterKnife.bind(this);
         listerners();
+
+        setData();
+
+    }
+
+    private void setData() {
+        String image = getStringVal(Constants.USER_IMAGE);
+        String name = getStringVal(Constants.USER_NAME);
+        Glide.with(context).load(image).into(profileUserimage);
+        profileUsername.setText(name);
 
     }
 

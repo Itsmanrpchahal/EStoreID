@@ -8,37 +8,49 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.net.wifi.hotspot2.pps.HomeSp;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.estoreid.estoreid.R;
+import com.estoreid.estoreid.views.baseclass.BaseClass;
+import com.estoreid.estoreid.views.login.Login;
+import com.estoreid.estoreid.views.utils.Constants;
 import com.google.android.material.navigation.NavigationView;
+import com.makeramen.roundedimageview.RoundedImageView;
 
-public class BaseActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class BaseActivity extends BaseClass implements NavigationView.OnNavigationItemSelectedListener {
 
     DrawerLayout drawer;
     NavigationView navigationView;
     EditText search;
     Dialog popup;
-    Button OK,CANCEL;
+    Button OK, CANCEL;
+    View header;
+    RoundedImageView imageView;
+    TextView username;
+    Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_base);
-
+        context = BaseActivity.this;
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         search = toolbar.findViewById(R.id.search_et);
+
 
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -49,6 +61,24 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        View headerLayout =
+                navigationView.inflateHeaderView(R.layout.header_layout);
+        navigationView.getHeaderView(0);
+        imageView = headerLayout.findViewById(R.id.drawer_useriamge);
+        username = headerLayout.findViewById(R.id.drawer_username);
+
+        setData();
+
+    }
+
+    private void setData() {
+        String image = getStringVal(Constants.USER_IMAGE);
+        String name = getStringVal(Constants.USER_NAME);
+
+        Glide.with(context).load(image).into(imageView);
+        username.setText(name);
+
+        Log.d("dataimage", getStringVal(Constants.USER_NAME) + "  " + getStringVal(Constants.USER_IMAGE));
     }
 
     @Override
@@ -58,33 +88,26 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
 
             startAnimatedActivity(new Intent(getApplicationContext(), MainActivity.class));
             drawer.closeDrawer(GravityCompat.START);
-        }
-        else if (id == R.id.cart) {
+        } else if (id == R.id.cart) {
             startAnimatedActivity(new Intent(getApplicationContext(), Cart_Activity.class));
             drawer.closeDrawer(GravityCompat.START);
-        } else if (id == R.id.settings)
-        {
-            startAnimatedActivity(new Intent(getApplicationContext(),SettingScreen.class));
+        } else if (id == R.id.settings) {
+            startAnimatedActivity(new Intent(getApplicationContext(), SettingScreen.class));
             drawer.closeDrawer(GravityCompat.START);
-        }else if (id==R.id.myaccount)
-        {
-            startAnimatedActivity(new Intent(getApplicationContext(),ProfileScreen.class));
+        } else if (id == R.id.myaccount) {
+            startAnimatedActivity(new Intent(getApplicationContext(), ProfileScreen.class));
             drawer.closeDrawer(GravityCompat.START);
-        }else if (id==R.id.myorders)
-        {
-            startAnimatedActivity(new Intent(getApplicationContext(),MyOrderActivity.class));
+        } else if (id == R.id.myorders) {
+            startAnimatedActivity(new Intent(getApplicationContext(), MyOrderActivity.class));
             drawer.closeDrawer(GravityCompat.START);
-        }else if (id==R.id.myfavoritestore)
-        {
-            startAnimatedActivity(new Intent(getApplicationContext(),MyFavoriteStoreActivity.class));
+        } else if (id == R.id.myfavoritestore) {
+            startAnimatedActivity(new Intent(getApplicationContext(), MyFavoriteStoreActivity.class));
             drawer.closeDrawer(GravityCompat.START);
-        }else if (id == R.id.logout)
-        {
+        } else if (id == R.id.logout) {
             dialog();
 
-        }else if (id == R.id.offerzone)
-        {
-            startAnimatedActivity(new Intent(getApplicationContext(),OfferZone.class));
+        } else if (id == R.id.offerzone) {
+            startAnimatedActivity(new Intent(getApplicationContext(), OfferZone.class));
             drawer.closeDrawer(GravityCompat.START);
         }
 
@@ -98,7 +121,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void dialog() {
-        popup = new Dialog (BaseActivity.this);
+        popup = new Dialog(BaseActivity.this);
         Window window = popup.getWindow();
         window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
         popup.setContentView(R.layout.logoutdialog);
@@ -112,6 +135,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         OK.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                clearStringVal(Constants.TOKEN);
                 Intent intent = new Intent(BaseActivity.this, Login.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);

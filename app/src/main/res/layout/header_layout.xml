@@ -26,7 +26,7 @@
         android:textColor="@color/colorBlack"
         android:fontFamily="@font/quicksandbold"
         android:layout_below="@id/drawer_useriamge"
-        android:layout_marginTop="@dimen/xxmargin"
+        android:layout_marginTop="@dimen/defaultmargin"
         android:layout_centerHorizontal="true"
         android:textSize="@dimen/normaltext"></TextView>
 
@@ -41,6 +41,7 @@
         android:drawablePadding="10dp"
         android:layout_below="@id/drawer_username"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/margin_dp3"
         android:layout_marginBottom="@dimen/defaultmargin"
         ></TextView>
 </RelativeLayout>

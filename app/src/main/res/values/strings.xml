@@ -28,6 +28,7 @@
 
     <string name="facebook_app_id">548824479018750</string>
     <string name="fb_login_protocol_scheme">fb548824479018750</string>
+    <string name="googleclientId">AIzaSyBv3FYZuLZJR8mOlONc6hMGqh-Taeo7-7g</string>
 
 </resources>
 

@@ -1,4 +1,4 @@
-package com.estoreid.estoreid.views;
+package com.estoreid.estoreid.views.splash;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -10,8 +10,13 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.estoreid.estoreid.R;
+import com.estoreid.estoreid.views.BaseActivity;
+import com.estoreid.estoreid.views.MainActivity;
+import com.estoreid.estoreid.views.baseclass.BaseClass;
+import com.estoreid.estoreid.views.login.Login;
+import com.estoreid.estoreid.views.utils.Constants;
 
-public class SplashScreen extends AppCompatActivity {
+public class SplashScreen extends BaseClass {
 
     ProgressBar progressBar;
     private int pStatus = 0;
@@ -40,9 +45,17 @@ public class SplashScreen extends AppCompatActivity {
                     pStatus++;
 
                     if(pStatus == 99){
-                        Intent intent = new Intent(SplashScreen.this,Login.class);
-                        startActivity(intent);
-                        finish();
+
+                        if (!getStringVal(Constants.TOKEN).equalsIgnoreCase(""))
+                        {
+                            Intent intent = new Intent(SplashScreen.this, MainActivity.class);
+                            startActivity(intent);
+                            finish();
+                        }else {
+                            Intent intent = new Intent(SplashScreen.this, Login.class);
+                            startActivity(intent);
+                            finish();
+                        }
                     }
                     handler.post(new Runnable() {
 
