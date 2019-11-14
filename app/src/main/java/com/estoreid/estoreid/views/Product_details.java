@@ -1,5 +1,6 @@
 package com.estoreid.estoreid.views;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
@@ -17,10 +18,13 @@ import android.widget.TextView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import com.borjabravo.readmoretextview.ReadMoreTextView;
 import com.estoreid.estoreid.R;
+import com.estoreid.estoreid.views.adapter.ProductColorAdapter;
 import com.estoreid.estoreid.views.adapter.Product_Detail_images_Adapter;
 
 import java.util.ArrayList;
@@ -96,11 +100,18 @@ public class Product_details extends BaseActivity {
     Button sizeL;
     @BindView(R.id.size_XXL)
     Button sizeXXL;
+    @BindView(R.id.color_recyler)
+    RecyclerView colorRecyler;
+    @BindView(R.id.size_layout1)
+    LinearLayout sizeLayout1;
+    @BindView(R.id.colorlayout)
+    LinearLayout colorlayout;
     private TextView[] dots;
     String type;
     Intent intent;
     ArrayList<String> images = new ArrayList<>();
     Product_Detail_images_Adapter adapter;
+    ProductColorAdapter productColorAdapter;
     int CurrentPage = 0;
 
     @Override
@@ -147,9 +158,43 @@ public class Product_details extends BaseActivity {
 
             }
         });
+
+        setColors();
+    }
+
+    @SuppressLint("WrongConstant")
+    private void setColors() {
+
+        LinearLayoutManager linearLayout = new LinearLayoutManager(this);
+        linearLayout.setOrientation(LinearLayout.HORIZONTAL);
+        colorRecyler.setHasFixedSize(true);
+        colorRecyler.setLayoutManager(linearLayout);
+        productColorAdapter = new ProductColorAdapter(this);
+        colorRecyler.setAdapter(productColorAdapter);
+        productColorAdapter.notifyDataSetChanged();
     }
 
     private void listeners() {
+
+        selectColour.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sizeLayout1.setVisibility(View.GONE);
+                colorlayout.setVisibility(View.VISIBLE);
+                selectColour.setTextColor(getResources().getColor(R.color.colorBlack));
+                selectSize.setTextColor(getResources().getColor(R.color.colorgrey));
+            }
+        });
+
+        selectSize.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                colorlayout.setVisibility(View.GONE);
+                sizeLayout1.setVisibility(View.VISIBLE);
+                selectSize.setTextColor(getResources().getColor(R.color.colorBlack));
+                selectColour.setTextColor(getResources().getColor(R.color.colorgrey));
+            }
+        });
 
         productTotalReviews.setOnClickListener(new View.OnClickListener() {
             @Override

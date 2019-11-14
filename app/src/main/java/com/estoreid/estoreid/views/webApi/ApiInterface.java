@@ -1,15 +1,18 @@
 package com.estoreid.estoreid.views.webApi;
 
+import com.estoreid.estoreid.views.apiResponseModel.FollowAPIResponse;
 import com.estoreid.estoreid.views.apiResponseModel.LoginAPIReponse;
 import com.estoreid.estoreid.views.apiResponseModel.RegisterAPIReponse;
 import com.estoreid.estoreid.views.apiResponseModel.ResetAPIReponse;
 import com.estoreid.estoreid.views.apiResponseModel.SetNewPasswordAPIReponse;
 import com.estoreid.estoreid.views.apiResponseModel.SocailLoginAPIResponse;
+import com.estoreid.estoreid.views.apiResponseModel.VendorAPIResponse;
 import com.estoreid.estoreid.views.apiResponseModel.VerifyAPIReponse;
 
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
 
@@ -63,6 +66,22 @@ public interface ApiInterface {
             @Field("first_name") String first_name,
             @Field("social_id") String social_id,
             @Field("type") String type
+    );
+
+    @FormUrlEncoded
+    @POST("vendorsList")
+    Call<VendorAPIResponse> vendorlist(
+            @Header("Authorization") String token,
+            @Field("latitude") String latitude,
+            @Field("longitude") String longitude,
+            @Field("pincode") String pincode
+    );
+
+    @FormUrlEncoded
+    @POST("FollowVendor")
+    Call<FollowAPIResponse> FollowVendor(
+            @Header("Authorization") String token,
+            @Field("vendor_id") String vendor_id
     );
 
 }

@@ -241,13 +241,12 @@
                         android:layout_width="match_parent"
                         android:layout_height="0.8dp"
                         android:layout_below="@id/decripition_tv"
-                        android:layout_marginTop="@dimen/defaultmargin"
                         android:background="@color/colorgrey"></View>
 
                     <LinearLayout
                         android:id="@+id/size_layout"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="@dimen/margin_dp40"
                         android:layout_below="@id/view2"
                         android:layout_marginTop="@dimen/defaultmargin"
                         android:orientation="horizontal"
@@ -256,7 +255,7 @@
                         <TextView
                             android:id="@+id/select_size"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:gravity="center"
                             android:text="Select Size"
@@ -267,11 +266,11 @@
                         <TextView
                             android:id="@+id/select_colour"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:gravity="center"
                             android:text="Select Colour"
-                            android:textColor="@color/colorBlack">
+                            android:textColor="@color/colorgrey">
 
                         </TextView>
                     </LinearLayout>
@@ -284,8 +283,22 @@
                         android:layout_marginTop="@dimen/defaultmargin"
                         android:background="@color/colorgrey"></View>
 
+                    <LinearLayout
+                        android:id="@+id/colorlayout"
+                        android:visibility="gone"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/view3"
+                        android:orientation="vertical">
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/color_recyler"></androidx.recyclerview.widget.RecyclerView>
+                    </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/size_layout1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/view3"

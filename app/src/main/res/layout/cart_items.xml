@@ -3,16 +3,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="160dp"
     android:background="@color/colorWhite">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="160dp"
         android:layout_margin="@dimen/defaultmargin"
         app:cardBackgroundColor="@color/colorWhite"
+        android:padding="@dimen/margin_dp10"
         app:cardElevation="3dp"
         app:cardCornerRadius="5dp">
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -21,9 +23,11 @@
                 android:id="@+id/cart_product_image"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="5dp"
+                android:layout_marginEnd="@dimen/defaultmargin"
                 android:src="@drawable/shape"
-                app:riv_corner_radius="5dp"
-                android:layout_margin="@dimen/defaultmargin">
+                app:riv_corner_radius="5dp">
 
             </com.makeramen.roundedimageview.RoundedImageView>
 
@@ -101,7 +105,6 @@
                     android:layout_width="wrap_content"
                     android:layout_marginRight="15dp"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_cancel"
                     android:background="@color/colorTrans"
                     android:layout_alignParentRight="true">
 
@@ -151,10 +154,5 @@
 
             </RelativeLayout>
         </RelativeLayout>
-
-
-
-
     </androidx.cardview.widget.CardView>
-
 </RelativeLayout>

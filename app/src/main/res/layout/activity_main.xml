@@ -42,13 +42,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <com.google.android.gms.maps.MapView
-                    android:layout_width="match_parent"
-                    android:layout_height="220dp"
-                    android:background="@color/colorBlack"
-                    android:id="@+id/mapview">
 
-                </com.google.android.gms.maps.MapView>
+                    <com.estoreid.estoreid.views.dashboard.AppMapView
+                        android:layout_width="match_parent"
+                        android:layout_height="220dp"
+                        android:background="@color/colorBlack"
+                        android:id="@+id/mapview">
+
+                    </com.estoreid.estoreid.views.dashboard.AppMapView>
+
+
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/location_view"
@@ -220,6 +223,19 @@
                         android:layout_marginTop="10dp">
 
                     </androidx.recyclerview.widget.RecyclerView>
+
+                    <TextView
+                        android:id="@+id/nostore"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/view3"
+                        android:layout_marginTop="@dimen/defaultmargin"
+                        android:text="No Store available in your loc"
+                        android:textColor="@color/colorBlack"
+                        android:fontFamily="@font/latoregular"
+                        android:textSize="@dimen/normaltext"
+                        android:visibility="gone"
+                        android:layout_centerHorizontal="true"></TextView>
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -338,6 +354,7 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@id/add_view4"
                         android:orientation="horizontal"
+                        android:visibility="gone"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="@dimen/xxmargin"
                         android:layout_marginLeft="@dimen/xxmargin"

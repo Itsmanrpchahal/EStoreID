@@ -1,10 +1,12 @@
 package com.estoreid.estoreid.views.controller;
 
+import com.estoreid.estoreid.views.apiResponseModel.FollowAPIResponse;
 import com.estoreid.estoreid.views.apiResponseModel.LoginAPIReponse;
 import com.estoreid.estoreid.views.apiResponseModel.RegisterAPIReponse;
 import com.estoreid.estoreid.views.apiResponseModel.ResetAPIReponse;
 import com.estoreid.estoreid.views.apiResponseModel.SetNewPasswordAPIReponse;
 import com.estoreid.estoreid.views.apiResponseModel.SocailLoginAPIResponse;
+import com.estoreid.estoreid.views.apiResponseModel.VendorAPIResponse;
 import com.estoreid.estoreid.views.apiResponseModel.VerifyAPIReponse;
 import com.estoreid.estoreid.views.webApi.WebAPI;
 
@@ -21,6 +23,8 @@ public class Controller {
     public ForgotPassword forgotPassword;
     public SetNewPassword setNewPassword;
     public setSocailLogin setSocailLogin;
+    public VendorList vendorList;
+    public FollowUnfollow followUnfollow;
 
     //registerAPI
     public Controller(RegisterAPI registerAPI1) {
@@ -45,7 +49,13 @@ public class Controller {
         webAPI = new WebAPI();
     }
 
-
+    //vendor list
+    public Controller(VendorList vendorList1,FollowUnfollow followUnfollow1)
+    {
+        vendorList = vendorList1;
+        followUnfollow = followUnfollow1;
+        webAPI = new WebAPI();
+    }
 
 
     //rest  API's
@@ -163,6 +173,44 @@ public class Controller {
         });
     }
 
+    public void setVendorList(String token,String lat,String lng,String pincode)
+    {
+        webAPI.getApi().vendorlist(token,lat,lng,pincode).enqueue(new Callback<VendorAPIResponse>() {
+            @Override
+            public void onResponse(Call<VendorAPIResponse> call, Response<VendorAPIResponse> response) {
+                if (response!=null)
+                {
+                    Response<VendorAPIResponse> vendorListResponse = response;
+                    vendorList.onSucessVendorList(vendorListResponse);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<VendorAPIResponse> call, Throwable t) {
+                vendorList.onError(t.getMessage());
+            }
+        });
+    }
+
+    public void setFollowUnfollow(String token,String vendor_id)
+    {
+        webAPI.getApi().FollowVendor(token,vendor_id).enqueue(new Callback<FollowAPIResponse>() {
+            @Override
+            public void onResponse(Call<FollowAPIResponse> call, Response<FollowAPIResponse> response) {
+                if (response!=null)
+                {
+                    Response<FollowAPIResponse> followAPIResponseResponse = response;
+                    followUnfollow.onSucessFollow(followAPIResponseResponse);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<FollowAPIResponse> call, Throwable t) {
+                followUnfollow.onError(t.getMessage());
+            }
+        });
+    }
+
 
     public interface RegisterAPI {
         void onSucess(Response<RegisterAPIReponse> registerAPIReponseResponse);
@@ -192,6 +240,16 @@ public class Controller {
 
     public interface setSocailLogin{
         void onSuccessSocialLogin(Response<SocailLoginAPIResponse> socailLoginAPIResponseResponse);
+        void onError(String error);
+    }
+
+    public interface VendorList{
+        void onSucessVendorList(Response<VendorAPIResponse> vendorAPIResponseResponse);
+        void onError(String error);
+    }
+
+    public interface FollowUnfollow{
+        void onSucessFollow(Response<FollowAPIResponse> followAPIResponseResponse);
         void onError(String error);
     }
 }

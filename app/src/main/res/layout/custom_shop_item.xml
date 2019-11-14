@@ -75,6 +75,7 @@
     </RelativeLayout>
 
     <Button
+        android:id="@+id/followbt"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
         android:background="@drawable/round_theam_button1"

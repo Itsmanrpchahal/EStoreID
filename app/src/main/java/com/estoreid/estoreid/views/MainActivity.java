@@ -3,18 +3,21 @@ package com.estoreid.estoreid.views;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
+import android.graphics.Rect;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,8 +42,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.estoreid.estoreid.R;
 import com.estoreid.estoreid.views.adapter.DashBoardShopAdapter;
+import com.estoreid.estoreid.views.adapter.FollowIF;
+import com.estoreid.estoreid.views.apiResponseModel.FollowAPIResponse;
+import com.estoreid.estoreid.views.apiResponseModel.VendorAPIResponse;
+import com.estoreid.estoreid.views.controller.Controller;
 import com.estoreid.estoreid.views.filter.FilterScreen;
-import com.estoreid.estoreid.views.login.Login;
+import com.estoreid.estoreid.views.utils.Constants;
 import com.estoreid.estoreid.views.utils.Utils;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -50,8 +57,10 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -71,8 +80,9 @@ import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import retrofit2.Response;
 
-public class MainActivity extends BaseActivity implements OnMapReadyCallback {
+public class MainActivity extends BaseActivity implements OnMapReadyCallback, Controller.VendorList,Controller.FollowUnfollow {
 
     public static final int MY_PERMISSIONS_REQUEST_READ_LOCATION = 121;
     DashBoardShopAdapter adapter;
@@ -142,7 +152,12 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback {
     @BindView(R.id.adress_layout)
     RelativeLayout adressLayout;
     MapView mapView;
+    Controller controller;
     ArrayList<LatLng> locations = new ArrayList();
+    ArrayList<VendorAPIResponse.Datum> vendorlist = new ArrayList<>();
+    Dialog Dialog;
+    @BindView(R.id.nostore)
+    TextView nostore;
 
 
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -155,18 +170,17 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback {
         View contentView = inflater.inflate(R.layout.activity_main, null, false);
         drawer.addView(contentView, 0);
         ButterKnife.bind(this);
+        controller = new Controller((Controller.VendorList)this,(Controller.FollowUnfollow)this);
+        Dialog = Utils.showDialog(this);
         mapView = findViewById(R.id.mapview);
         Places.initialize(this, getResources().getString(R.string.googleclientId));
         searchEt.setVisibility(View.VISIBLE);
-        setAdapter();
         listerners();
         Utils.checkPermissions(MainActivity.this);
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(this);
         MapsInitializer.initialize(this);
-        location("30.712408","76.708060");
-        location("30.714926","76.709530");
-        location("30.710242","76.706413");
+//        controller.setVendorList();
 
     }
 
@@ -190,38 +204,65 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback {
                 changeAddress.setVisibility(View.GONE);
             }
         });
+
         saveNewAddress.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                adressLayout.setVisibility(View.GONE);
-                view2.setVisibility(View.VISIBLE);
-                dashboardRecylerview.setVisibility(View.VISIBLE);
-                selectCurrentLoc.setVisibility(View.GONE);
-                yourLocTv.setVisibility(View.VISIBLE);
-                loactionTv.setVisibility(View.VISIBLE);
-                changeAddress.setVisibility(View.VISIBLE);
+
+                String postcode = pincode.getText().toString();
+                if (!TextUtils.isEmpty(pincode.getText().toString())) {
+                    Dialog.show();
+                    controller.setVendorList("Bearer " + getStringVal(Constants.TOKEN), "", "", postcode);
+                   layoutvisibilty();
+                } else {
+                    pincode.setError("Enter Pincode");
+                }
             }
         });
 
-        filterTv.setOnClickListener(new View.OnClickListener() {
+        filterLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, FilterScreen.class);
                 startActivity(intent);
             }
         });
+
+        selectCurrentLoc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CurrentLocation();
+                layoutvisibilty();
+            }
+        });
+    }
+
+    private void layoutvisibilty() {
+        adressLayout.setVisibility(View.GONE);
+        view2.setVisibility(View.VISIBLE);
+        dashboardRecylerview.setVisibility(View.VISIBLE);
+        selectCurrentLoc.setVisibility(View.GONE);
+        yourLocTv.setVisibility(View.VISIBLE);
+        loactionTv.setVisibility(View.VISIBLE);
+        changeAddress.setVisibility(View.VISIBLE);
     }
 
 
     @SuppressLint("WrongConstant")
-    private void setAdapter() {
+    private void setAdapter(ArrayList<VendorAPIResponse.Datum> vendorlist) {
         LinearLayoutManager linearLayout = new LinearLayoutManager(this);
         linearLayout.setOrientation(LinearLayout.VERTICAL);
         dashboardRecylerview.setHasFixedSize(true);
         dashboardRecylerview.setLayoutManager(linearLayout);
-        adapter = new DashBoardShopAdapter(this);
+        adapter = new DashBoardShopAdapter(this, vendorlist);
         dashboardRecylerview.setAdapter(adapter);
         adapter.notifyDataSetChanged();
+        adapter.SetOnFollow(new FollowIF() {
+            @Override
+            public void onSuccess(String id) {
+                controller.setFollowUnfollow("Bearer " + getStringVal(Constants.TOKEN),id);
+            }
+        });
     }
 
     @Override
@@ -292,6 +333,7 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback {
                                 } else {
                                     lat = String.valueOf(location.getLatitude());
                                     lng = String.valueOf(location.getLongitude());
+                                    controller.setVendorList("Bearer " + getStringVal(Constants.TOKEN), lat, lng, "");
                                 }
 
                                 Log.d("Location", "" + lat + "" + lng);
@@ -302,6 +344,7 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback {
                                     if (address != null) {
                                         //citystr = address.get(0).getAdminArea();
                                         //cityname.setText(address.get(0).getLocality());
+                                        loactionTv.setText(address.get(0).getLocality());
                                     } else {
                                         //cityname.setText("Address not found");
                                     }
@@ -311,7 +354,6 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback {
                                         mapView.onResume();
                                         mapView.getMapAsync(MainActivity.this);
                                     }
-
                                 } catch (IOException e) {
                                     e.printStackTrace();
                                 }
@@ -334,8 +376,26 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback {
     @Override
     public void onMapReady(GoogleMap googleMap) {
         Gmap = googleMap;
-        Gmap.getUiSettings().setMyLocationButtonEnabled(true);
-        Gmap.getUiSettings().setZoomControlsEnabled(true);
+        Gmap.getUiSettings().setMyLocationButtonEnabled(false);
+        Gmap.getUiSettings().setZoomControlsEnabled(false);
+        Gmap.getUiSettings().setCompassEnabled(false);
+        Gmap.setMyLocationEnabled(true);
+
+        /*Rect rect = new Rect();
+        mapview.getLocalVisibleRect(rect);
+        Gmap.setPadding(rect.width()-1,rect.centerX()+15,rect.centerY(),rect.height());
+
+        try {
+            // Customise the styling of the base map using a JSON object defined
+            // in a raw resource file.
+            boolean success = googleMap.setMapStyle(
+                    MapStyleOptions.loadRawResourceStyle(
+                            this, R.raw.mapstype));
+
+            if (!success) {
+            }
+        } catch (Resources.NotFoundException e) {
+        }*/
 
 
         CameraPosition cameraPosition = CameraPosition.builder().target(new LatLng(Double.parseDouble(lat), Double.parseDouble(lng))).zoom(15).bearing(0).tilt(40).build();
@@ -350,23 +410,20 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback {
             // for ActivityCompat#requestPermissions for more details.
             return;
         }
-        Gmap.setMyLocationEnabled(true);
 
-
-        if (lat != null && lng != null) {
-            Gmap.setOnCameraIdleListener(new GoogleMap.OnCameraIdleListener() {
-                @Override
-                public void onCameraIdle() {
-                    LatLng midLatLng = Gmap.getCameraPosition().target;
-
-                    String latt = String.valueOf(midLatLng.latitude);
-                    String lnng = String.valueOf(midLatLng.longitude);
-
-                    Log.d("cameralatlong", "" + latt + "    " + lnng);
-                }
-            });
+        for (int i=0;i<vendorlist.size();i++)
+        {
+            createMarker(Double.parseDouble(vendorlist.get(i).getLatitude()),Double.parseDouble(vendorlist.get(i).getLongitude()), vendorlist.get(i).getBusinessName());
         }
+    }
 
+    protected Marker createMarker(double latitude, double longitude, String title) {
+
+        return Gmap.addMarker(new MarkerOptions()
+                .position(new LatLng(latitude, longitude))
+                .anchor(0.5f, 0.5f)
+                .title(title)
+                .icon(BitmapDescriptorFactory.defaultMarker()));
     }
 
     @Override
@@ -376,11 +433,9 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                         Toast.makeText(this, "Permission granted", Toast.LENGTH_SHORT).show();
-
                     }
                 } else {
                     Toast.makeText(this, "No permission Granted", Toast.LENGTH_SHORT).show();
-
                 }
                 return;
             }
@@ -470,5 +525,68 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void onSucessVendorList(Response<VendorAPIResponse> vendorAPIResponseResponse) {
+        vendorlist.clear();
+        Dialog.dismiss();
+        if (vendorAPIResponseResponse.body().getStatus() == 200) {
+
+            for (int i = 0; i < vendorAPIResponseResponse.body().getData().size(); i++) {
+                VendorAPIResponse.Datum datum = vendorAPIResponseResponse.body().getData().get(i);
+                String lat = datum.getLatitude();
+                String lng = datum.getLongitude();
+
+                Geocoder geocoder = new Geocoder(MainActivity.this, Locale.getDefault());
+                try {
+                    List<Address> address = (List<Address>) geocoder.getFromLocation(Double.parseDouble(lat), Double.parseDouble(lng), 1);
+
+                    if (address != null) {
+                        loactionTv.setText(address.get(0).getLocality());
+                    } else {
+                        loactionTv.setText("Address not found");
+                    }
+
+                    if (mapView != null) {
+                        mapView.onCreate(null);
+                        mapView.onResume();
+                        mapView.getMapAsync(MainActivity.this);
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                vendorlist.add(datum);
+                setAdapter(vendorlist);
+                Dialog.dismiss();
+
+            }
+        } else {
+            vendorlist.clear();
+            dashboardRecylerview.setVisibility(View.GONE);
+            nostore.setVisibility(View.VISIBLE);
+            Dialog.dismiss();
+            Utils.showToastMessage(MainActivity.this, vendorAPIResponseResponse.body().getMessage(), getResources().getDrawable(R.drawable.ic_error_black_24dp));
+        }
+    }
+
+    @Override
+    public void onSucessFollow(Response<FollowAPIResponse> followAPIResponseResponse) {
+        Dialog.dismiss();
+        if (followAPIResponseResponse.body().getStatus()==200)
+        {
+            Toast.makeText(context, ""+followAPIResponseResponse.body().getMessage(), Toast.LENGTH_SHORT).show();
+        }else
+        {
+            Toast.makeText(context, ""+followAPIResponseResponse.body().getStatus(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    public void onError(String error) {
+        vendorlist.clear();
+        Dialog.dismiss();
+        Utils.showToastMessage(MainActivity.this, error, getResources().getDrawable(R.drawable.ic_error_black_24dp));
+
     }
 }

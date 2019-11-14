@@ -75,9 +75,8 @@ public class ProfileScreen extends BaseClass {
     private void setData() {
         String image = getStringVal(Constants.USER_IMAGE);
         String name = getStringVal(Constants.USER_NAME);
-        Glide.with(context).load(image).into(profileUserimage);
+        Glide.with(ProfileScreen.this).load(image).into(profileUserimage);
         profileUsername.setText(name);
-
     }
 
     private void listerners() {
