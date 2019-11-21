@@ -59,7 +59,6 @@ public class DashBoardShopAdapter extends RecyclerView.Adapter<DashBoardShopAdap
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Intent intent = new Intent(context, Products_Screen.class);
                 context.startActivity(intent);
             }
@@ -75,7 +74,6 @@ public class DashBoardShopAdapter extends RecyclerView.Adapter<DashBoardShopAdap
         holder.followbt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 followIF.onSuccess(datum.getVendor_id());
                 if (holder.followbt.getText().equals("Follow"))
                 {
@@ -106,7 +104,5 @@ public class DashBoardShopAdapter extends RecyclerView.Adapter<DashBoardShopAdap
             vendor_time = itemView.findViewById(R.id.vendor_time);
             followbt = itemView.findViewById(R.id.followbt);
         }
-
-
     }
 }

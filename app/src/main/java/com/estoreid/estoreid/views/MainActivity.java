@@ -8,8 +8,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.content.res.Resources;
-import android.graphics.Rect;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -49,7 +47,6 @@ import com.estoreid.estoreid.views.controller.Controller;
 import com.estoreid.estoreid.views.filter.FilterScreen;
 import com.estoreid.estoreid.views.utils.Constants;
 import com.estoreid.estoreid.views.utils.Utils;
-import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -60,7 +57,6 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -69,8 +65,6 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.model.Place;
-import com.google.android.libraries.places.widget.Autocomplete;
-import com.google.android.libraries.places.widget.AutocompleteActivity;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -419,6 +413,7 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback, Co
 
     protected Marker createMarker(double latitude, double longitude, String title) {
 
+
         return Gmap.addMarker(new MarkerOptions()
                 .position(new LatLng(latitude, longitude))
                 .anchor(0.5f, 0.5f)
@@ -441,7 +436,6 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback, Co
             }
         }
     }
-
 
 
     @Override
@@ -476,7 +470,6 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback, Co
                 vendorlist.add(datum);
                 setAdapter(vendorlist);
                 Dialog.dismiss();
-
             }
         } else {
             vendorlist.clear();
@@ -504,6 +497,5 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback, Co
         vendorlist.clear();
         Dialog.dismiss();
         Utils.showToastMessage(MainActivity.this, error, getResources().getDrawable(R.drawable.ic_error_black_24dp));
-
     }
 }

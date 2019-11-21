@@ -1,16 +1,12 @@
 package com.estoreid.estoreid.views.splash;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.WindowManager;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.estoreid.estoreid.R;
-import com.estoreid.estoreid.views.BaseActivity;
 import com.estoreid.estoreid.views.MainActivity;
 import com.estoreid.estoreid.views.baseclass.BaseClass;
 import com.estoreid.estoreid.views.login.Login;
