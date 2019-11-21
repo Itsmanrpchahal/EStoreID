@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="@color/colorWhite"
+        app:cardElevation="@dimen/margin_dp10"
+        app:cardCornerRadius="5dp">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/markervendorname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/margin_dp10"
+                android:text="Vegetable Vedor"
+                android:textColor="@color/colorBlack"
+                android:fontFamily="@font/quicksandbold"></TextView>
+
+            <TextView
+                android:id="@+id/markerlocation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mohali, India"
+                android:layout_below="@id/markervendorname"
+                android:paddingLeft="@dimen/margin_dp10"
+                android:paddingBottom="@dimen/margin_dp10"
+                android:fontFamily="@font/latoregular"></TextView>
+        </RelativeLayout>
+
+
+
+    </androidx.cardview.widget.CardView>
+
+</RelativeLayout>

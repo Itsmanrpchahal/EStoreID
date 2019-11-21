@@ -75,7 +75,7 @@ public class DashBoardShopAdapter extends RecyclerView.Adapter<DashBoardShopAdap
         holder.followbt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               
+
                 followIF.onSuccess(datum.getVendor_id());
                 if (holder.followbt.getText().equals("Follow"))
                 {

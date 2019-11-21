@@ -439,93 +439,10 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback, Co
                 }
                 return;
             }
-
-        }
-
-    }
-
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == AUTOCOMPLETE_REQUEST_CODE) {
-            if (resultCode == RESULT_OK) {
-                Place place = Autocomplete.getPlaceFromIntent(data);
-                String puneet = String.valueOf(place).subSequence(String.valueOf(place).indexOf("name") + 5, String.valueOf(place).length()).toString();
-                String[] puni = puneet.split(",");
-                Log.d("checkplace", "" + String.valueOf(place));
-                Log.d("checkplace", "" + String.valueOf(place).subSequence(String.valueOf(place).indexOf("name") + 5, String.valueOf(place).length()));
-                Log.d("checkplace", "" + puni[0]);
-                //cityname.setText(puni[0]);
-                //Toast.makeText(getContext(), ""+cityname.getText().toString(), Toast.LENGTH_SHORT).show();
-
-                String loc = String.valueOf(place);
-                Geocoder geocoder = new Geocoder(this);
-                try {
-                    List<Address> addresses = geocoder.getFromLocationName(loc, 5);
-                    List<LatLng> latLngs = new ArrayList<LatLng>(addresses.size());
-
-                    if (addresses != null) {
-                        citystr = addresses.get(0).getAddressLine(0);
-                        // cityname.setText(addresses.get(0).getAddressLine(0).toString());
-                    } else {
-                        //cityname.setText("Address not found");
-                    }
-
-
-                    for (Address a : addresses) {
-                        if (a.hasLatitude() && a.hasLongitude()) {
-                            latLngs.add(new LatLng(a.getLatitude(), a.getLongitude()));
-
-                            lat = String.valueOf(a.getLatitude());
-                            lng = String.valueOf(a.getLongitude());
-                            location(lat, lng);
-                            Log.d("checkplace", "" + String.valueOf(a.getLatitude()));
-                        }
-
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-
-            } else if (resultCode == AutocompleteActivity.RESULT_ERROR) {
-
-                Status status = Autocomplete.getStatusFromIntent(data);
-                Log.i("Hello", status.getStatusMessage());
-            } else if (resultCode == RESULT_CANCELED) {
-                // The user canceled the operation.
-            }
         }
     }
 
-    private void location(String lat, String lng) {
 
-
-        Geocoder geocoder = new Geocoder(this, Locale.getDefault());
-        try {
-            List<Address> address = (List<Address>) geocoder.getFromLocation(Double.valueOf(lat), Double.valueOf(lng), 1);
-            citystr = address.get(0).getLocality();
-
-            if (address != null) {
-                citystr = address.get(0).getAddressLine(0);
-                // cityname.setText(city);
-            } else {
-                // cityname.setText("Address not found");
-            }
-
-
-            if (mapView != null) {
-                mapView.onCreate(null);
-                mapView.onResume();
-                mapView.getMapAsync(MainActivity.this);
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
     @Override
     public void onSucessVendorList(Response<VendorAPIResponse> vendorAPIResponseResponse) {
