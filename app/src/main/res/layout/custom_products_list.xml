@@ -54,6 +54,7 @@
                     android:id="@+id/product_rating"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:progressTint="@color/colorRating"
                     style="@style/Widget.AppCompat.RatingBar.Small"
                     android:layout_below="@id/product_brand"
                     android:layout_marginTop="2dp"
@@ -97,6 +98,7 @@
                     android:layout_marginLeft="5dp"></TextView>
 
                 <TextView
+                    android:id="@+id/product_discountper"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="50% off"

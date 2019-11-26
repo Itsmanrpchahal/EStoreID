@@ -1,16 +1,24 @@
 package com.estoreid.estoreid.views.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.estoreid.estoreid.R;
+import com.estoreid.estoreid.views.apiResponseModel.FilterDataResponse;
+import com.estoreid.estoreid.views.utils.Constants;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -19,9 +27,13 @@ public class BrandAdapter extends RecyclerView.Adapter<BrandAdapter.ViewHolder> 
 
     Context context;
     private int selectedPosition = -1;
+    ArrayList<FilterDataResponse.Datum> products = new ArrayList<>();
+    ArrayList<FilterDataResponse.Datum.Brand> brands = new ArrayList<FilterDataResponse.Datum.Brand>();
 
-    public BrandAdapter(Context context) {
+
+    public BrandAdapter(Context context,ArrayList<FilterDataResponse.Datum.Brand> brands) {
         this.context = context;
+        this.brands = brands;
     }
 
     @NonNull
@@ -34,6 +46,10 @@ public class BrandAdapter extends RecyclerView.Adapter<BrandAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+
+        Glide.with(context).load(Constants.IMAGES+brands.get(position).getImage()).into(holder.imgbrand);
+
+
 
         if (selectedPosition == position) {
             holder.itemView.setSelected(true); //using selector drawable
@@ -56,13 +72,13 @@ public class BrandAdapter extends RecyclerView.Adapter<BrandAdapter.ViewHolder> 
 
     @Override
     public int getItemCount() {
-        return 5;
+        return brands.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.img_card)
-        ImageView imgCard;
+        @BindView(R.id.img_brand)
+        ImageView imgbrand;
         @BindView(R.id.layout_methods)
         RelativeLayout layoutMethods;
 

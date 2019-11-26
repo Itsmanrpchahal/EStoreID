@@ -30,7 +30,7 @@ public class Product_Detail_images_Adapter extends PagerAdapter {
 
     @Override
     public int getCount() {
-        return 5;
+        return images.size();
     }
 
     @Override

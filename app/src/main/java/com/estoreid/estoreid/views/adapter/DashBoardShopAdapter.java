@@ -28,8 +28,7 @@ public class DashBoardShopAdapter extends RecyclerView.Adapter<DashBoardShopAdap
     android.app.Dialog Dialog;
     FollowIF followIF;
 
-    public void SetOnFollow(FollowIF followIF1)
-    {
+    public void SetOnFollow(FollowIF followIF1) {
         followIF = followIF1;
     }
 
@@ -44,30 +43,31 @@ public class DashBoardShopAdapter extends RecyclerView.Adapter<DashBoardShopAdap
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Dialog = Utils.showDialog(this.context);
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        View view = layoutInflater.inflate(R.layout.custom_shop_item,parent,false);
+        View view = layoutInflater.inflate(R.layout.custom_shop_item, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull DashBoardShopAdapter.ViewHolder holder, int position) {
 
-        VendorAPIResponse.Datum datum =vendorlist.get(position);
+        VendorAPIResponse.Datum datum = vendorlist.get(position);
         holder.vendor_name.setText(datum.getBusinessName());
         holder.vendor_loc.setText(datum.getAddress());
-        holder.vendor_time.setText("Timing: "+datum.getTimeFrom()+" - "+datum.getTimeTo());
-
+        holder.vendor_time.setText("Timing: " + datum.getTimeFrom() + " - " + datum.getTimeTo());
+        String vendor_id = datum.getVendor_id();
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, Products_Screen.class);
+                intent.putExtra("vendor_id", vendor_id);
+                intent.putExtra("type","list");
                 context.startActivity(intent);
             }
         });
 
-        if (datum.getFollow_status().equals("1"))
-        {
+        if (datum.getFollow_status().equals("1")) {
             holder.followbt.setText("Unfollow");
-        }else {
+        } else {
             holder.followbt.setText("Follow");
         }
 
@@ -75,11 +75,9 @@ public class DashBoardShopAdapter extends RecyclerView.Adapter<DashBoardShopAdap
             @Override
             public void onClick(View v) {
                 followIF.onSuccess(datum.getVendor_id());
-                if (holder.followbt.getText().equals("Follow"))
-                {
+                if (holder.followbt.getText().equals("Follow")) {
                     holder.followbt.setText("Unfollow");
-                }else if (holder.followbt.getText().equals("Unfollow"))
-                {
+                } else if (holder.followbt.getText().equals("Unfollow")) {
                     holder.followbt.setText("Follow");
                 }
             }
@@ -92,9 +90,9 @@ public class DashBoardShopAdapter extends RecyclerView.Adapter<DashBoardShopAdap
         return vendorlist.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView vendor_name,vendor_loc,vendor_time;
+        TextView vendor_name, vendor_loc, vendor_time;
         Button followbt;
 
         public ViewHolder(@NonNull View itemView) {
@@ -104,5 +102,7 @@ public class DashBoardShopAdapter extends RecyclerView.Adapter<DashBoardShopAdap
             vendor_time = itemView.findViewById(R.id.vendor_time);
             followbt = itemView.findViewById(R.id.followbt);
         }
+
+
     }
 }

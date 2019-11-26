@@ -1,7 +1,10 @@
 package com.estoreid.estoreid.views.webApi;
 
+import com.estoreid.estoreid.views.apiResponseModel.FilterDataResponse;
 import com.estoreid.estoreid.views.apiResponseModel.FollowAPIResponse;
 import com.estoreid.estoreid.views.apiResponseModel.LoginAPIReponse;
+import com.estoreid.estoreid.views.apiResponseModel.ProductDetailResponse;
+import com.estoreid.estoreid.views.apiResponseModel.ProductsAPI;
 import com.estoreid.estoreid.views.apiResponseModel.RegisterAPIReponse;
 import com.estoreid.estoreid.views.apiResponseModel.ResetAPIReponse;
 import com.estoreid.estoreid.views.apiResponseModel.SetNewPasswordAPIReponse;
@@ -82,6 +85,25 @@ public interface ApiInterface {
     Call<FollowAPIResponse> FollowVendor(
             @Header("Authorization") String token,
             @Field("vendor_id") String vendor_id
+    );
+
+    @FormUrlEncoded
+    @POST("get_vendor_products")
+    Call<ProductsAPI> products(
+            @Header("Authorization") String token,
+            @Field("vendor_id") String vendor_id
+    );
+
+    @POST("filterScreen")
+    Call<FilterDataResponse> filterscreen(
+            @Header("Authorization") String token
+    );
+
+    @FormUrlEncoded
+    @POST("productDetails")
+    Call<ProductDetailResponse> productdetails(
+            @Header("Authorization") String token,
+            @Field("product_id") String product_id
     );
 
 }

@@ -15,6 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/margin_dp55">
 
+
         <ImageButton
             android:id="@+id/product_serach"
             android:layout_width="wrap_content"
@@ -98,6 +99,7 @@
                 android:weightSum="5">
 
                 <TextView
+                    android:id="@+id/totalproducts"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"

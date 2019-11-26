@@ -4,12 +4,12 @@
     android:orientation="vertical"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_margin="@dimen/defaultmargin"
     android:background="@color/colorWhite">
 
     <androidx.cardview.widget.CardView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="@dimen/defaultmargin"
         app:cardBackgroundColor="@color/colorWhite"
         app:cardElevation="5dp">
 
@@ -42,6 +42,7 @@
                     android:textColor="@color/colorBlack"
                     android:textSize="@dimen/textsize_sp16"
                     ></TextView>
+
 
                 <TextView
                     android:id="@+id/product_price"
@@ -83,6 +84,7 @@
                     android:id="@+id/product_rating"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:progressTint="@color/colorRating"
                     style="@style/Widget.AppCompat.RatingBar.Small"
                     android:layout_below="@id/product_discountper"
                     android:layout_marginTop="5dp"

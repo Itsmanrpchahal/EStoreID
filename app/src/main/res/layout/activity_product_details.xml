@@ -22,6 +22,15 @@
                 android:layout_height="@dimen/margin_dp55">
 
                 <ImageButton
+                    android:id="@+id/backonproductdetails"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/defaultmargin"
+                    android:src="@drawable/ic_chevron_left_black_24dp"
+                    android:background="@color/colorTrans"></ImageButton>
+
+                <ImageButton
                     android:id="@+id/product_serach"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -131,7 +140,7 @@
                             android:textSize="@dimen/largetext"></TextView>
 
                         <TextView
-                            android:id="@+id/product_original_price"
+                            android:id="@+id/product_detail_original_price"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
@@ -307,41 +316,10 @@
                         android:orientation="horizontal">
 
 
-                        <Button
-                            android:id="@+id/size_s"
-                            android:layout_width="45dp"
-                            android:layout_height="45dp"
-                            android:layout_margin="5dp"
-                            android:background="@color/colorgrey"
-                            android:fontFamily="@font/quicksandbold"
-                            android:text="S"></Button>
-
-                        <Button
-                            android:id="@+id/size_M"
-                            android:layout_width="45dp"
-                            android:layout_height="45dp"
-                            android:layout_margin="5dp"
-                            android:background="@color/colorgrey"
-                            android:fontFamily="@font/quicksandbold"
-                            android:text="M"></Button>
-
-                        <Button
-                            android:id="@+id/size_L"
-                            android:layout_width="45dp"
-                            android:layout_height="45dp"
-                            android:layout_margin="5dp"
-                            android:background="@color/colorgrey"
-                            android:fontFamily="@font/quicksandbold"
-                            android:text="L"></Button>
-
-                        <Button
-                            android:id="@+id/size_XXL"
-                            android:layout_width="45dp"
-                            android:layout_height="45dp"
-                            android:layout_margin="5dp"
-                            android:background="@color/colorgrey"
-                            android:fontFamily="@font/quicksandbold"
-                            android:text="XXL"></Button>
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/size_recyler"></androidx.recyclerview.widget.RecyclerView>
                     </LinearLayout>
                 </RelativeLayout>
 

@@ -15,7 +15,7 @@
         android:background="@drawable/custom_theme_unselected_bg">
 
         <ImageView
-            android:id="@+id/img_card"
+            android:id="@+id/img_brand"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"

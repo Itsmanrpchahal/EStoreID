@@ -1,7 +1,10 @@
 package com.estoreid.estoreid.views.controller;
 
+import com.estoreid.estoreid.views.apiResponseModel.FilterDataResponse;
 import com.estoreid.estoreid.views.apiResponseModel.FollowAPIResponse;
 import com.estoreid.estoreid.views.apiResponseModel.LoginAPIReponse;
+import com.estoreid.estoreid.views.apiResponseModel.ProductDetailResponse;
+import com.estoreid.estoreid.views.apiResponseModel.ProductsAPI;
 import com.estoreid.estoreid.views.apiResponseModel.RegisterAPIReponse;
 import com.estoreid.estoreid.views.apiResponseModel.ResetAPIReponse;
 import com.estoreid.estoreid.views.apiResponseModel.SetNewPasswordAPIReponse;
@@ -25,6 +28,10 @@ public class Controller {
     public setSocailLogin setSocailLogin;
     public VendorList vendorList;
     public FollowUnfollow followUnfollow;
+    public Products products;
+    public FilterScreen filterScreen;
+    public ProductDetail productDetail;
+
 
     //registerAPI
     public Controller(RegisterAPI registerAPI1) {
@@ -57,6 +64,26 @@ public class Controller {
         webAPI = new WebAPI();
     }
 
+    //products api
+    public Controller(Products products1)
+    {
+        products = products1;
+        webAPI = new WebAPI();
+    }
+
+    //filter screen
+    public Controller(FilterScreen filterScreen1)
+    {
+        filterScreen = filterScreen1;
+        webAPI = new WebAPI();
+    }
+
+    //product details
+    public Controller(ProductDetail productDetail1)
+    {
+        productDetail = productDetail1;
+        webAPI = new WebAPI();
+    }
 
     //rest  API's
     public void setRegisterAPI(String firstname, String lastname, String email, String password, String confirmPassword, String mobilenumber) {
@@ -211,6 +238,60 @@ public class Controller {
         });
     }
 
+    public void Products(String token,String vendor_id)
+    {
+        webAPI.getApi().products(token,vendor_id).enqueue(new Callback<ProductsAPI>() {
+            @Override
+            public void onResponse(Call<ProductsAPI> call, Response<ProductsAPI> response) {
+                if (response!=null)
+                {
+                    Response<ProductsAPI> productsAPIResponse = response;
+                    products.onSuccessProduct(productsAPIResponse);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ProductsAPI> call, Throwable t) {
+                    products.onError(t.getMessage());
+            }
+        });
+    }
+
+    public void FilterScreen(String token)
+    {
+        webAPI.getApi().filterscreen(token).enqueue(new Callback<FilterDataResponse>() {
+            @Override
+            public void onResponse(Call<FilterDataResponse> call, Response<FilterDataResponse> response) {
+                if (response!=null)
+                {
+                    Response<FilterDataResponse> filterDataResponseResponse = response;
+                    filterScreen.onSucessFilter(filterDataResponseResponse);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<FilterDataResponse> call, Throwable t) {
+                filterScreen.onError(t.getMessage());
+            }
+        });
+    }
+
+    public void ProductDetails(String token,String product_id)
+    {
+        webAPI.getApi().productdetails(token,product_id).enqueue(new Callback<ProductDetailResponse>() {
+            @Override
+            public void onResponse(Call<ProductDetailResponse> call, Response<ProductDetailResponse> response) {
+                Response<ProductDetailResponse> productDetailResponse = response;
+                productDetail.onSuccessProductDetail(productDetailResponse);
+            }
+
+            @Override
+            public void onFailure(Call<ProductDetailResponse> call, Throwable t) {
+                productDetail.onError(t.getMessage());
+            }
+        });
+    }
+
 
     public interface RegisterAPI {
         void onSucess(Response<RegisterAPIReponse> registerAPIReponseResponse);
@@ -250,6 +331,21 @@ public class Controller {
 
     public interface FollowUnfollow{
         void onSucessFollow(Response<FollowAPIResponse> followAPIResponseResponse);
+        void onError(String error);
+    }
+
+    public interface Products{
+        void onSuccessProduct(Response<ProductsAPI> productsAPIResponse);
+        void onError(String error);
+    }
+
+    public interface FilterScreen{
+        void onSucessFilter(Response<FilterDataResponse> filterDataResponseResponse);
+        void onError(String error);
+    }
+
+    public interface ProductDetail {
+        void onSuccessProductDetail(Response<ProductDetailResponse> productDetailResponseResponse);
         void onError(String error);
     }
 }
