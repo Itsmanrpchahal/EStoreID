@@ -6,6 +6,7 @@ import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -65,12 +66,17 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         holder.product_brand.setText(products.get(position).getBrandName());
         holder.product_discountper.setText(products.get(position).getDiscount()+"% off");
         holder.product_rating.setRating(Float.parseFloat(products.get(position).getRating()));
-//        holder.products_review.setText(products.get(position).);
+
+        if (products.get(position).getCart_status().equals("1"))
+        {
+            Glide.with(context).load(R.drawable.ic_addproductactive).into(holder.product_add_to_cart);
+        }
 
         String productid = products.get(position).getId().toString();
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Intent intent = new Intent(context, Product_details.class);
                 intent.putExtra("type",type);
                 intent.putExtra("product_id",productid);
@@ -88,6 +94,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         ImageView product_image;
         TextView product_name,product_price,product_original_price,product_discountper,products_review,product_brand;
         AppCompatRatingBar product_rating;
+        ImageButton product_add_to_cart;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
@@ -99,6 +106,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
             product_rating = itemView.findViewById(R.id.product_rating);
             products_review = itemView.findViewById(R.id.products_review);
             product_brand = itemView.findViewById(R.id.product_brand);
+            product_add_to_cart = itemView.findViewById(R.id.product_add_to_cart);
         }
     }
 }

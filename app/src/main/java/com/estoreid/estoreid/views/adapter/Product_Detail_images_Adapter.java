@@ -13,6 +13,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.bumptech.glide.Glide;
 import com.estoreid.estoreid.R;
+import com.estoreid.estoreid.views.utils.Constants;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.util.ArrayList;
@@ -49,7 +50,7 @@ public class Product_Detail_images_Adapter extends PagerAdapter {
         Log.d("images",""+images.toString());
 
 
-        Glide.with(context).load(R.drawable.shape).into(trailimg);
+        Glide.with(context).load(Constants.IMAGES+images.get(position)).into(trailimg);
 
         ((ViewPager) container).addView(itemview);
 

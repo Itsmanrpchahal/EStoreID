@@ -39,7 +39,7 @@
                     android:layout_marginRight="70dp"
                     android:background="@color/colorTrans"
                     android:src="@drawable/ic_search_black_24dp"
-                    android:visibility="visible"></ImageButton>
+                    android:visibility="gone"></ImageButton>
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
@@ -333,6 +333,7 @@
                 android:weightSum="2">
 
                 <Button
+                    android:id="@+id/product_add_to_cart"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -344,6 +345,7 @@
 
 
                 <Button
+                    android:id="@+id/product_add_to_wishlist"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"

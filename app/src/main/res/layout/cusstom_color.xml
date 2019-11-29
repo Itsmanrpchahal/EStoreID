@@ -7,18 +7,25 @@
     android:layout_margin="@dimen/margin_dp10">
 
 
+        <RelativeLayout
+            android:id="@+id/layout_methods"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/custom_round_unselected_bg">
 
-        <com.makeramen.roundedimageview.RoundedImageView
-            android:id="@+id/color_imageview"
-            android:layout_width="40dp"
-            android:layout_height="@dimen/margin_dp40"
-            android:scaleType="centerCrop"
-            app:riv_oval="true"
-            app:riv_corner_radius="@dimen/margin_dp10"
-            android:layout_marginLeft="@dimen/margin_dp10"
-            android:layout_marginRight="@dimen/margin_dp10"
-            android:layout_marginTop="@dimen/margin_dp10"
-            android:background="#00FFFFFF"
-            android:layout_margin="@dimen/margin_dp5"></com.makeramen.roundedimageview.RoundedImageView>
+                <com.makeramen.roundedimageview.RoundedImageView
+                    android:id="@+id/color_imageview"
+                    android:layout_width="40dp"
+                    android:layout_height="@dimen/margin_dp40"
+                    android:scaleType="centerCrop"
+                    app:riv_oval="true"
+                    app:riv_corner_radius="@dimen/margin_dp10"
+                    android:layout_marginLeft="@dimen/margin_dp10"
+                    android:layout_marginRight="@dimen/margin_dp10"
+                    android:layout_marginTop="@dimen/margin_dp10"
+                    android:background="#00FFFFFF"
+                    android:layout_margin="@dimen/margin_dp5"></com.makeramen.roundedimageview.RoundedImageView>
+
+        </RelativeLayout>
 
 </RelativeLayout>

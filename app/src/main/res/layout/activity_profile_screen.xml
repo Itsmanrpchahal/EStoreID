@@ -125,9 +125,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Username"
+                    android:editable="false"
                     android:textColor="@color/colorBlack"
                     android:fontFamily="@font/latoregular"
                     android:textSize="@dimen/normaltext"
+                    android:focusable="false"
                     android:inputType="textPersonName"
                     android:layout_marginTop="@dimen/margin_dp6"
                     android:background="@color/colorTrans"></EditText>
@@ -155,7 +157,9 @@
                     android:textColor="@color/colorBlack"
                     android:inputType="textEmailAddress"
                     android:fontFamily="@font/latoregular"
+                    android:editable="false"
                     android:textSize="@dimen/normaltext"
+                    android:focusable="false"
                     android:layout_marginTop="@dimen/margin_dp6"
                     android:background="@color/colorTrans"></EditText>
 
@@ -182,7 +186,9 @@
                     android:textColor="@color/colorBlack"
                     android:fontFamily="@font/latoregular"
                     android:textSize="@dimen/normaltext"
+                    android:editable="false"
                     android:inputType="number"
+                    android:focusable="false"
                     android:layout_marginTop="@dimen/margin_dp6"
                     android:background="@color/colorTrans"></EditText>
 
@@ -211,6 +217,8 @@
                     android:fontFamily="@font/latoregular"
                     android:textSize="@dimen/normaltext"
                     android:inputType="number"
+                    android:focusable="false"
+                    android:editable="false"
                     android:layout_marginTop="@dimen/margin_dp6"
                     android:background="@color/colorTrans"></EditText>
 
@@ -238,6 +246,8 @@
                     android:textColor="@color/colorBlack"
                     android:fontFamily="@font/latoregular"
                     android:textSize="@dimen/normaltext"
+                    android:editable="false"
+                    android:focusable="false"
                     android:inputType="number"
                     android:layout_marginTop="@dimen/margin_dp6"
                     android:background="@color/colorTrans"></EditText>
@@ -256,6 +266,7 @@
                     android:id="@+id/profile_logout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:visibility="gone"
                     android:layout_margin="@dimen/defaultmargin"
                     android:background="@drawable/round_button_theam"
                     android:textColor="@color/colorWhite"

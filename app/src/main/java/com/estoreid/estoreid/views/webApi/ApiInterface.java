@@ -1,7 +1,9 @@
 package com.estoreid.estoreid.views.webApi;
 
+import com.estoreid.estoreid.views.apiResponseModel.AddToCartResponse;
 import com.estoreid.estoreid.views.apiResponseModel.FilterDataResponse;
 import com.estoreid.estoreid.views.apiResponseModel.FollowAPIResponse;
+import com.estoreid.estoreid.views.apiResponseModel.GetProfileResponse;
 import com.estoreid.estoreid.views.apiResponseModel.LoginAPIReponse;
 import com.estoreid.estoreid.views.apiResponseModel.ProductDetailResponse;
 import com.estoreid.estoreid.views.apiResponseModel.ProductsAPI;
@@ -106,4 +108,17 @@ public interface ApiInterface {
             @Field("product_id") String product_id
     );
 
+    @POST("userProfile")
+    Call<GetProfileResponse> getProfile(
+            @Header("Authorization") String token
+    );
+
+    @FormUrlEncoded
+    @POST("addToCart")
+    Call<AddToCartResponse> addtocart(
+      @Header("Authorization") String token,
+      @Field("product_id") String product_id,
+      @Field("color_id") String color_id,
+      @Field("size_id") String size_id
+    );
 }

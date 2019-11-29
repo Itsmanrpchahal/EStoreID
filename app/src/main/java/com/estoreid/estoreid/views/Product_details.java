@@ -1,6 +1,7 @@
 package com.estoreid.estoreid.views;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
@@ -20,9 +21,12 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.borjabravo.readmoretextview.ReadMoreTextView;
 import com.estoreid.estoreid.R;
+import com.estoreid.estoreid.views.adapter.GetProductColorIF;
+import com.estoreid.estoreid.views.adapter.GetProductSizeIF;
 import com.estoreid.estoreid.views.adapter.ProductColorAdapter;
 import com.estoreid.estoreid.views.adapter.ProductSizeAdapter;
 import com.estoreid.estoreid.views.adapter.Product_Detail_images_Adapter;
+import com.estoreid.estoreid.views.apiResponseModel.AddToCartResponse;
 import com.estoreid.estoreid.views.apiResponseModel.ProductDetailResponse;
 import com.estoreid.estoreid.views.controller.Controller;
 import com.estoreid.estoreid.views.utils.Constants;
@@ -34,7 +38,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import retrofit2.Response;
 
-public class Product_details extends BaseActivity implements Controller.ProductDetail {
+public class Product_details extends BaseActivity implements Controller.ProductDetail,Controller.AddToCart {
 
     @BindView(R.id.search_et)
     EditText searchEt;
@@ -104,6 +108,10 @@ public class Product_details extends BaseActivity implements Controller.ProductD
     LinearLayout colorlayout;
     @BindView(R.id.size_recyler)
     RecyclerView sizeRecyler;
+    @BindView(R.id.product_add_to_cart)
+    Button productAddToCart;
+    @BindView(R.id.product_add_to_wishlist)
+    Button productAddToWishlist;
     private TextView[] dots;
     String type, product_id;
     Intent intent;
@@ -113,7 +121,8 @@ public class Product_details extends BaseActivity implements Controller.ProductD
     ProductSizeAdapter productSizeAdapter;
     int CurrentPage = 0;
     Controller controller;
-    String token;
+    String token, productSizeID, productColorID;
+    Dialog Dialog;
     ArrayList<ProductDetailResponse.Datum.Color> productImages = new ArrayList<>();
     ArrayList<ProductDetailResponse.Datum.Size> productSize = new ArrayList<>();
 
@@ -122,7 +131,9 @@ public class Product_details extends BaseActivity implements Controller.ProductD
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_details);
-        controller = new Controller(this);
+        controller = new Controller((Controller.ProductDetail)this,(Controller.AddToCart)this);
+        Dialog = Utils.showDialog(this);
+        Dialog.show();
         type = getIntent().getStringExtra("type");
         token = getStringVal(Constants.TOKEN);
         intent = getIntent();
@@ -133,54 +144,6 @@ public class Product_details extends BaseActivity implements Controller.ProductD
         ButterKnife.bind(this);
 
         listeners();
-
-        productDetialViewpager.setOffscreenPageLimit(1);
-        adapter = new Product_Detail_images_Adapter(Product_details.this, images);
-        productDetialViewpager.setAdapter(adapter);
-        addBottomDots(0);
-        //indicator.setViewPager(viewPager);
-        productDetialViewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-
-
-            @Override
-            public void onPageScrolled(int i, float v, int i1) {
-                CurrentPage = i;
-            }
-
-            @Override
-            public void onPageSelected(int i) {
-                addBottomDots(i);
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int i) {
-
-                if (i == ViewPager.SCROLL_STATE_IDLE) {
-
-                    int pagecount = images.size();
-
-                    if (CurrentPage == pagecount) {
-                        productDetialViewpager.setCurrentItem(pagecount, true);
-                    } else
-                        CurrentPage++;
-                }
-
-            }
-        });
-
-
-    }
-
-    @SuppressLint("WrongConstant")
-    private void setColors(ArrayList<ProductDetailResponse.Datum.Color> productImages) {
-
-        LinearLayoutManager linearLayout = new LinearLayoutManager(this);
-        linearLayout.setOrientation(LinearLayout.HORIZONTAL);
-        colorRecyler.setHasFixedSize(true);
-        colorRecyler.setLayoutManager(linearLayout);
-        productColorAdapter = new ProductColorAdapter(this, productImages);
-        colorRecyler.setAdapter(productColorAdapter);
-        productColorAdapter.notifyDataSetChanged();
     }
 
     private void listeners() {
@@ -222,13 +185,22 @@ public class Product_details extends BaseActivity implements Controller.ProductD
                 onBackPressed();
             }
         });
+
+        productAddToCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                controller.Addtocart("Bearer "+getStringVal(Constants.TOKEN),product_id,productColorID,productSizeID);
+                Dialog.show();
+            }
+        });
+
     }
 
 
     //add dots at bottom
     private void addBottomDots(int currentPage) {
 
-        dots = new TextView[5];
+        dots = new TextView[images.size()];
         productDetailDotlayout.removeAllViews();
         for (int i = 0; i < dots.length; i++) {
 
@@ -248,24 +220,61 @@ public class Product_details extends BaseActivity implements Controller.ProductD
     @Override
     public void onSuccessProductDetail(Response<ProductDetailResponse> productDetailResponseResponse) {
         productImages.clear();
+        Dialog.dismiss();
         if (productDetailResponseResponse.body().getStatus() == 200) {
 
             productDetialProductName.setText(productDetailResponseResponse.body().getData().get(0).getProductName());
-            images.add(productDetailResponseResponse.body().getData().get(0).getImage().toString());
+            for (int i = 0; i < productDetailResponseResponse.body().getData().get(0).getImages().size(); i++) {
+                images.add(productDetailResponseResponse.body().getData().get(0).getImages().get(i).getImage());
+            }
+
             for (int i = 0; i < productDetailResponseResponse.body().getData().get(0).getColor().size(); i++) {
                 ProductDetailResponse.Datum.Color color = productDetailResponseResponse.body().getData().get(0).getColor().get(i);
                 productImages.add(color);
                 setColors(productImages);
             }
 
-            for (int i=0;i<productDetailResponseResponse.body().getData().get(0).getSize().size();i++)
-            {
+            for (int i = 0; i < productDetailResponseResponse.body().getData().get(0).getSize().size(); i++) {
                 ProductDetailResponse.Datum.Size size = productDetailResponseResponse.body().getData().get(0).getSize().get(i);
                 productSize.add(size);
                 setSize(productSize);
             }
 
+            productDetialViewpager.setOffscreenPageLimit(1);
+            adapter = new Product_Detail_images_Adapter(Product_details.this, images);
+            productDetialViewpager.setAdapter(adapter);
+            addBottomDots(0);
+            //indicator.setViewPager(viewPager);
+            productDetialViewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+
+
+                @Override
+                public void onPageScrolled(int i, float v, int i1) {
+                    CurrentPage = i;
+                }
+
+                @Override
+                public void onPageSelected(int i) {
+                    addBottomDots(i);
+                }
+
+                @Override
+                public void onPageScrollStateChanged(int i) {
+
+                    if (i == ViewPager.SCROLL_STATE_IDLE) {
+
+                        int pagecount = images.size();
+
+                        if (CurrentPage == pagecount) {
+                            productDetialViewpager.setCurrentItem(pagecount, true);
+                        } else
+                            CurrentPage++;
+                    }
+
+                }
+            });
         } else {
+            Dialog.dismiss();
             Utils.showToastMessage(Product_details.this, productDetailResponseResponse.body().getMessage(), getResources().getDrawable(R.drawable.ic_error_black_24dp));
         }
 
@@ -280,10 +289,46 @@ public class Product_details extends BaseActivity implements Controller.ProductD
         productSizeAdapter = new ProductSizeAdapter(this, productSize);
         sizeRecyler.setAdapter(productSizeAdapter);
         productSizeAdapter.notifyDataSetChanged();
+        productSizeAdapter.ProductSizeAdapter(new GetProductSizeIF() {
+            @Override
+            public void getID(String id) {
+                productSizeID = id;
+            }
+        });
+    }
+
+    @SuppressLint("WrongConstant")
+    private void setColors(ArrayList<ProductDetailResponse.Datum.Color> productImages) {
+
+        LinearLayoutManager linearLayout = new LinearLayoutManager(this);
+        linearLayout.setOrientation(LinearLayout.HORIZONTAL);
+        colorRecyler.setHasFixedSize(true);
+        colorRecyler.setLayoutManager(linearLayout);
+        productColorAdapter = new ProductColorAdapter(this, productImages);
+        colorRecyler.setAdapter(productColorAdapter);
+        productColorAdapter.notifyDataSetChanged();
+        productColorAdapter.ProductColorAdapter(new GetProductColorIF() {
+            @Override
+            public void getColorID(String id) {
+                productColorID = id;
+            }
+        });
+    }
+
+
+    @Override
+    public void onSuccessAddToCart(Response<AddToCartResponse> addToCartResponseResponse) {
+        Dialog.dismiss();
+        if (addToCartResponseResponse.body().getStatus()==200)
+        {
+            Utils.showToastMessage(Product_details.this,addToCartResponseResponse.body().getMessage(),getResources().getDrawable(R.drawable.ic_cart_active));
+        }else {
+            Utils.showToastMessage(Product_details.this, addToCartResponseResponse.body().getMessage(), getResources().getDrawable(R.drawable.ic_error_black_24dp));
+        }
     }
 
     @Override
     public void onError(String error) {
-        Toast.makeText(context, "" + error, Toast.LENGTH_SHORT).show();
+        Utils.showToastMessage(Product_details.this, error, getResources().getDrawable(R.drawable.ic_error_black_24dp));
     }
 }

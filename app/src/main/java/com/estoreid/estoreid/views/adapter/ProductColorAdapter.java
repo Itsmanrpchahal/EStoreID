@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -21,9 +22,16 @@ import java.util.ArrayList;
 public class ProductColorAdapter extends RecyclerView.Adapter<ProductColorAdapter.ViewHolder> {
 
     Context context;
+    private int selectedPosition = -1;
+    GetProductColorIF getProductColorIF;
+
+    public void ProductColorAdapter(GetProductColorIF getProductColorIF) {
+        this.getProductColorIF = getProductColorIF;
+    }
+
     ArrayList<ProductDetailResponse.Datum.Color> colorImages = new ArrayList<>();
 
-    public ProductColorAdapter(Context context, ArrayList<ProductDetailResponse.Datum.Color> colorImages) {
+    public  ProductColorAdapter(Context context, ArrayList<ProductDetailResponse.Datum.Color> colorImages) {
         this.context = context;
         this.colorImages = colorImages;
     }
@@ -41,7 +49,24 @@ public class ProductColorAdapter extends RecyclerView.Adapter<ProductColorAdapte
     public void onBindViewHolder(@NonNull ProductColorAdapter.ViewHolder holder, int position) {
 
         Glide.with(context).load(Constants.IMAGES+colorImages.get(position).getImage()).into(holder.color_imageview);
+        if (selectedPosition == position) {
+            holder.itemView.setSelected(true); //using selector drawable
+            holder.layout_methods.setBackgroundResource(R.drawable.custome_theme_selected_bg);
+        } else {
+            holder.itemView.setSelected(false);
+            holder.layout_methods.setBackgroundResource(R.drawable.grey_border);
+        }
 
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (selectedPosition >= 0)
+                    notifyItemChanged(selectedPosition);
+                selectedPosition = holder.getAdapterPosition();
+                getProductColorIF.getColorID(String.valueOf(colorImages.get(position).getId()));
+                notifyItemChanged(selectedPosition);
+            }
+        });
 
     }
 
@@ -52,10 +77,12 @@ public class ProductColorAdapter extends RecyclerView.Adapter<ProductColorAdapte
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         RoundedImageView color_imageview;
+        RelativeLayout layout_methods;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             color_imageview = itemView.findViewById(R.id.color_imageview);
+            layout_methods = itemView.findViewById(R.id.layout_methods);
         }
     }
 }

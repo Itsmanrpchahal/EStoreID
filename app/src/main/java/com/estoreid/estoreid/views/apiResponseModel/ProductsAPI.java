@@ -77,6 +77,18 @@ public class ProductsAPI {
         @Expose
         private String image;
 
+        public String getCart_status() {
+            return cart_status;
+        }
+
+        public void setCart_status(String cart_status) {
+            this.cart_status = cart_status;
+        }
+
+        @SerializedName("cart_status")
+        @Expose
+        private String cart_status;
+
         public Integer getId() {
             return id;
         }

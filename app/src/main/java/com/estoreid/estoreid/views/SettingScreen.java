@@ -24,8 +24,6 @@ public class SettingScreen extends AppCompatActivity {
     RoundedImageView settingUserImage;
     @BindView(R.id.userimagelayout)
     RelativeLayout userimagelayout;
-    @BindView(R.id.setting_username)
-    EditText settingUsername;
     @BindView(R.id.setting_view1)
     View settingView1;
     @BindView(R.id.setting_email)
@@ -44,16 +42,16 @@ public class SettingScreen extends AppCompatActivity {
     EditText settingDob;
     @BindView(R.id.setting_view5)
     View settingView5;
-    @BindView(R.id.setting_changepassword)
-    EditText settingChangepassword;
-    @BindView(R.id.setting_view6)
-    View settingView6;
-    @BindView(R.id.setting_confirmpassword)
-    EditText settingConfirmpassword;
-    @BindView(R.id.setting_view7)
-    View settingView7;
     @BindView(R.id.setting_save)
     Button settingSave;
+    @BindView(R.id.setting_firstname)
+    EditText settingFirstname;
+    @BindView(R.id.setting_view)
+    View settingView;
+    @BindView(R.id.setting_lastname)
+    EditText settingLastname;
+    @BindView(R.id.setting_uploadpic)
+    ImageButton settingUploadpic;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +71,15 @@ public class SettingScreen extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 onBackPressed();
+            }
+        });
+
+
+
+        settingUploadpic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
             }
         });
     }

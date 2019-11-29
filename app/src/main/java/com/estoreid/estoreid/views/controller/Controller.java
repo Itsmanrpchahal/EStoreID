@@ -1,7 +1,9 @@
 package com.estoreid.estoreid.views.controller;
 
+import com.estoreid.estoreid.views.apiResponseModel.AddToCartResponse;
 import com.estoreid.estoreid.views.apiResponseModel.FilterDataResponse;
 import com.estoreid.estoreid.views.apiResponseModel.FollowAPIResponse;
+import com.estoreid.estoreid.views.apiResponseModel.GetProfileResponse;
 import com.estoreid.estoreid.views.apiResponseModel.LoginAPIReponse;
 import com.estoreid.estoreid.views.apiResponseModel.ProductDetailResponse;
 import com.estoreid.estoreid.views.apiResponseModel.ProductsAPI;
@@ -31,6 +33,8 @@ public class Controller {
     public Products products;
     public FilterScreen filterScreen;
     public ProductDetail productDetail;
+    public GetProfile getProfile;
+    public AddToCart addToCart;
 
 
     //registerAPI
@@ -79,9 +83,17 @@ public class Controller {
     }
 
     //product details
-    public Controller(ProductDetail productDetail1)
+    public Controller(ProductDetail productDetail1,AddToCart addToCart1)
     {
         productDetail = productDetail1;
+        addToCart = addToCart1;
+        webAPI = new WebAPI();
+    }
+
+    //get profile
+    public Controller(GetProfile getProfile1)
+    {
+        getProfile = getProfile1;
         webAPI = new WebAPI();
     }
 
@@ -281,13 +293,54 @@ public class Controller {
         webAPI.getApi().productdetails(token,product_id).enqueue(new Callback<ProductDetailResponse>() {
             @Override
             public void onResponse(Call<ProductDetailResponse> call, Response<ProductDetailResponse> response) {
-                Response<ProductDetailResponse> productDetailResponse = response;
-                productDetail.onSuccessProductDetail(productDetailResponse);
+                if (response!=null)
+                {
+                    Response<ProductDetailResponse> productDetailResponse = response;
+                    productDetail.onSuccessProductDetail(productDetailResponse);
+                }
             }
 
             @Override
             public void onFailure(Call<ProductDetailResponse> call, Throwable t) {
                 productDetail.onError(t.getMessage());
+            }
+        });
+    }
+
+    public void Addtocart(String token,String product_id,String color_id,String size_id)
+    {
+        webAPI.getApi().addtocart(token,product_id,color_id,size_id).enqueue(new Callback<AddToCartResponse>() {
+            @Override
+            public void onResponse(Call<AddToCartResponse> call, Response<AddToCartResponse> response) {
+                if (response!=null)
+                {
+                    Response<AddToCartResponse> addToCartResponseResponse = response;
+                    addToCart.onSuccessAddToCart(addToCartResponseResponse);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<AddToCartResponse> call, Throwable t) {
+                addToCart.onError(t.getMessage());
+            }
+        });
+    }
+
+    public void GetProfile(String token)
+    {
+        webAPI.getApi().getProfile(token).enqueue(new Callback<GetProfileResponse>() {
+            @Override
+            public void onResponse(Call<GetProfileResponse> call, Response<GetProfileResponse> response) {
+                if (response!=null)
+                {
+                    Response<GetProfileResponse> getProfileResponseResponse = response;
+                    getProfile.onSuccessGetProfile(getProfileResponseResponse);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<GetProfileResponse> call, Throwable t) {
+                getProfile.onError(t.getMessage());
             }
         });
     }
@@ -346,6 +399,16 @@ public class Controller {
 
     public interface ProductDetail {
         void onSuccessProductDetail(Response<ProductDetailResponse> productDetailResponseResponse);
+        void onError(String error);
+    }
+
+    public interface GetProfile{
+        void onSuccessGetProfile(Response<GetProfileResponse> getProfileResponseResponse);
+        void onError(String error);
+    }
+
+    public interface AddToCart{
+        void onSuccessAddToCart(Response<AddToCartResponse> addToCartResponseResponse);
         void onError(String error);
     }
 }

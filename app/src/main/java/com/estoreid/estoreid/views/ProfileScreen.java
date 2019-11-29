@@ -1,5 +1,6 @@
 package com.estoreid.estoreid.views;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -7,19 +8,24 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.estoreid.estoreid.R;
+import com.estoreid.estoreid.views.apiResponseModel.GetProfileResponse;
 import com.estoreid.estoreid.views.baseclass.BaseClass;
+import com.estoreid.estoreid.views.controller.Controller;
 import com.estoreid.estoreid.views.utils.Constants;
+import com.estoreid.estoreid.views.utils.Utils;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import retrofit2.Response;
 
-public class ProfileScreen extends BaseClass {
+public class ProfileScreen extends BaseClass implements Controller.GetProfile {
 
 
     @BindView(R.id.profile_back)
@@ -60,6 +66,8 @@ public class ProfileScreen extends BaseClass {
     View settingView6;
     @BindView(R.id.profile_logout)
     Button profileLogout;
+    Dialog Dialog;
+    Controller controller;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +75,10 @@ public class ProfileScreen extends BaseClass {
         setContentView(R.layout.activity_profile_screen);
         ButterKnife.bind(this);
         listerners();
+        Dialog = Utils.showDialog(this);
+        Dialog.show();
+        controller = new Controller(this);
+        controller.GetProfile("Bearer "+getStringVal(Constants.TOKEN));
 
         setData();
 
@@ -86,5 +98,22 @@ public class ProfileScreen extends BaseClass {
                 onBackPressed();
             }
         });
+    }
+
+    @Override
+    public void onSuccessGetProfile(Response<GetProfileResponse> getProfileResponseResponse) {
+        Dialog.dismiss();
+        if (getProfileResponseResponse.body().getStatus()==200)
+        {
+            profileUsername.setText(getProfileResponseResponse.body().getData().get(0).getFirstName()+" "+getProfileResponseResponse.body().getData().get(0).getLastName());
+            profileUsernameet.setText(getProfileResponseResponse.body().getData().get(0).getFirstName()+" "+getProfileResponseResponse.body().getData().get(0).getLastName());
+            profileEmail.setText(getProfileResponseResponse.body().getData().get(0).getEmail());
+            profilePhnno.setText(getProfileResponseResponse.body().getData().get(0).getMobileNumber());
+        }
+    }
+
+    @Override
+    public void onError(String error) {
+        Dialog.dismiss();Utils.showToastMessage(ProfileScreen.this, error, getResources().getDrawable(R.drawable.ic_error_black_24dp));Toast.makeText(this, "", Toast.LENGTH_SHORT).show();
     }
 }

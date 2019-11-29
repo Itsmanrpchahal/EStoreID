@@ -56,10 +56,21 @@
                     android:src="@drawable/shape"
                     ></com.makeramen.roundedimageview.RoundedImageView>
 
-                <ImageButton
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    ></ImageButton>
+                    android:layout_centerInParent="true">
+
+                    <ImageButton
+                        android:id="@+id/setting_uploadpic"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@color/colorTrans"
+                        android:layout_marginLeft="145dp"
+                        android:layout_marginTop="145dp"
+                        android:src="@drawable/ic_camera"></ImageButton>
+                </LinearLayout>
+
             </RelativeLayout>
 
 
@@ -76,26 +87,73 @@
                     android:layout_marginTop="@dimen/defaultmargin"
                     android:text="Username"></TextView>
 
-               <EditText
-                   android:id="@+id/setting_username"
-                   android:layout_width="match_parent"
-                   android:layout_height="wrap_content"
-                   android:hint="Username"
-                   android:textColor="@color/colorBlack"
-                   android:fontFamily="@font/latoregular"
-                   android:textSize="@dimen/normaltext"
-                   android:inputType="textPersonName"
-                   android:layout_marginTop="@dimen/defaultmargin"
-                   android:background="@color/colorTrans"></EditText>
-
-
-                <View
-                    android:id="@+id/setting_view1"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_below="@id/email_et"
-                    android:layout_marginTop="5dp"
-                    android:background="@color/colorgrey"></View>
+                    android:layout_height="wrap_content"
+                    android:weightSum="2"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="@dimen/defaultmargin">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <EditText
+                            android:id="@+id/setting_firstname"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:hint="Firstname"
+                            android:textColor="@color/colorBlack"
+                            android:layout_marginRight="@dimen/margin_dp5"
+                            android:fontFamily="@font/latoregular"
+                            android:textSize="@dimen/normaltext"
+                            android:inputType="textPersonName"
+                            android:background="@color/colorTrans"></EditText>
+
+                        <View
+                            android:id="@+id/setting_view"
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_below="@id/email_et"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginRight="@dimen/margin_dp5"
+                            android:background="@color/colorgrey"></View>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <EditText
+                            android:id="@+id/setting_lastname"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/margin_dp5"
+                            android:layout_weight="1"
+                            android:hint="Lastname"
+                            android:textColor="@color/colorBlack"
+                            android:fontFamily="@font/latoregular"
+                            android:textSize="@dimen/normaltext"
+                            android:inputType="textPersonName"
+                            android:background="@color/colorTrans"></EditText>
+
+                        <View
+                            android:id="@+id/setting_view1"
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_below="@id/email_et"
+                            android:layout_marginLeft="@dimen/margin_dp5"
+                            android:layout_marginTop="5dp"
+                            android:background="@color/colorgrey"></View>
+                    </LinearLayout>
+
+                </LinearLayout>
+
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -207,60 +265,6 @@
                     android:layout_marginTop="5dp"
                     android:background="@color/colorgrey"></View>
 
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/defaultmargin"
-                    android:text="Change Password"></TextView>
-
-                <EditText
-                    android:id="@+id/setting_changepassword"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Change Password"
-                    android:textColor="@color/colorBlack"
-                    android:fontFamily="@font/latoregular"
-                    android:textSize="@dimen/normaltext"
-                    android:inputType="textPassword"
-                    android:layout_marginTop="@dimen/defaultmargin"
-                    android:background="@color/colorTrans"></EditText>
-
-
-                <View
-                    android:id="@+id/setting_view6"
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_below="@id/email_et"
-                    android:layout_marginTop="5dp"
-                    android:background="@color/colorgrey"></View>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/defaultmargin"
-                    android:text="Confirm password"></TextView>
-
-                <EditText
-                    android:id="@+id/setting_confirmpassword"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="**********"
-                    android:textColor="@color/colorBlack"
-                    android:fontFamily="@font/latoregular"
-                    android:textSize="@dimen/normaltext"
-                    android:inputType="textPassword"
-                    android:layout_marginTop="@dimen/defaultmargin"
-                    android:background="@color/colorTrans"></EditText>
-
-
-                <View
-                    android:id="@+id/setting_view7"
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_below="@id/email_et"
-                    android:layout_marginTop="5dp"
-                    android:background="@color/colorgrey"></View>
 
                 <Button
                     android:id="@+id/setting_save"

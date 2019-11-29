@@ -2,16 +2,26 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="@dimen/margin_dp40"
+    android:layout_margin="@dimen/margin_dp5"
     android:layout_height="@dimen/margin_dp40">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="S"
-        android:textColor="@color/colorBlack"
-        android:textSize="@dimen/margin_dp22"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:id="@+id/productsize"></TextView>
+    <RelativeLayout
+        android:id="@+id/layout_methods"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/custom_theme_unselected_bg">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="S"
+            android:background="@color/colorTrans"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/textsize_sp14"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:id="@+id/productsize"></TextView>
+    </RelativeLayout>
+
 
 </LinearLayout>

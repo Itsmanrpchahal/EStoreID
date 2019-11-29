@@ -79,12 +79,18 @@ public class ProductDetailResponse {
         @SerializedName("size")
         @Expose
         private List<Size> size = null;
+        @SerializedName("description")
+        @Expose
+        private String description;
         @SerializedName("created_at")
         @Expose
         private String createdAt;
         @SerializedName("updated_at")
         @Expose
         private String updatedAt;
+        @SerializedName("images")
+        @Expose
+        private List<Image> images = null;
 
         public Integer getId() {
             return id;
@@ -182,6 +188,14 @@ public class ProductDetailResponse {
             this.size = size;
         }
 
+        public String getDescription() {
+            return description;
+        }
+
+        public void setDescription(String description) {
+            this.description = description;
+        }
+
         public String getCreatedAt() {
             return createdAt;
         }
@@ -198,14 +212,34 @@ public class ProductDetailResponse {
             this.updatedAt = updatedAt;
         }
 
+        public List<Image> getImages() {
+            return images;
+        }
+
+        public void setImages(List<Image> images) {
+            this.images = images;
+        }
+
+
         public class Color {
 
+            @SerializedName("id")
+            @Expose
+            private Integer id;
             @SerializedName("name")
             @Expose
             private String name;
             @SerializedName("image")
             @Expose
             private String image;
+
+            public Integer getId() {
+                return id;
+            }
+
+            public void setId(Integer id) {
+                this.id = id;
+            }
 
             public String getName() {
                 return name;
@@ -225,14 +259,52 @@ public class ProductDetailResponse {
 
         }
 
+        public class Image {
+
+            @SerializedName("id")
+            @Expose
+            private Integer id;
+            @SerializedName("image")
+            @Expose
+            private String image;
+
+            public Integer getId() {
+                return id;
+            }
+
+            public void setId(Integer id) {
+                this.id = id;
+            }
+
+            public String getImage() {
+                return image;
+            }
+
+            public void setImage(String image) {
+                this.image = image;
+            }
+
+        }
+
         public class Size {
 
+            @SerializedName("id")
+            @Expose
+            private Integer id;
             @SerializedName("name")
             @Expose
             private String name;
             @SerializedName("description")
             @Expose
             private String description;
+
+            public Integer getId() {
+                return id;
+            }
+
+            public void setId(Integer id) {
+                this.id = id;
+            }
 
             public String getName() {
                 return name;
