@@ -1,6 +1,9 @@
 package com.estoreid.estoreid.views.webApi;
 
+import com.estoreid.estoreid.views.apiResponseModel.AddCartQuantityResponse;
 import com.estoreid.estoreid.views.apiResponseModel.AddToCartResponse;
+import com.estoreid.estoreid.views.apiResponseModel.CartItemsResponse;
+import com.estoreid.estoreid.views.apiResponseModel.FavVendorsResponse;
 import com.estoreid.estoreid.views.apiResponseModel.FilterDataResponse;
 import com.estoreid.estoreid.views.apiResponseModel.FollowAPIResponse;
 import com.estoreid.estoreid.views.apiResponseModel.GetProfileResponse;
@@ -11,14 +14,18 @@ import com.estoreid.estoreid.views.apiResponseModel.RegisterAPIReponse;
 import com.estoreid.estoreid.views.apiResponseModel.ResetAPIReponse;
 import com.estoreid.estoreid.views.apiResponseModel.SetNewPasswordAPIReponse;
 import com.estoreid.estoreid.views.apiResponseModel.SocailLoginAPIResponse;
+import com.estoreid.estoreid.views.apiResponseModel.UploadProfileResponse;
 import com.estoreid.estoreid.views.apiResponseModel.VendorAPIResponse;
 import com.estoreid.estoreid.views.apiResponseModel.VerifyAPIReponse;
 
+import okhttp3.MultipartBody;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.Header;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 import retrofit2.http.Query;
 
 public interface ApiInterface {
@@ -120,5 +127,38 @@ public interface ApiInterface {
       @Field("product_id") String product_id,
       @Field("color_id") String color_id,
       @Field("size_id") String size_id
+    );
+
+    @Multipart
+    @POST("updateUserProfile")
+    Call<UploadProfileResponse> uploadProfile(
+            @Header("Authorization") String token,
+            @Query("first_name") String first_name,
+            @Query("last_name") String last_name,
+            @Query("email") String email,
+            @Query("phone") String phone,
+            @Query("gender") String gender,
+            @Query("dob") String dob,
+            @Part MultipartBody.Part user_image
+    );
+
+
+
+    @POST("followVendorsList")
+    Call<FavVendorsResponse> favStores(
+         @Header("Authorization") String token
+    );
+
+    @POST("get_cart_products")
+    Call<CartItemsResponse> cartItems(
+            @Header("Authorization") String token
+    );
+
+
+    @POST("updateQuantity")
+    Call<AddCartQuantityResponse> addtcartquantity(
+            @Header("Authorization") String token,
+            @Query("cart_id") String cart_id,
+            @Query("quantity") String quantity
     );
 }

@@ -1,6 +1,9 @@
 package com.estoreid.estoreid.views.controller;
 
+import com.estoreid.estoreid.views.apiResponseModel.AddCartQuantityResponse;
 import com.estoreid.estoreid.views.apiResponseModel.AddToCartResponse;
+import com.estoreid.estoreid.views.apiResponseModel.CartItemsResponse;
+import com.estoreid.estoreid.views.apiResponseModel.FavVendorsResponse;
 import com.estoreid.estoreid.views.apiResponseModel.FilterDataResponse;
 import com.estoreid.estoreid.views.apiResponseModel.FollowAPIResponse;
 import com.estoreid.estoreid.views.apiResponseModel.GetProfileResponse;
@@ -11,13 +14,17 @@ import com.estoreid.estoreid.views.apiResponseModel.RegisterAPIReponse;
 import com.estoreid.estoreid.views.apiResponseModel.ResetAPIReponse;
 import com.estoreid.estoreid.views.apiResponseModel.SetNewPasswordAPIReponse;
 import com.estoreid.estoreid.views.apiResponseModel.SocailLoginAPIResponse;
+import com.estoreid.estoreid.views.apiResponseModel.UploadProfileResponse;
 import com.estoreid.estoreid.views.apiResponseModel.VendorAPIResponse;
 import com.estoreid.estoreid.views.apiResponseModel.VerifyAPIReponse;
+import com.estoreid.estoreid.views.utils.Utils;
 import com.estoreid.estoreid.views.webApi.WebAPI;
 
+import okhttp3.MultipartBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.http.Multipart;
 
 public class Controller {
 
@@ -35,6 +42,10 @@ public class Controller {
     public ProductDetail productDetail;
     public GetProfile getProfile;
     public AddToCart addToCart;
+    public UploadProfile uploadProfile;
+    public FavStore favStore;
+    public CartItems cartItems;
+    public AddCartItemQuantity addCartItemQuantity;
 
 
     //registerAPI
@@ -94,6 +105,30 @@ public class Controller {
     public Controller(GetProfile getProfile1)
     {
         getProfile = getProfile1;
+        webAPI = new WebAPI();
+    }
+
+    //uploadProfile -- getProfile
+    public Controller(UploadProfile uploadProfile1,GetProfile getProfile1)
+    {
+        uploadProfile = uploadProfile1;
+        getProfile = getProfile1;
+        webAPI = new WebAPI();
+    }
+
+    //fav strore
+    public Controller(FavStore favStore1,FollowUnfollow followUnfollow1)
+    {
+        favStore = favStore1;
+        followUnfollow = followUnfollow1;
+        webAPI = new WebAPI();
+    }
+
+    //cart Items
+    public Controller(CartItems cartItems1,AddCartItemQuantity addCartItemQuantity1)
+    {
+        cartItems = cartItems1;
+        addCartItemQuantity = addCartItemQuantity1;
         webAPI = new WebAPI();
     }
 
@@ -345,6 +380,83 @@ public class Controller {
         });
     }
 
+    public void UploadProfile(String token, String first_name, String last_name, String email, String phone, String gender, String dob, MultipartBody.Part part)
+    {
+        webAPI.getApi().uploadProfile(token,first_name,last_name,email,phone,gender,dob,part).enqueue(new Callback<UploadProfileResponse>() {
+            @Override
+            public void onResponse(Call<UploadProfileResponse> call, Response<UploadProfileResponse> response) {
+                if (response!=null)
+                {
+                    Response<UploadProfileResponse> responseResponse = response;
+                    uploadProfile.onSuccessUploadProfile(responseResponse);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UploadProfileResponse> call, Throwable t) {
+                    uploadProfile.onError(t.getMessage());
+            }
+        });
+    }
+
+    public void FavStore(String token)
+    {
+        webAPI.getApi().favStores(token).enqueue(new Callback<FavVendorsResponse>() {
+            @Override
+            public void onResponse(Call<FavVendorsResponse> call, Response<FavVendorsResponse> response) {
+                if (response!=null)
+                {
+                    Response<FavVendorsResponse> favVendorsResponseResponse = response;
+                    favStore.onSuccessFavStore(favVendorsResponseResponse);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<FavVendorsResponse> call, Throwable t) {
+                    favStore.onError(t.getMessage());
+            }
+        });
+    }
+
+
+    public void CartItems(String token)
+    {
+        webAPI.getApi().cartItems(token).enqueue(new Callback<CartItemsResponse>() {
+            @Override
+            public void onResponse(Call<CartItemsResponse> call, Response<CartItemsResponse> response) {
+                if (response != null)
+                {
+                    Response<CartItemsResponse> cartItemsResponseResponse = response;
+                    cartItems.onSuccessCartItems(cartItemsResponseResponse);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CartItemsResponse> call, Throwable t) {
+                    cartItems.onError(t.getMessage());
+            }
+        });
+    }
+
+    public void AddCartItemQuantity(String token,String cart_id,String quantint)
+    {
+        webAPI.getApi().addtcartquantity(token,cart_id,quantint).enqueue(new Callback<AddCartQuantityResponse>() {
+            @Override
+            public void onResponse(Call<AddCartQuantityResponse> call, Response<AddCartQuantityResponse> response) {
+                if (response != null)
+                {
+                    Response<AddCartQuantityResponse> addCartItemQuantityResponse = response;
+                    addCartItemQuantity.onSucessAddCartQuantity(addCartItemQuantityResponse);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<AddCartQuantityResponse> call, Throwable t) {
+                addCartItemQuantity.onError(t.getMessage());
+            }
+        });
+    }
+
 
     public interface RegisterAPI {
         void onSucess(Response<RegisterAPIReponse> registerAPIReponseResponse);
@@ -409,6 +521,26 @@ public class Controller {
 
     public interface AddToCart{
         void onSuccessAddToCart(Response<AddToCartResponse> addToCartResponseResponse);
+        void onError(String error);
+    }
+
+    public interface UploadProfile{
+        void onSuccessUploadProfile(Response<UploadProfileResponse> uploadProfileResponseResponse);
+        void onError(String error);
+    }
+
+    public interface FavStore{
+        void onSuccessFavStore(Response<FavVendorsResponse> favVendorsResponseResponse);
+        void onError(String error);
+    }
+
+    public interface CartItems{
+        void onSuccessCartItems(Response<CartItemsResponse> cartItemsResponseResponse);
+        void onError(String error);
+    }
+
+    public interface AddCartItemQuantity{
+        void onSucessAddCartQuantity(Response<AddCartQuantityResponse> addCartItemQuantityResponse);
         void onError(String error);
     }
 }

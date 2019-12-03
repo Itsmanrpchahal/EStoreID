@@ -58,6 +58,15 @@ public class GetProfileResponse {
         @SerializedName("type")
         @Expose
         private String type;
+        @SerializedName("dob")
+        @Expose
+        private String dob;
+        @SerializedName("image")
+        @Expose
+        private String image;
+        @SerializedName("gender")
+        @Expose
+        private String gender;
 
         public String getEmail() {
             return email;
@@ -99,6 +108,29 @@ public class GetProfileResponse {
             this.type = type;
         }
 
-    }
+        public String getDob() {
+            return dob;
+        }
 
+        public void setDob(String dob) {
+            this.dob = dob;
+        }
+
+        public String getImage() {
+            return image;
+        }
+
+        public void setImage(String image) {
+            this.image = image;
+        }
+
+        public String getGender() {
+            return gender;
+        }
+
+        public void setGender(String gender) {
+            this.gender = gender;
+        }
+
+    }
 }

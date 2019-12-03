@@ -8,6 +8,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -19,6 +21,8 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -152,6 +156,7 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback, Co
     Dialog Dialog;
     @BindView(R.id.nostore)
     TextView nostore;
+    Dialog popup;
 
 
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -166,6 +171,7 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback, Co
         ButterKnife.bind(this);
         controller = new Controller((Controller.VendorList)this,(Controller.FollowUnfollow)this);
         Dialog = Utils.showDialog(this);
+        Dialog.show();
         mapView = findViewById(R.id.mapview);
         Places.initialize(this, getResources().getString(R.string.googleclientId));
         searchEt.setVisibility(View.VISIBLE);
@@ -265,11 +271,7 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback, Co
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                finishAffinity();
-            } else {
-                super.onBackPressed();
-            }
+                dialog();
         }
     }
 
@@ -449,6 +451,10 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback, Co
                 String lat = datum.getLatitude();
                 String lng = datum.getLongitude();
 
+                if (vendorAPIResponseResponse.body().getData().size()>0)
+                {
+                    nostore.setVisibility(View.GONE);
+                }
                 Geocoder geocoder = new Geocoder(MainActivity.this, Locale.getDefault());
                 try {
                     List<Address> address = (List<Address>) geocoder.getFromLocation(Double.parseDouble(lat), Double.parseDouble(lng), 1);
@@ -485,10 +491,10 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback, Co
         Dialog.dismiss();
         if (followAPIResponseResponse.body().getStatus()==200)
         {
-            Toast.makeText(context, ""+followAPIResponseResponse.body().getMessage(), Toast.LENGTH_SHORT).show();
+            Utils.showToastMessage(context,""+followAPIResponseResponse.body().getMessage(),getResources().getDrawable(R.drawable.ic_check_black_24dp));
         }else
         {
-            Toast.makeText(context, ""+followAPIResponseResponse.body().getStatus(), Toast.LENGTH_SHORT).show();
+            Utils.showToastMessage(context,""+followAPIResponseResponse.body().getMessage(),getResources().getDrawable(R.drawable.ic_check_black_24dp));
         }
     }
 
@@ -497,5 +503,34 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback, Co
         vendorlist.clear();
         Dialog.dismiss();
         Utils.showToastMessage(MainActivity.this, error, getResources().getDrawable(R.drawable.ic_error_black_24dp));
+    }
+
+
+    private void dialog() {
+        popup = new Dialog(MainActivity.this);
+        Window window = popup.getWindow();
+        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+        popup.setContentView(R.layout.exit_dialog);
+        popup.setCancelable(true);
+        popup.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        popup.show();
+
+        OK = popup.findViewById(R.id.ok_exit);
+        CANCEL = popup.findViewById(R.id.cancel_exit);
+
+        OK.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+                System.exit(0);
+            }
+        });
+
+        CANCEL.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                popup.dismiss();
+            }
+        });
     }
 }

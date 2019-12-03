@@ -109,6 +109,21 @@ public class ProfileScreen extends BaseClass implements Controller.GetProfile {
             profileUsernameet.setText(getProfileResponseResponse.body().getData().get(0).getFirstName()+" "+getProfileResponseResponse.body().getData().get(0).getLastName());
             profileEmail.setText(getProfileResponseResponse.body().getData().get(0).getEmail());
             profilePhnno.setText(getProfileResponseResponse.body().getData().get(0).getMobileNumber());
+            if (getProfileResponseResponse.body().getData().get(0).getDob()!=null)
+            {
+                profileDob.setText(Utils.convertTimeStampDate(Long.parseLong(getProfileResponseResponse.body().getData().get(0).getDob())));
+            }
+            if (getProfileResponseResponse.body().getData().get(0).getGender()!=null)
+            {
+                profileGender.setText(getProfileResponseResponse.body().getData().get(0).getGender());
+            }
+
+            if (getProfileResponseResponse.body().getData().get(0).getImage()!=null)
+            {
+                setStringVal(Constants.USER_NAME,getProfileResponseResponse.body().getData().get(0).getFirstName()+" "+getProfileResponseResponse.body().getData().get(0).getLastName());
+                setStringVal(Constants.USER_IMAGE,Constants.IMAGES+getProfileResponseResponse.body().getData().get(0).getImage());
+                Glide.with(ProfileScreen.this).load(Constants.IMAGES+getProfileResponseResponse.body().getData().get(0).getImage().toString()).into(profileUserimage);
+            }
         }
     }
 

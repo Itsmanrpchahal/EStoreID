@@ -91,8 +91,8 @@
                     android:text="(4012 ratings)"
                     android:textSize="12sp" />
 
-                <TextView
-                    android:id="@+id/btn_payment"
+                <Button
+                    android:id="@+id/btn_unfollow"
                     android:layout_width="70dp"
                     android:layout_height="18dp"
                     android:layout_below="@+id/tv_venderTimming"
@@ -106,7 +106,7 @@
                     android:textColor="@color/colorWhite"
                     android:textSize="8dp">
 
-                </TextView>
+                </Button>
             </RelativeLayout>
         </androidx.cardview.widget.CardView>
     </RelativeLayout>

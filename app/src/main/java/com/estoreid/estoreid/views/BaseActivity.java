@@ -20,6 +20,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.estoreid.estoreid.R;
@@ -65,6 +66,7 @@ public class BaseActivity extends BaseClass implements NavigationView.OnNavigati
         navigationView.getHeaderView(0);
         imageView = headerLayout.findViewById(R.id.drawer_useriamge);
         username = headerLayout.findViewById(R.id.drawer_username);
+
 
         setData();
 

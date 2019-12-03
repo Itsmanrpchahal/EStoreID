@@ -4,9 +4,13 @@ import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -26,6 +30,7 @@ import com.estoreid.estoreid.views.adapter.ProductAdapter;
 import com.estoreid.estoreid.views.apiResponseModel.ProductsAPI;
 import com.estoreid.estoreid.views.controller.Controller;
 import com.estoreid.estoreid.views.filter.FilterScreen;
+import com.estoreid.estoreid.views.login.Login;
 import com.estoreid.estoreid.views.utils.Constants;
 import com.estoreid.estoreid.views.utils.Utils;
 
@@ -81,6 +86,7 @@ public class Products_Screen extends BaseActivity implements Controller.Products
     android.app.Dialog Dialog;
     @BindView(R.id.totalproducts)
     TextView totalproducts;
+    Dialog popup;
 
 
     @SuppressLint("WrongConstant")
@@ -181,7 +187,7 @@ public class Products_Screen extends BaseActivity implements Controller.Products
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-
+           dialog();
         }
     }
 
@@ -210,4 +216,32 @@ public class Products_Screen extends BaseActivity implements Controller.Products
         Utils.showToastMessage(Products_Screen.this, error, getResources().getDrawable(R.drawable.ic_error_black_24dp));
     }
 
+
+    private void dialog() {
+        popup = new Dialog(Products_Screen.this);
+        Window window = popup.getWindow();
+        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+        popup.setContentView(R.layout.exit_dialog);
+        popup.setCancelable(true);
+        popup.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        popup.show();
+
+        OK = popup.findViewById(R.id.ok_exit);
+        CANCEL = popup.findViewById(R.id.cancel_exit);
+
+        OK.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+               finish();
+               System.exit(0);
+            }
+        });
+
+        CANCEL.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                popup.dismiss();
+            }
+        });
+    }
 }

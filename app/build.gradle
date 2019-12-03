@@ -81,6 +81,7 @@ dependencies {
 
     //OTP view
     implementation 'com.chaos.view:pinview:1.4.3'
-
+    //image cropview
+    implementation 'com.theartofdev.edmodo:android-image-cropper:2.3.+'
 }
 

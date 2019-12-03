@@ -1,6 +1,7 @@
 package com.estoreid.estoreid.views;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -20,13 +21,24 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.estoreid.estoreid.R;
+import com.estoreid.estoreid.views.adapter.AddCartQuantity;
+import com.estoreid.estoreid.views.adapter.AsyncTask;
 import com.estoreid.estoreid.views.adapter.CartAddedItemAdapter;
 import com.estoreid.estoreid.views.adapter.ReletedProductAdpater;
+import com.estoreid.estoreid.views.apiResponseModel.AddCartQuantityResponse;
+import com.estoreid.estoreid.views.apiResponseModel.CartItemsResponse;
+import com.estoreid.estoreid.views.apiResponseModel.count;
+import com.estoreid.estoreid.views.controller.Controller;
+import com.estoreid.estoreid.views.utils.Constants;
+import com.estoreid.estoreid.views.utils.Utils;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import retrofit2.Response;
 
-public class Cart_Activity extends BaseActivity {
+public class Cart_Activity extends BaseActivity  implements Controller.CartItems,Controller.AddCartItemQuantity {
 
 
     ReletedProductAdpater reletedProductAdpater;
@@ -83,6 +95,10 @@ public class Cart_Activity extends BaseActivity {
     ScrollView scrollview;
     @BindView(R.id.safetext)
     TextView safetext;
+    ArrayList<CartItemsResponse.Datum> cartitems = new ArrayList<>();
+    static Integer counter = 0;
+    Controller controller;
+    Dialog Dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,8 +107,12 @@ public class Cart_Activity extends BaseActivity {
         View contentView = inflater.inflate(R.layout.activity_cart_, null, false);
         drawer.addView(contentView, 0);
         ButterKnife.bind(this);
+        Dialog = Utils.showDialog(this);
+        Dialog.show();
         additemRecyclerviw.setFocusable(false);
-        setAdapter();
+        controller = new Controller((Controller.CartItems)this,(Controller.AddCartItemQuantity)this);
+        controller.CartItems("Bearer "+getStringVal(Constants.TOKEN));
+
         listeners();
     }
 
@@ -109,16 +129,22 @@ public class Cart_Activity extends BaseActivity {
 
 
     @SuppressLint("WrongConstant")
-    private void setAdapter() {
+    private void setAdapter(ArrayList<CartItemsResponse.Datum> cartitems) {
 
         //Cart Addet items
         LinearLayoutManager linearLayout = new LinearLayoutManager(this);
         linearLayout.setOrientation(LinearLayout.VERTICAL);
         additemRecyclerviw.setHasFixedSize(true);
         additemRecyclerviw.setLayoutManager(linearLayout);
-        adapter = new CartAddedItemAdapter(this);
+        adapter = new CartAddedItemAdapter(this,cartitems);
         additemRecyclerviw.setAdapter(adapter);
         adapter.notifyDataSetChanged();
+        adapter.CartAddedItemAdapter(new AddCartQuantity() {
+            @Override
+            public void onSuccess(String cart_id, String quantity) {
+                controller.AddCartItemQuantity("Bearer "+getStringVal(Constants.TOKEN),cart_id,quantity);
+            }
+        });
 
         //Releted Items
         LinearLayoutManager linearLayout1 = new LinearLayoutManager(this);
@@ -128,5 +154,36 @@ public class Cart_Activity extends BaseActivity {
         reletedProductAdpater = new ReletedProductAdpater(this);
         relatedItemRecyclerview.setAdapter(reletedProductAdpater);
         reletedProductAdpater.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onSuccessCartItems(Response<CartItemsResponse> cartItemsResponseResponse) {
+            Dialog.dismiss();
+        if (cartItemsResponseResponse.body().getStatus()==200)
+        {
+            for (int i=0;i<cartItemsResponseResponse.body().getData().size();i++)
+            {
+                CartItemsResponse.Datum datum = cartItemsResponseResponse.body().getData().get(i);
+                cartitems.add(datum);
+                setAdapter(cartitems);
+            }
+        }else {
+            Utils.showToastMessage(this,cartItemsResponseResponse.body().getMessage(),getResources().getDrawable(R.drawable.ic_error_black_24dp));
+        }
+    }
+
+    @Override
+    public void onSucessAddCartQuantity(Response<AddCartQuantityResponse> addCartItemQuantityResponse) {
+        Dialog.dismiss();
+        if (addCartItemQuantityResponse.body().getStatus()==200)
+        {
+
+        }
+    }
+
+    @Override
+    public void onError(String error) {
+        Dialog.dismiss();
+        Utils.showToastMessage(this,error,getResources().getDrawable(R.drawable.ic_error_black_24dp));
     }
 }

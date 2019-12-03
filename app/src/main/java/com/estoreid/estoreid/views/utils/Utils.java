@@ -185,7 +185,7 @@ public static String[] permissions = new String[]{
 
         long time_stamp = 0;
         try {
-            SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
             //SimpleDateFormat formatter = new SimpleDateFormat("HH:mm");
             Date date = (Date) formatter.parse(str_date);
             time_stamp = date.getTime();

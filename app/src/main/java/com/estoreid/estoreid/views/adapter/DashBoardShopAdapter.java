@@ -59,6 +59,7 @@ public class DashBoardShopAdapter extends RecyclerView.Adapter<DashBoardShopAdap
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, Products_Screen.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 intent.putExtra("vendor_id", vendor_id);
                 intent.putExtra("type","list");
                 context.startActivity(intent);

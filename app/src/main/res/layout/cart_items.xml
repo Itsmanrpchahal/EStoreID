@@ -79,7 +79,6 @@
                     android:textColor="@color/colorBlack"
                     android:layout_marginTop="@dimen/defaultmargin"
                     android:drawablePadding="5dp"
-                    android:drawableLeft="@drawable/ic_saveinwishlist"
                     android:textSize="@dimen/normaltext"
                     android:fontFamily="@font/quicksandbold"></TextView>
 
