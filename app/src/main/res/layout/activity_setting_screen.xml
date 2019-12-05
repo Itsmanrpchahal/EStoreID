@@ -226,6 +226,8 @@
                     android:textColor="@color/colorBlack"
                     android:fontFamily="@font/latoregular"
                     android:textSize="@dimen/normaltext"
+                    android:editable="false"
+                    android:focusable="false"
                     android:inputType="number"
                     android:layout_marginTop="@dimen/defaultmargin"
                     android:background="@color/colorTrans"></EditText>

@@ -10,14 +10,19 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -25,6 +30,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -36,6 +42,7 @@ import com.estoreid.estoreid.R;
 import com.estoreid.estoreid.views.apiResponseModel.GetProfileResponse;
 import com.estoreid.estoreid.views.apiResponseModel.UploadProfileResponse;
 import com.estoreid.estoreid.views.controller.Controller;
+import com.estoreid.estoreid.views.login.Login;
 import com.estoreid.estoreid.views.utils.Constants;
 import com.estoreid.estoreid.views.utils.Utils;
 import com.makeramen.roundedimageview.RoundedImageView;
@@ -111,6 +118,8 @@ public class SettingScreen extends BaseActivity implements Controller.UploadProf
     String firstname,lastname,email,phoneno,gender,dob,myFormat;
     DatePickerDialog.OnDateSetListener dateSetListener;
     Calendar calendar;
+    Dialog dialog;
+    String getGender;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -146,6 +155,13 @@ public class SettingScreen extends BaseActivity implements Controller.UploadProf
             }
         });
 
+        settingGender.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog();
+            }
+        });
+
 
 
         settingUploadpic.setOnClickListener(new View.OnClickListener() {
@@ -177,7 +193,38 @@ public class SettingScreen extends BaseActivity implements Controller.UploadProf
 
                 Log.d("data+++++",firstname+" "+lastname+" "+email+" "+phoneno+" "+gender+" "+dob+"  "+part);
 //                Dialog.show();
-                controller.UploadProfile("Bearer "+getStringVal(Constants.TOKEN),firstname,lastname,email,phoneno,gender,frommilles,part);
+
+                if (TextUtils.isEmpty(firstname) && TextUtils.isEmpty(lastname) && TextUtils.isEmpty(email) &&
+                        TextUtils.isEmpty(email) && TextUtils.isEmpty(phoneno) &&
+                TextUtils.isEmpty(gender) && TextUtils.isEmpty(dob))
+                {
+                    settingFirstname.setError("enter firstname");
+                    settingLastname.setError("enter lastname");
+                    settingEmail.setError("enter email");
+                    settingDob.setError("enter dob");
+                    settingPhnno.setError("enter phoneno.");
+                    settingGender.setError("enter gender");
+                }else if (TextUtils.isEmpty(firstname))
+                {
+                    settingFirstname.setError("enter firstname");
+                }else if (TextUtils.isEmpty(lastname)){
+                    settingLastname.setError("enter lastname");
+                }else if ( TextUtils.isEmpty(email))
+                {
+                    settingEmail.setError("enter email");
+                }else if (TextUtils.isEmpty(phoneno))
+                {
+                    settingPhnno.setError("enter phoneno.");
+                }else if (TextUtils.isEmpty(gender))
+                {
+                    settingGender.setError("enter gender");
+                }else if (TextUtils.isEmpty(dob))
+                {
+                    settingDob.setError("enter dob");
+                }else {
+                    controller.UploadProfile("Bearer "+getStringVal(Constants.TOKEN),firstname,lastname,email,phoneno,gender,frommilles,part);
+                }
+
             }
         });
 
@@ -415,4 +462,36 @@ public class SettingScreen extends BaseActivity implements Controller.UploadProf
         return imageEncoded;
     }
 
+
+    private void dialog() {
+        dialog = new Dialog(SettingScreen.this);
+        Window window = dialog.getWindow();
+        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+        dialog.setContentView(R.layout.selectgender);
+        dialog.setCancelable(true);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.show();
+
+        TextView male,female;
+        male = dialog.findViewById(R.id.gendermale);
+        female = dialog.findViewById(R.id.genderfemale);
+
+        male.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getGender = "Male";
+                dialog.dismiss();
+                settingGender.setText(getGender);
+            }
+        });
+
+        female.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getGender = "Female";
+                dialog.dismiss();
+                settingGender.setText(getGender);
+            }
+        });
+    }
 }
