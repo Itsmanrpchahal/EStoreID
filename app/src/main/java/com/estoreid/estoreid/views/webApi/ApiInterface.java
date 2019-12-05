@@ -17,8 +17,10 @@ import com.estoreid.estoreid.views.apiResponseModel.SocailLoginAPIResponse;
 import com.estoreid.estoreid.views.apiResponseModel.UploadProfileResponse;
 import com.estoreid.estoreid.views.apiResponseModel.VendorAPIResponse;
 import com.estoreid.estoreid.views.apiResponseModel.VerifyAPIReponse;
+import com.estoreid.estoreid.views.utils.Constants;
 
 import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -160,5 +162,16 @@ public interface ApiInterface {
             @Header("Authorization") String token,
             @Query("cart_id") String cart_id,
             @Query("quantity") String quantity
+    );
+
+    @Multipart
+    @POST(Constants.SERVER_main_folder +"payumoney/new_hash.php")
+    Call<String> getHashCall(
+            @Part("key") String key,
+            @Part("txnid") String txnid,
+            @Part("amount") String amount,
+            @Part("productinfo") String producinfo,
+            @Part("firstname") String firstname,
+            @Part("email") String email
     );
 }

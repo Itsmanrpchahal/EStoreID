@@ -143,9 +143,6 @@ public class SignUp extends AppCompatActivity implements Controller.RegisterAPI 
                     }else {
                         Utils.showToastMessage(SignUp.this,"No Internet connection",getResources().getDrawable(R.drawable.ic_nointernet));
                     }
-
-
-
                 }
             }
         });

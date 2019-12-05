@@ -75,12 +75,17 @@ public class DashBoardShopAdapter extends RecyclerView.Adapter<DashBoardShopAdap
         holder.followbt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                followIF.onSuccess(datum.getVendor_id());
-                if (holder.followbt.getText().equals("Follow")) {
-                    holder.followbt.setText("Unfollow");
-                } else if (holder.followbt.getText().equals("Unfollow")) {
-                    holder.followbt.setText("Follow");
+                if (Utils.isOnline() != false) {
+                    followIF.onSuccess(datum.getVendor_id());
+                    if (holder.followbt.getText().equals("Follow")) {
+                        holder.followbt.setText("Unfollow");
+                    } else if (holder.followbt.getText().equals("Unfollow")) {
+                        holder.followbt.setText("Follow");
+                    }
+                } else {
+                    Utils.showToastMessage(context, "No Internet", context.getResources().getDrawable(R.drawable.ic_nointernet));
                 }
+
             }
         });
 

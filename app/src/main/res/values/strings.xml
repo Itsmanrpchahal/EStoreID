@@ -24,7 +24,12 @@
     <string name="order_delete">If you deleted it will not appeare in\n your order list anymore.</string>
     <string name="selectcurloc"><u>Select Current Loaction</u></string>
     <string name="tc">View T&amp;C</string>
-
+    <string name="title_fingerprint">One-touch Sign In</string>
+    <string name="desc_fingerprint">Please place your fingertip on the scanner to verify your identity</string>
+    <string name="note">(Fingerprint sign in makes your app login much faster. Your device should have at least one fingerprint registered in device settings)</string>
+    <string name="title_activity_home">Fingerprint</string>
+    <string name="activity_home_desc">You have successfully logged in with fingerprint authentication</string>
+    <string name="activity_home_note">Close and re-open the app to see the fingerprint auth screen again</string>
 
     <string name="facebook_app_id">548824479018750</string>
     <string name="fb_login_protocol_scheme">fb548824479018750</string>

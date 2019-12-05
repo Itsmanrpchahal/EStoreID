@@ -5,10 +5,11 @@ android {
     buildToolsVersion "29.0.2"
     defaultConfig {
         applicationId "com.estoreid.estoreid"
-        minSdkVersion 17
+        minSdkVersion 23
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -36,7 +37,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     implementation 'com.jakewharton:butterknife:10.0.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.0.0'
-
+    implementation 'com.android.support:multidex:1.0.3'
     //Map View
     implementation 'com.google.android.gms:play-services-auth:16.0.1'
     implementation 'com.google.android.gms:play-services-vision:17.0.2'
@@ -83,5 +84,9 @@ dependencies {
     implementation 'com.chaos.view:pinview:1.4.3'
     //image cropview
     implementation 'com.theartofdev.edmodo:android-image-cropper:2.3.+'
-}
 
+    //PayUMoney
+    implementation 'com.payumoney.core:payumoney-sdk:7.6.0'
+    implementation 'com.payumoney.sdkui:plug-n-play:1.6.0'
+
+}

@@ -49,6 +49,7 @@ import com.estoreid.estoreid.views.apiResponseModel.FollowAPIResponse;
 import com.estoreid.estoreid.views.apiResponseModel.VendorAPIResponse;
 import com.estoreid.estoreid.views.controller.Controller;
 import com.estoreid.estoreid.views.filter.FilterScreen;
+import com.estoreid.estoreid.views.signup.SignUp;
 import com.estoreid.estoreid.views.utils.Constants;
 import com.estoreid.estoreid.views.utils.Utils;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -329,7 +330,14 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback, Co
                                 } else {
                                     lat = String.valueOf(location.getLatitude());
                                     lng = String.valueOf(location.getLongitude());
-                                    controller.setVendorList("Bearer " + getStringVal(Constants.TOKEN), lat, lng, "");
+
+                                    if (Utils.isOnline()!=false)
+                                    {
+                                        controller.setVendorList("Bearer " + getStringVal(Constants.TOKEN), lat, lng, "");
+                                    }else {
+                                        Utils.showToastMessage(MainActivity.this,"No Internet connection",getResources().getDrawable(R.drawable.ic_nointernet));
+                                    }
+
                                 }
 
                                 Log.d("Location", "" + lat + "" + lng);
