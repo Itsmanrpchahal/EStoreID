@@ -147,16 +147,17 @@
                 android:id="@+id/qr_share"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/round_blue_bt"
-                android:layout_centerHorizontal="true"
                 android:layout_below="@id/qr_image"
-                android:layout_marginTop="@dimen/defaultmargin"
-                android:text="@string/sharre"
-                android:textColor="@color/colorWhite"
-                android:padding="15dp"
-                android:textAllCaps="false"
+                android:layout_marginTop="18dp"
+                android:gravity="center_horizontal"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/round_blue_bt"
                 android:drawableLeft="@drawable/ic_share"
-                android:drawablePadding="10dp"></Button>
+                android:drawablePadding="10dp"
+                android:padding="15dp"
+                android:text="@string/sharre"
+                android:textAllCaps="false"
+                android:textColor="@color/colorWhite"></Button>
 
             <Button
                 android:id="@+id/orderCancel"

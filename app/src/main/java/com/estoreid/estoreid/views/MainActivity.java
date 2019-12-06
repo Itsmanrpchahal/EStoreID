@@ -213,6 +213,7 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback, Co
                 String postcode = pincode.getText().toString();
                 if (!TextUtils.isEmpty(pincode.getText().toString())) {
                     Dialog.show();
+
                     controller.setVendorList("Bearer " + getStringVal(Constants.TOKEN), "", "", postcode);
                    layoutvisibilty();
                 } else {
@@ -261,7 +262,12 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback, Co
         adapter.SetOnFollow(new FollowIF() {
             @Override
             public void onSuccess(String id) {
-                controller.setFollowUnfollow("Bearer " + getStringVal(Constants.TOKEN),id);
+                if (Utils.isOnline() != false) {
+                    controller.setFollowUnfollow("Bearer " + getStringVal(Constants.TOKEN),id);
+                } else {
+                    Utils.showToastMessage(MainActivity.this, "No Internet Connection", getResources().getDrawable(R.drawable.ic_nointernet));
+                }
+
             }
         });
     }
@@ -335,7 +341,8 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback, Co
                                     {
                                         controller.setVendorList("Bearer " + getStringVal(Constants.TOKEN), lat, lng, "");
                                     }else {
-                                        Utils.showToastMessage(MainActivity.this,"No Internet connection",getResources().getDrawable(R.drawable.ic_nointernet));
+                                        Dialog.dismiss();
+                                        Utils.showToastMessage(MainActivity.this,"No Internet Connection",getResources().getDrawable(R.drawable.ic_nointernet));
                                     }
 
                                 }

@@ -78,7 +78,14 @@ public class ProfileScreen extends BaseClass implements Controller.GetProfile {
         Dialog = Utils.showDialog(this);
         Dialog.show();
         controller = new Controller(this);
-        controller.GetProfile("Bearer "+getStringVal(Constants.TOKEN));
+        if (Utils.isOnline()!=false)
+        {
+            Dialog.show();
+            controller.GetProfile("Bearer "+getStringVal(Constants.TOKEN));
+        }else {
+            Dialog.dismiss();
+            Utils.showToastMessage(ProfileScreen.this,"No Internet Connection",getResources().getDrawable(R.drawable.ic_nointernet));
+        }
 
         setData();
 

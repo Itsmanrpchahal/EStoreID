@@ -139,7 +139,15 @@ public class Product_details extends BaseActivity implements Controller.ProductD
         intent = getIntent();
         if (intent != null) {
             product_id = intent.getStringExtra("product_id");
-            controller.ProductDetails("Bearer " + token, product_id);
+            if (Utils.isOnline()!=false)
+            {
+                Dialog.show();
+                controller.ProductDetails("Bearer " + token, product_id);
+            }else {
+                Dialog.dismiss();
+                Utils.showToastMessage(Product_details.this,"No Internet Connection",getResources().getDrawable(R.drawable.ic_nointernet));
+            }
+
         }
         ButterKnife.bind(this);
 
@@ -189,7 +197,15 @@ public class Product_details extends BaseActivity implements Controller.ProductD
         productAddToCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                controller.Addtocart("Bearer "+getStringVal(Constants.TOKEN),product_id,productColorID,productSizeID);
+                if (Utils.isOnline()!=false)
+                {
+                    Dialog.show();
+                    controller.Addtocart("Bearer "+getStringVal(Constants.TOKEN),product_id,productColorID,productSizeID);
+                }else {
+                    Dialog.dismiss();
+                    Utils.showToastMessage(Product_details.this,"No Internet Connection",getResources().getDrawable(R.drawable.ic_nointernet));
+                }
+
                 Dialog.show();
             }
         });

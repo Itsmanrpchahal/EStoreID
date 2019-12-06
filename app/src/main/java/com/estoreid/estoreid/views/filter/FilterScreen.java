@@ -1,6 +1,7 @@
 package com.estoreid.estoreid.views.filter;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -68,7 +69,7 @@ public class FilterScreen extends BaseActivity implements Controller.FilterScree
     @BindView(R.id.clearfilterbt)
     Button clearfilterbt;
     Controller controller;
-    ArrayList<FilterDataResponse.Datum> filterdata = new ArrayList<>();
+    Dialog Dialog;
     ArrayList<FilterDataResponse.Datum.Brand> brands = new ArrayList<>();
     ArrayList<FilterDataResponse.Datum.Category> categoryArrayList = new ArrayList<>();
     ArrayList<FilterDataResponse.Datum.Color> colorArrayList = new ArrayList<>();
@@ -77,10 +78,17 @@ public class FilterScreen extends BaseActivity implements Controller.FilterScree
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_filter_screen);
-        ButterKnife.bind(this);
         controller = new Controller(this);
+        ButterKnife.bind(this);
+        Dialog = Utils.showDialog(this);
 
-        controller.FilterScreen("Bearer "+getStringVal(Constants.TOKEN));
+        if (Utils.isOnline() != false) {
+
+            controller.FilterScreen("Bearer " + getStringVal(Constants.TOKEN));
+        } else {
+            Dialog.dismiss();
+            Utils.showToastMessage(FilterScreen.this, "No Internet Connection", getResources().getDrawable(R.drawable.ic_nointernet));
+        }
 
         listerners();
     }
@@ -101,7 +109,7 @@ public class FilterScreen extends BaseActivity implements Controller.FilterScree
         linearLayout.setOrientation(LinearLayout.HORIZONTAL);
         colorsrecycler.setHasFixedSize(true);
         colorsrecycler.setLayoutManager(linearLayout);
-        colorsAdapter = new ColorsAdapter(this,colorArrayList);
+        colorsAdapter = new ColorsAdapter(this, colorArrayList);
         colorsrecycler.setAdapter(colorsAdapter);
         colorsAdapter.notifyDataSetChanged();
     }
@@ -117,46 +125,45 @@ public class FilterScreen extends BaseActivity implements Controller.FilterScree
     private void setBrandAdapter(ArrayList<FilterDataResponse.Datum.Brand> brands) {
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getApplicationContext(), 3);
         brandrecycler.setLayoutManager(gridLayoutManager); // set LayoutManager to RecyclerView
-        brandAdapter = new BrandAdapter(this,brands);
+        brandAdapter = new BrandAdapter(this, brands);
         brandrecycler.setAdapter(brandAdapter);
         brandAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void onSucessFilter(Response<FilterDataResponse> filterDataResponseResponse) {
+        Dialog.dismiss();
         brands.clear();
         categoryArrayList.clear();
         if (filterDataResponseResponse.body().getStatus() == 200) {
 
-            for (int i=0;i<filterDataResponseResponse.body().getData().get(0).getBrands().size();i++)
-            {
+            for (int i = 0; i < filterDataResponseResponse.body().getData().get(0).getBrands().size(); i++) {
                 FilterDataResponse.Datum.Brand brand = filterDataResponseResponse.body().getData().get(0).getBrands().get(i);
                 brands.add(brand);
                 setBrandAdapter(brands);
             }
 
-            for (int i=0;i<filterDataResponseResponse.body().getData().get(0).getCategories().size();i++)
-            {
+            for (int i = 0; i < filterDataResponseResponse.body().getData().get(0).getCategories().size(); i++) {
                 FilterDataResponse.Datum.Category category = filterDataResponseResponse.body().getData().get(0).getCategories().get(i);
                 categoryArrayList.add(category);
                 setCategoriesAdpater(categoryArrayList);
             }
 
-            for (int i=0;i<filterDataResponseResponse.body().getData().get(0).getColors().size();i++)
-            {
+            for (int i = 0; i < filterDataResponseResponse.body().getData().get(0).getColors().size(); i++) {
                 FilterDataResponse.Datum.Color color = filterDataResponseResponse.body().getData().get(0).getColors().get(i);
                 colorArrayList.add(color);
                 setColorsAdapter(colorArrayList);
             }
 
 
-        }else {
+        } else {
             Utils.showToastMessage(FilterScreen.this, filterDataResponseResponse.body().getMessage(), getResources().getDrawable(R.drawable.ic_error_black_24dp));
         }
     }
 
     @Override
     public void onError(String error) {
+        Dialog.dismiss();
         Utils.showToastMessage(FilterScreen.this, error, getResources().getDrawable(R.drawable.ic_error_black_24dp));
     }
 }

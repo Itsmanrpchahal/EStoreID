@@ -165,7 +165,7 @@ public class Login extends BaseClass implements Controller.LoginAPI, Controller.
                     }
 
                 } else {
-                    Utils.showToastMessage(Login.this, "No Internet", getResources().getDrawable(R.drawable.ic_nointernet));
+                    Utils.showToastMessage(Login.this, "No Internet Connection", getResources().getDrawable(R.drawable.ic_nointernet));
                 }
             }
         });
@@ -177,6 +177,7 @@ public class Login extends BaseClass implements Controller.LoginAPI, Controller.
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 startActivity(intent);
+                finish();
             }
         });
 
@@ -210,7 +211,7 @@ public class Login extends BaseClass implements Controller.LoginAPI, Controller.
                 if (Utils.isOnline() != false) {
                     resetemaildialog();
                 } else {
-                    Utils.showToastMessage(Login.this, "No Internet", getResources().getDrawable(R.drawable.ic_nointernet));
+                    Utils.showToastMessage(Login.this, "No Internet Connection", getResources().getDrawable(R.drawable.ic_nointernet));
                 }
 
             }
@@ -252,7 +253,7 @@ public class Login extends BaseClass implements Controller.LoginAPI, Controller.
 
                 } else {
                     Dialog.dismiss();
-                    Utils.showToastMessage(Login.this, "No Internet", getResources().getDrawable(R.drawable.ic_nointernet));
+                    Utils.showToastMessage(Login.this, "No Internet Connection", getResources().getDrawable(R.drawable.ic_nointernet));
                 }
 
             }
@@ -321,7 +322,7 @@ public class Login extends BaseClass implements Controller.LoginAPI, Controller.
                         Dialog.show();
                         controller.setSetNewPassword(email,otp,passwrd);
                     }else {
-                        Utils.showToastMessage(Login.this,"No Internet",getResources().getDrawable(R.drawable.ic_nointernet));
+                        Utils.showToastMessage(Login.this,"No Internet Connection",getResources().getDrawable(R.drawable.ic_nointernet));
                     }
 
                 }

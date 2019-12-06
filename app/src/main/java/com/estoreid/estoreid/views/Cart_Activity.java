@@ -124,7 +124,15 @@ public class Cart_Activity extends BaseActivity  implements Controller.CartItems
         Dialog.show();
         additemRecyclerviw.setFocusable(false);
         controller = new Controller((Controller.CartItems)this,(Controller.AddCartItemQuantity)this);
-        controller.CartItems("Bearer "+getStringVal(Constants.TOKEN));
+        if (Utils.isOnline()!=false)
+        {
+            Dialog.show();
+            controller.CartItems("Bearer "+getStringVal(Constants.TOKEN));
+        }else {
+            Dialog.dismiss();
+            Utils.showToastMessage(Cart_Activity.this,"No Internet Connection",getResources().getDrawable(R.drawable.ic_nointernet));
+        }
+
 
         listeners();
     }
@@ -162,7 +170,15 @@ public class Cart_Activity extends BaseActivity  implements Controller.CartItems
         adapter.CartAddedItemAdapter(new AddCartQuantity() {
             @Override
             public void onSuccess(String cart_id, String quantity) {
-                controller.AddCartItemQuantity("Bearer "+getStringVal(Constants.TOKEN),cart_id,quantity);
+                if (Utils.isOnline()!=false)
+                {
+                    Dialog.show();
+                    controller.AddCartItemQuantity("Bearer "+getStringVal(Constants.TOKEN),cart_id,quantity);
+                }else {
+                    Dialog.dismiss();
+                    Utils.showToastMessage(Cart_Activity.this,"No Internet Connection",getResources().getDrawable(R.drawable.ic_nointernet));
+                }
+
             }
         });
 

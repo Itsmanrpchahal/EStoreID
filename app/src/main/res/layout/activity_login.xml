@@ -163,6 +163,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/or_layout"
                 android:layout_marginTop="@dimen/defaultmargin"
+                android:layout_marginBottom="@dimen/defaultmargin"
                 android:orientation="horizontal"
                 android:weightSum="2">
 

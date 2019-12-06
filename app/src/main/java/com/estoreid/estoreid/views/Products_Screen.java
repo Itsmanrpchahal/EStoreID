@@ -110,7 +110,14 @@ public class Products_Screen extends BaseActivity implements Controller.Products
         if (intent != null) {
             vendor_id = intent.getStringExtra("vendor_id");
             type = intent.getStringExtra("type");
-            controller.Products("Bearer " + getStringVal(Constants.TOKEN), vendor_id);
+            if (Utils.isOnline()!=false)
+            {
+                Dialog.show();
+                controller.Products("Bearer " + getStringVal(Constants.TOKEN), vendor_id);
+            }else {
+                Dialog.dismiss();
+                Utils.showToastMessage(Products_Screen.this,"No Internet Connection",getResources().getDrawable(R.drawable.ic_nointernet));
+            }
 
         }
 

@@ -5,11 +5,16 @@ import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
+import android.util.Base64;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -115,7 +120,7 @@ public static String[] permissions = new String[]{
         dialog.setContentView(R.layout.custom_progress);
         dialog.setCancelable(false);
         dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-
+        dialog.show();
         return dialog;
     }
 
@@ -237,10 +242,10 @@ public static String[] permissions = new String[]{
         return sdf.format(currenTimeZone);
     }
 
-    public MultipartBody.Part sendImageFileToserver(Bitmap bitMap) throws IOException {
+    public static MultipartBody.Part sendImageFileToserver(Bitmap bitMap,String image,Context context) throws IOException {
 
         File filesDir = context.getFilesDir();
-        File file = new File(filesDir, "avatar" + ".png");
+        File file = new File(filesDir, image + ".png");
 
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
         bitMap.compress(Bitmap.CompressFormat.JPEG, 50, bos);
@@ -252,10 +257,56 @@ public static String[] permissions = new String[]{
         fos.close();
 
         RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), file);
-        MultipartBody.Part body = MultipartBody.Part.createFormData("avatar", file.getName(), reqFile);
-        RequestBody name = RequestBody.create(MediaType.parse("text/plain"), "avatar");
+        MultipartBody.Part body = MultipartBody.Part.createFormData(image, file.getName(), reqFile);
+        RequestBody name = RequestBody.create(MediaType.parse("text/plain"), image);
 
         return body;
+    }
+
+    public static String encodeTobase64(Bitmap image) {
+        Bitmap immage = image;
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        immage.compress(Bitmap.CompressFormat.JPEG, 60, baos);
+        byte[] b = baos.toByteArray();
+        String imageEncoded = Base64.encodeToString(b, Base64.DEFAULT);
+
+        return imageEncoded;
+    }
+
+    //share image
+    public static void shareContent(Context context, View imageView){
+
+        Bitmap bitmap =getBitmapFromView(imageView);
+        try {
+            File file = new File(context.getExternalCacheDir(),"logicchip.png");
+            FileOutputStream fOut = new FileOutputStream(file);
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, fOut);
+            fOut.flush();
+            fOut.close();
+            file.setReadable(true, false);
+            final Intent intent = new Intent(android.content.Intent.ACTION_SEND);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.putExtra(Intent.EXTRA_TEXT, "SHARE QR");
+            intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file));
+            intent.setType("image/png");
+            context.startActivity(Intent.createChooser(intent, "Share image via"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private static Bitmap getBitmapFromView(View view) {
+        Bitmap returnedBitmap = Bitmap.createBitmap(view.getWidth(), view.getHeight(),Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(returnedBitmap);
+        Drawable bgDrawable =view.getBackground();
+        if (bgDrawable!=null) {
+            bgDrawable.draw(canvas);
+        }   else{
+            canvas.drawColor(Color.WHITE);
+        }
+        view.draw(canvas);
+        return returnedBitmap;
     }
 
 }

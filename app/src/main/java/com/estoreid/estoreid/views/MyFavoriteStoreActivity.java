@@ -49,7 +49,15 @@ public class MyFavoriteStoreActivity extends BaseActivity implements Controller.
         Dialog.show();
         controller = new Controller((Controller.FavStore) this,(Controller.FollowUnfollow)this);
 
-        controller.FavStore("Bearer "+getStringVal(Constants.TOKEN));
+        if (Utils.isOnline()!=false)
+        {
+            Dialog.show();
+            controller.FavStore("Bearer "+getStringVal(Constants.TOKEN));
+        }else {
+            Dialog.dismiss();
+            Utils.showToastMessage(MyFavoriteStoreActivity.this,"No Internet Connection",getResources().getDrawable(R.drawable.ic_nointernet));
+        }
+
         backOnfavStore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -79,7 +87,14 @@ public class MyFavoriteStoreActivity extends BaseActivity implements Controller.
         favoriteStoreAdapter.FavoriteStoreAdapter(new GetVendorIDIF() {
             @Override
             public void venDorID(String vendorID) {
-                controller.setFollowUnfollow("Bearer " + getStringVal(Constants.TOKEN),vendorID);
+                if (Utils.isOnline()!=false)
+                {
+                    Dialog.show();
+                    controller.setFollowUnfollow("Bearer " + getStringVal(Constants.TOKEN),vendorID);
+                }else {
+                    Dialog.dismiss();
+                    Utils.showToastMessage(MyFavoriteStoreActivity.this,"No Internet Connection",getResources().getDrawable(R.drawable.ic_nointernet));
+                }
             }
         });
     }

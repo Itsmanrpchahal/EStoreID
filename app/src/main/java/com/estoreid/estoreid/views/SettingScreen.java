@@ -61,6 +61,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -133,7 +134,15 @@ public class SettingScreen extends BaseActivity implements Controller.UploadProf
         calendar = Calendar.getInstance();
         filesDir = getFilesDir();
         listerners();
-        controller.GetProfile("Bearer "+getStringVal(Constants.TOKEN));
+        if (Utils.isOnline()!=false)
+        {
+            Dialog.show();
+            controller.GetProfile("Bearer "+getStringVal(Constants.TOKEN));
+        }else {
+            Dialog.dismiss();
+            Utils.showToastMessage(SettingScreen.this,"No Internet Connection",getResources().getDrawable(R.drawable.ic_nointernet));
+        }
+
     }
 
     private void listerners() {
@@ -222,7 +231,15 @@ public class SettingScreen extends BaseActivity implements Controller.UploadProf
                 {
                     settingDob.setError("enter dob");
                 }else {
-                    controller.UploadProfile("Bearer "+getStringVal(Constants.TOKEN),firstname,lastname,email,phoneno,gender,frommilles,part);
+                    if (Utils.isOnline()!=false)
+                    {
+                        Dialog.show();
+                        controller.UploadProfile("Bearer "+getStringVal(Constants.TOKEN),firstname,lastname,email,phoneno,gender,frommilles,part);
+                    }else {
+                        Dialog.dismiss();
+                        Utils.showToastMessage(SettingScreen.this,"No Internet Connection",getResources().getDrawable(R.drawable.ic_nointernet));
+                    }
+
                 }
 
             }
@@ -269,8 +286,6 @@ public class SettingScreen extends BaseActivity implements Controller.UploadProf
                     } else {
                         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                         startActivityForResult(intent, REQUEST_CAMERA);
-
-
                     }
 
                 }else if ("Gallery".equals(dialogOptions[which])) {
@@ -300,9 +315,10 @@ public class SettingScreen extends BaseActivity implements Controller.UploadProf
             try {
                 CropImage.activity(uri).setGuidelines(CropImageView.Guidelines.ON).start(SettingScreen.this);
                 bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
+//                setStringVal(Constants.BitmapImage, String.valueOf(bitmap));
 
                 settingUserImage.setImageBitmap(bitmap);
-                part = sendImageFileToserver(bitmap);
+                part = Utils.sendImageFileToserver(bitmap,"user_image",SettingScreen.this);
 
 
             } catch (IOException e) {
@@ -318,8 +334,8 @@ public class SettingScreen extends BaseActivity implements Controller.UploadProf
                 try {
                     bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), imageURI);
                     Glide.with(SettingScreen.this).load(imageURI).into(settingUserImage);
-                    encodeTobase64(bitmap);
-                    part = sendImageFileToserver(bitmap);
+                    Utils.encodeTobase64(bitmap);
+                    part = Utils.sendImageFileToserver(bitmap,"user_image",SettingScreen.this);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -333,10 +349,10 @@ public class SettingScreen extends BaseActivity implements Controller.UploadProf
             bitmap = (Bitmap) bundle.get("data");
 
             settingUserImage.setImageBitmap(bitmap);
-            encodeTobase64(bitmap);
+            Utils.encodeTobase64(bitmap);
 
             try {
-                part = sendImageFileToserver(bitmap);
+                part = Utils.sendImageFileToserver(bitmap,"user_image", SettingScreen.this);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -415,7 +431,7 @@ public class SettingScreen extends BaseActivity implements Controller.UploadProf
             try {
                 InputStream stream = new URL(urlimage).openStream();
                 bitmap = BitmapFactory.decodeStream(stream);
-                part = sendImageFileToserver(bitmap);
+                part = Utils.sendImageFileToserver(bitmap,"user_image",SettingScreen.this);
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -428,38 +444,6 @@ public class SettingScreen extends BaseActivity implements Controller.UploadProf
             super.onPostExecute(bitmap);
             imageView.setImageBitmap(bitmap);
         }
-    }
-
-
-    //convert image to multipart
-    public MultipartBody.Part sendImageFileToserver(Bitmap bitMap) throws IOException {
-
-
-        File file = new File(filesDir, "user_image" + ".png");
-
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        bitMap.compress(Bitmap.CompressFormat.JPEG, 50, bos);
-        byte[] bitmapdata = bos.toByteArray();
-
-        FileOutputStream fos = new FileOutputStream(file);
-        fos.write(bitmapdata);
-        fos.flush();
-        fos.close();
-
-        RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), file);
-        MultipartBody.Part body = MultipartBody.Part.createFormData("user_image", file.getName(), reqFile);
-        RequestBody name = RequestBody.create(MediaType.parse("text/plain"), "user_image");
-        return body;
-    }
-
-    public static String encodeTobase64(Bitmap image) {
-        Bitmap immage = image;
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        immage.compress(Bitmap.CompressFormat.JPEG, 60, baos);
-        byte[] b = baos.toByteArray();
-        String imageEncoded = Base64.encodeToString(b, Base64.DEFAULT);
-
-        return imageEncoded;
     }
 
 

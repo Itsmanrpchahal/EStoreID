@@ -59,6 +59,7 @@
             android:icon="@drawable/ic_job_inactive"
             android:title="Job" />
 
+
         <item
             android:id="@+id/logout"
             android:icon="@drawable/ic_logout_inactive"

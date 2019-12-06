@@ -9,4 +9,5 @@ public class Constants {
     public static final String MERCHANTID ="5884494";
     public static final String MERCHANTKEY ="WnWkb6be";
     public static final String SERVER_main_folder = "payment/";
+    public static final String BitmapImage = "bitmapimage";
 }

@@ -25,6 +25,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.estoreid.estoreid.R;
 import com.estoreid.estoreid.views.baseclass.BaseClass;
+import com.estoreid.estoreid.views.biometriclock.FingerprintActivity;
 import com.estoreid.estoreid.views.login.Login;
 import com.estoreid.estoreid.views.utils.Constants;
 import com.google.android.material.navigation.NavigationView;
@@ -35,8 +36,8 @@ public class BaseActivity extends BaseClass implements NavigationView.OnNavigati
     DrawerLayout drawer;
     NavigationView navigationView;
     EditText search;
-    Dialog popup;
-    Button OK, CANCEL;
+    Dialog popup,biometric;
+    Button OK, CANCEL,BIOMETRICYES,BIOMETRICNO;
     View header;
     RoundedImageView imageView;
     TextView username;
@@ -114,6 +115,34 @@ public class BaseActivity extends BaseClass implements NavigationView.OnNavigati
 
 
         return true;
+    }
+
+    private void biometricdialog() {
+        biometric = new Dialog(BaseActivity.this);
+        Window window = biometric.getWindow();
+        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+        biometric.setContentView(R.layout.biometricdialog);
+        biometric.setCancelable(true);
+        biometric.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        biometric.show();
+
+        BIOMETRICYES = biometric.findViewById(R.id.yesbiometric);
+        BIOMETRICNO = biometric.findViewById(R.id.nobiometric);
+
+        BIOMETRICYES.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(BaseActivity.this, FingerprintActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        BIOMETRICNO.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                biometric.dismiss();
+            }
+        });
     }
 
     protected void startAnimatedActivity(Intent intent) {
