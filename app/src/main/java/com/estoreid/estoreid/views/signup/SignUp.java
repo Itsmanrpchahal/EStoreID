@@ -89,8 +89,6 @@ public class SignUp extends AppCompatActivity implements Controller.RegisterAPI 
         });
 
 
-
-
         signup_bt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -106,7 +104,7 @@ public class SignUp extends AppCompatActivity implements Controller.RegisterAPI 
                     confirmPasswordEt.setError("enter confirm password");
                 }else if (TextUtils.isEmpty(firstnameEt.getText().toString()))
                 {
-
+                    firstnameEt.setError("enter firstname");
                 }else if (TextUtils.isEmpty(lastnameEt.getText().toString()))
                 {
                     lastnameEt.setError("enter lastname");

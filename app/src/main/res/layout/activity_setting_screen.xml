@@ -106,6 +106,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:hint="Firstname"
+                            android:imeOptions="actionNext"
                             android:textColor="@color/colorBlack"
                             android:layout_marginRight="@dimen/margin_dp5"
                             android:fontFamily="@font/latoregular"
@@ -190,17 +191,35 @@
                     android:layout_marginTop="@dimen/defaultmargin"
                     android:text="Phone"></TextView>
 
-                <EditText
-                    android:id="@+id/setting_phnno"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="+5151161"
-                    android:textColor="@color/colorBlack"
-                    android:fontFamily="@font/latoregular"
-                    android:textSize="@dimen/normaltext"
-                    android:inputType="number"
-                    android:layout_marginTop="@dimen/defaultmargin"
-                    android:background="@color/colorTrans"></EditText>
+               <LinearLayout
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:weightSum="2"
+                   android:orientation="horizontal">
+
+                   <com.rilixtech.widget.countrycodepicker.CountryCodePicker
+                       android:id="@+id/ccp"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       app:ccp_defaultNameCode="IN"
+                       android:layout_marginTop="@dimen/defaultmargin">
+
+                   </com.rilixtech.widget.countrycodepicker.CountryCodePicker>
+
+                   <EditText
+                       android:id="@+id/setting_phnno"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:hint="5151161"
+                       android:textColor="@color/colorBlack"
+                       android:fontFamily="@font/latoregular"
+                       android:textSize="@dimen/normaltext"
+                       android:imeOptions="actionDone"
+                       android:inputType="number"
+                       android:layout_marginTop="@dimen/defaultmargin"
+                       android:background="@color/colorTrans"></EditText>
+
+               </LinearLayout>
 
 
                 <View

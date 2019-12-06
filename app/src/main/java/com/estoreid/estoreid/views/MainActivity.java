@@ -88,8 +88,6 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback, Co
     String lat = "20.5937";
     String lng = "78.9629", citystr;
     GoogleMap Gmap;
-    int AUTOCOMPLETE_REQUEST_CODE = 1;
-    List<Place.Field> fields = Arrays.asList(Place.Field.ID, Place.Field.NAME);
     @BindView(R.id.search_et)
     EditText searchEt;
     @BindView(R.id.toolbar_layout)
@@ -212,10 +210,17 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback, Co
 
                 String postcode = pincode.getText().toString();
                 if (!TextUtils.isEmpty(pincode.getText().toString())) {
-                    Dialog.show();
 
-                    controller.setVendorList("Bearer " + getStringVal(Constants.TOKEN), "", "", postcode);
-                   layoutvisibilty();
+                    if (Utils.isOnline()!=false)
+                    {
+                        Dialog.show();
+                        controller.setVendorList("Bearer " + getStringVal(Constants.TOKEN), "", "", postcode);
+                        layoutvisibilty();
+                    }else {
+                        Dialog.dismiss();
+                        Utils.showToastMessage(MainActivity.this,"No Internet Connection",getResources().getDrawable(R.drawable.ic_nointernet));
+                    }
+
                 } else {
                     pincode.setError("Enter Pincode");
                 }

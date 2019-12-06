@@ -1,7 +1,6 @@
 package com.estoreid.estoreid.views;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -17,9 +16,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.TextUtils;
-import android.util.Base64;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -28,12 +25,10 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
@@ -42,16 +37,15 @@ import com.estoreid.estoreid.R;
 import com.estoreid.estoreid.views.apiResponseModel.GetProfileResponse;
 import com.estoreid.estoreid.views.apiResponseModel.UploadProfileResponse;
 import com.estoreid.estoreid.views.controller.Controller;
-import com.estoreid.estoreid.views.login.Login;
 import com.estoreid.estoreid.views.utils.Constants;
 import com.estoreid.estoreid.views.utils.Utils;
 import com.makeramen.roundedimageview.RoundedImageView;
+import com.rilixtech.widget.countrycodepicker.Country;
+import com.rilixtech.widget.countrycodepicker.CountryCodePicker;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -60,17 +54,13 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Locale;
-import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import okhttp3.MediaType;
 import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
 import retrofit2.Response;
 
-public class SettingScreen extends BaseActivity implements Controller.UploadProfile ,Controller.GetProfile{
+public class SettingScreen extends BaseActivity implements Controller.UploadProfile, Controller.GetProfile {
 
     public static int RESULT_LOAD_IMAGE = 101;
     public static int REQUEST_CAMERA = 102;
@@ -116,11 +106,13 @@ public class SettingScreen extends BaseActivity implements Controller.UploadProf
     ImageButton settingUploadpic;
     Controller controller;
     Dialog Dialog;
-    String firstname,lastname,email,phoneno,gender,dob,myFormat;
+    String firstname, lastname, email, phoneno, gender, dob, myFormat;
     DatePickerDialog.OnDateSetListener dateSetListener;
     Calendar calendar;
     Dialog dialog;
-    String getGender;
+    String getGender, frommilles,countrycode="91";
+    @BindView(R.id.ccp)
+    CountryCodePicker ccp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -128,24 +120,30 @@ public class SettingScreen extends BaseActivity implements Controller.UploadProf
         setContentView(R.layout.activity_setting_screen);
         ButterKnife.bind(this);
 
-        controller = new Controller((Controller.UploadProfile)this,(Controller.GetProfile)this);
+        controller = new Controller((Controller.UploadProfile) this, (Controller.GetProfile) this);
         Dialog = Utils.showDialog(this);
         Dialog.show();
         calendar = Calendar.getInstance();
         filesDir = getFilesDir();
         listerners();
-        if (Utils.isOnline()!=false)
-        {
+        if (Utils.isOnline() != false) {
             Dialog.show();
-            controller.GetProfile("Bearer "+getStringVal(Constants.TOKEN));
-        }else {
+            controller.GetProfile("Bearer " + getStringVal(Constants.TOKEN));
+        } else {
             Dialog.dismiss();
-            Utils.showToastMessage(SettingScreen.this,"No Internet Connection",getResources().getDrawable(R.drawable.ic_nointernet));
+            Utils.showToastMessage(SettingScreen.this, "No Internet Connection", getResources().getDrawable(R.drawable.ic_nointernet));
         }
 
     }
 
     private void listerners() {
+
+        ccp.setOnCountryChangeListener(new CountryCodePicker.OnCountryChangeListener() {
+            @Override
+            public void onCountrySelected(Country selectedCountry) {
+                countrycode = selectedCountry.getPhoneCode();
+            }
+        });
 
         backSetting.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -157,8 +155,8 @@ public class SettingScreen extends BaseActivity implements Controller.UploadProf
         settingDob.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DatePickerDialog datePickerDialog =new DatePickerDialog(SettingScreen.this,R.style.DialogTheme,
-                        dateSetListener,calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),calendar.get(Calendar.DAY_OF_MONTH));
+                DatePickerDialog datePickerDialog = new DatePickerDialog(SettingScreen.this, R.style.DialogTheme,
+                        dateSetListener, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
 //                datePickerDialog.getDatePicker().setMinDate();
                 datePickerDialog.show();
             }
@@ -172,18 +170,16 @@ public class SettingScreen extends BaseActivity implements Controller.UploadProf
         });
 
 
-
         settingUploadpic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               selectPhoto();
+                selectPhoto();
             }
         });
 
         settingSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Dialog.show();
                 firstname = settingFirstname.getText().toString();
                 lastname = settingLastname.getText().toString();
                 email = settingEmail.getText().toString();
@@ -191,53 +187,46 @@ public class SettingScreen extends BaseActivity implements Controller.UploadProf
                 gender = settingGender.getText().toString();
                 dob = settingDob.getText().toString();
 
-                DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-                Date date = null;
-                try {
-                    date = (Date) formatter.parse(dob);
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-                String frommilles = String.valueOf(date.getTime());
-
-                Log.d("data+++++",firstname+" "+lastname+" "+email+" "+phoneno+" "+gender+" "+dob+"  "+part);
+                Log.d("data+++++", firstname + " " + lastname + " " + email + " " + phoneno + " " + gender + " " + dob + "  " + part);
 //                Dialog.show();
 
                 if (TextUtils.isEmpty(firstname) && TextUtils.isEmpty(lastname) && TextUtils.isEmpty(email) &&
                         TextUtils.isEmpty(email) && TextUtils.isEmpty(phoneno) &&
-                TextUtils.isEmpty(gender) && TextUtils.isEmpty(dob))
-                {
+                        TextUtils.isEmpty(gender) && TextUtils.isEmpty(dob)) {
                     settingFirstname.setError("enter firstname");
                     settingLastname.setError("enter lastname");
                     settingEmail.setError("enter email");
                     settingDob.setError("enter dob");
                     settingPhnno.setError("enter phoneno.");
                     settingGender.setError("enter gender");
-                }else if (TextUtils.isEmpty(firstname))
-                {
+                } else if (TextUtils.isEmpty(firstname)) {
                     settingFirstname.setError("enter firstname");
-                }else if (TextUtils.isEmpty(lastname)){
+                } else if (TextUtils.isEmpty(lastname)) {
                     settingLastname.setError("enter lastname");
-                }else if ( TextUtils.isEmpty(email))
-                {
+                } else if (TextUtils.isEmpty(email)) {
                     settingEmail.setError("enter email");
-                }else if (TextUtils.isEmpty(phoneno))
-                {
+                } else if (TextUtils.isEmpty(phoneno)) {
                     settingPhnno.setError("enter phoneno.");
-                }else if (TextUtils.isEmpty(gender))
-                {
+                } else if (TextUtils.isEmpty(gender)) {
                     settingGender.setError("enter gender");
-                }else if (TextUtils.isEmpty(dob))
-                {
+                } else if (TextUtils.isEmpty(dob)) {
                     settingDob.setError("enter dob");
-                }else {
-                    if (Utils.isOnline()!=false)
-                    {
+                } else {
+                    DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+                    Date date = null;
+                    try {
+                        date = (Date) formatter.parse(dob);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+
+                    frommilles = String.valueOf(date.getTime());
+                    if (Utils.isOnline() != false) {
                         Dialog.show();
-                        controller.UploadProfile("Bearer "+getStringVal(Constants.TOKEN),firstname,lastname,email,phoneno,gender,frommilles,part);
-                    }else {
+                        controller.UploadProfile("Bearer " + getStringVal(Constants.TOKEN), firstname, lastname, email, phoneno, gender, frommilles, part);
+                    } else {
                         Dialog.dismiss();
-                        Utils.showToastMessage(SettingScreen.this,"No Internet Connection",getResources().getDrawable(R.drawable.ic_nointernet));
+                        Utils.showToastMessage(SettingScreen.this, "No Internet Connection", getResources().getDrawable(R.drawable.ic_nointernet));
                     }
 
                 }
@@ -288,7 +277,7 @@ public class SettingScreen extends BaseActivity implements Controller.UploadProf
                         startActivityForResult(intent, REQUEST_CAMERA);
                     }
 
-                }else if ("Gallery".equals(dialogOptions[which])) {
+                } else if ("Gallery".equals(dialogOptions[which])) {
                     Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                     startActivityForResult(intent, RESULT_LOAD_IMAGE);
 
@@ -318,7 +307,7 @@ public class SettingScreen extends BaseActivity implements Controller.UploadProf
 //                setStringVal(Constants.BitmapImage, String.valueOf(bitmap));
 
                 settingUserImage.setImageBitmap(bitmap);
-                part = Utils.sendImageFileToserver(bitmap,"user_image",SettingScreen.this);
+                part = Utils.sendImageFileToserver(bitmap, "user_image", SettingScreen.this);
 
 
             } catch (IOException e) {
@@ -335,7 +324,7 @@ public class SettingScreen extends BaseActivity implements Controller.UploadProf
                     bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), imageURI);
                     Glide.with(SettingScreen.this).load(imageURI).into(settingUserImage);
                     Utils.encodeTobase64(bitmap);
-                    part = Utils.sendImageFileToserver(bitmap,"user_image",SettingScreen.this);
+                    part = Utils.sendImageFileToserver(bitmap, "user_image", SettingScreen.this);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -352,7 +341,7 @@ public class SettingScreen extends BaseActivity implements Controller.UploadProf
             Utils.encodeTobase64(bitmap);
 
             try {
-                part = Utils.sendImageFileToserver(bitmap,"user_image", SettingScreen.this);
+                part = Utils.sendImageFileToserver(bitmap, "user_image", SettingScreen.this);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -362,10 +351,8 @@ public class SettingScreen extends BaseActivity implements Controller.UploadProf
     @Override
     public void onSuccessUploadProfile(Response<UploadProfileResponse> uploadProfileResponseResponse) {
         Dialog.dismiss();
-        if (uploadProfileResponseResponse.body().getStatus()==200)
-        {
-            if (uploadProfileResponseResponse.body().getData().getImage()!=null)
-            {
+        if (uploadProfileResponseResponse.body().getStatus() == 200) {
+            if (uploadProfileResponseResponse.body().getData().getImage() != null) {
                 settingFirstname.setText(uploadProfileResponseResponse.body().getData().getFirstName());
                 settingLastname.setText(uploadProfileResponseResponse.body().getData().getLastName());
                 settingEmail.setText(uploadProfileResponseResponse.body().getData().getEmail());
@@ -378,36 +365,32 @@ public class SettingScreen extends BaseActivity implements Controller.UploadProf
     @Override
     public void onSuccessGetProfile(Response<GetProfileResponse> getProfileResponseResponse) {
         Dialog.dismiss();
-        if (getProfileResponseResponse.body().getStatus()==200)
-        {
+        if (getProfileResponseResponse.body().getStatus() == 200) {
             settingFirstname.setText(getProfileResponseResponse.body().getData().get(0).getFirstName());
             settingLastname.setText(getProfileResponseResponse.body().getData().get(0).getLastName());
             settingEmail.setText(getProfileResponseResponse.body().getData().get(0).getEmail());
             settingPhnno.setText(getProfileResponseResponse.body().getData().get(0).getMobileNumber().toString());
-            if (getProfileResponseResponse.body().getData().get(0).getGender()!=null)
-            {
+            if (getProfileResponseResponse.body().getData().get(0).getGender() != null) {
                 settingGender.setText(getProfileResponseResponse.body().getData().get(0).getGender());
             }
 
-            if (getProfileResponseResponse.body().getData().get(0).getDob()!=null)
-            {
+            if (getProfileResponseResponse.body().getData().get(0).getDob() != null) {
                 settingDob.setText(Utils.convertTimeStampDate(Long.parseLong(getProfileResponseResponse.body().getData().get(0).getDob())));
             }
 
-            if (getProfileResponseResponse.body().getData().get(0).getImage()!=null)
-            {
-                setStringVal(Constants.USER_NAME,getProfileResponseResponse.body().getData().get(0).getFirstName()+" "+getProfileResponseResponse.body().getData().get(0).getLastName());
-                setStringVal(Constants.USER_IMAGE,Constants.IMAGES+getProfileResponseResponse.body().getData().get(0).getImage());
-                Glide.with(SettingScreen.this).load(Constants.IMAGES+getProfileResponseResponse.body().getData().get(0).getImage()).into(settingUserImage);
-                new getImagefromURL(settingUserImage).execute(Constants.IMAGES+getProfileResponseResponse.body().getData().get(0).getImage());
+            if (getProfileResponseResponse.body().getData().get(0).getImage() != null) {
+                setStringVal(Constants.USER_NAME, getProfileResponseResponse.body().getData().get(0).getFirstName() + " " + getProfileResponseResponse.body().getData().get(0).getLastName());
+                setStringVal(Constants.USER_IMAGE, Constants.IMAGES + getProfileResponseResponse.body().getData().get(0).getImage());
+                Glide.with(SettingScreen.this).load(Constants.IMAGES + getProfileResponseResponse.body().getData().get(0).getImage()).into(settingUserImage);
+                new getImagefromURL(settingUserImage).execute(Constants.IMAGES + getProfileResponseResponse.body().getData().get(0).getImage());
             }
         }
     }
 
     @Override
     public void onError(String error) {
-    Dialog.dismiss();
-    Utils.showToastMessage(this,error,getResources().getDrawable(R.drawable.ic_error_black_24dp));
+        Dialog.dismiss();
+        Utils.showToastMessage(this, error, getResources().getDrawable(R.drawable.ic_error_black_24dp));
     }
 
 
@@ -431,7 +414,7 @@ public class SettingScreen extends BaseActivity implements Controller.UploadProf
             try {
                 InputStream stream = new URL(urlimage).openStream();
                 bitmap = BitmapFactory.decodeStream(stream);
-                part = Utils.sendImageFileToserver(bitmap,"user_image",SettingScreen.this);
+                part = Utils.sendImageFileToserver(bitmap, "user_image", SettingScreen.this);
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -456,7 +439,7 @@ public class SettingScreen extends BaseActivity implements Controller.UploadProf
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.show();
 
-        TextView male,female;
+        TextView male, female;
         male = dialog.findViewById(R.id.gendermale);
         female = dialog.findViewById(R.id.genderfemale);
 
