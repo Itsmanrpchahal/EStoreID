@@ -2,12 +2,15 @@ package com.estoreid.estoreid.views;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Address;
@@ -18,9 +21,11 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -170,7 +175,6 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback, Co
         ButterKnife.bind(this);
         controller = new Controller((Controller.VendorList)this,(Controller.FollowUnfollow)this);
         Dialog = Utils.showDialog(this);
-        Dialog.show();
         mapView = findViewById(R.id.mapview);
         Places.initialize(this, getResources().getString(R.string.googleclientId));
         searchEt.setVisibility(View.VISIBLE);
@@ -268,8 +272,10 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback, Co
             @Override
             public void onSuccess(String id) {
                 if (Utils.isOnline() != false) {
+                    Dialog.dismiss();
                     controller.setFollowUnfollow("Bearer " + getStringVal(Constants.TOKEN),id);
                 } else {
+                    Dialog.dismiss();
                     Utils.showToastMessage(MainActivity.this, "No Internet Connection", getResources().getDrawable(R.drawable.ic_nointernet));
                 }
 
@@ -344,6 +350,7 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback, Co
 
                                     if (Utils.isOnline()!=false)
                                     {
+                                        Dialog.dismiss();
                                         controller.setVendorList("Bearer " + getStringVal(Constants.TOKEN), lat, lng, "");
                                     }else {
                                         Dialog.dismiss();
@@ -440,8 +447,27 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback, Co
                 .position(new LatLng(latitude, longitude))
                 .anchor(0.5f, 0.5f)
                 .title(title)
-                .icon(BitmapDescriptorFactory.defaultMarker()));
+                .icon(BitmapDescriptorFactory.fromBitmap(createCustomMarker(context,""))));
     }
+
+    public static Bitmap createCustomMarker(Context context, String firstLetter) {
+        View marker = ((LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.custom_marker_layout, null);
+
+//        TextView tvFirstLetterPerson = (TextView) marker.findViewById(R.id.tv_fl_person);
+//        tvFirstLetterPerson.setText(firstLetter);
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        ((Activity) context).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        marker.setLayoutParams(new ViewGroup.LayoutParams(52, ViewGroup.LayoutParams.WRAP_CONTENT));
+        marker.measure(displayMetrics.widthPixels, displayMetrics.heightPixels);
+        marker.layout(0, 0, displayMetrics.widthPixels, displayMetrics.heightPixels);
+        marker.buildDrawingCache();
+        Bitmap bitmap = Bitmap.createBitmap(marker.getMeasuredWidth(), marker.getMeasuredHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        marker.draw(canvas);
+
+        return bitmap;
+    }
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {

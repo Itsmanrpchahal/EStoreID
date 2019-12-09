@@ -28,6 +28,7 @@ import com.estoreid.estoreid.views.baseclass.BaseClass;
 import com.estoreid.estoreid.views.biometriclock.FingerprintActivity;
 import com.estoreid.estoreid.views.login.Login;
 import com.estoreid.estoreid.views.utils.Constants;
+import com.estoreid.estoreid.views.wishlist.WishList;
 import com.google.android.material.navigation.NavigationView;
 import com.makeramen.roundedimageview.RoundedImageView;
 
@@ -110,6 +111,10 @@ public class BaseActivity extends BaseClass implements NavigationView.OnNavigati
 
         } else if (id == R.id.offerzone) {
             startAnimatedActivity(new Intent(getApplicationContext(), OfferZone.class));
+            drawer.closeDrawer(GravityCompat.START);
+        }else if (id== R.id.wishlist)
+        {
+            startAnimatedActivity(new Intent(getApplicationContext(), WishList.class));
             drawer.closeDrawer(GravityCompat.START);
         }
 

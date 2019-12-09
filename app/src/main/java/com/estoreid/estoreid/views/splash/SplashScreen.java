@@ -3,9 +3,11 @@ package com.estoreid.estoreid.views.splash;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.StrictMode;
 import android.view.WindowManager;
 import android.widget.ProgressBar;
 
+import com.estoreid.estoreid.BuildConfig;
 import com.estoreid.estoreid.R;
 import com.estoreid.estoreid.views.MainActivity;
 import com.estoreid.estoreid.views.baseclass.BaseClass;
@@ -23,6 +25,7 @@ public class SplashScreen extends BaseClass {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         init();
 
     }

@@ -27,6 +27,7 @@ import com.estoreid.estoreid.views.adapter.ProductColorAdapter;
 import com.estoreid.estoreid.views.adapter.ProductSizeAdapter;
 import com.estoreid.estoreid.views.adapter.Product_Detail_images_Adapter;
 import com.estoreid.estoreid.views.apiResponseModel.AddToCartResponse;
+import com.estoreid.estoreid.views.apiResponseModel.AddToWishlistResponse;
 import com.estoreid.estoreid.views.apiResponseModel.ProductDetailResponse;
 import com.estoreid.estoreid.views.controller.Controller;
 import com.estoreid.estoreid.views.utils.Constants;
@@ -38,7 +39,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import retrofit2.Response;
 
-public class Product_details extends BaseActivity implements Controller.ProductDetail,Controller.AddToCart {
+public class Product_details extends BaseActivity implements Controller.ProductDetail,Controller.AddToCart,Controller.AddToWishlist {
 
     @BindView(R.id.search_et)
     EditText searchEt;
@@ -131,7 +132,7 @@ public class Product_details extends BaseActivity implements Controller.ProductD
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_details);
-        controller = new Controller((Controller.ProductDetail)this,(Controller.AddToCart)this);
+        controller = new Controller((Controller.ProductDetail)this,(Controller.AddToCart)this,(Controller.AddToWishlist)this);
         Dialog = Utils.showDialog(this);
         Dialog.show();
         type = getIntent().getStringExtra("type");
@@ -180,6 +181,7 @@ public class Product_details extends BaseActivity implements Controller.ProductD
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Product_details.this, Product_Reviews.class);
+                intent.putExtra("product_id",product_id);
                 intent.putExtra("type", type);
                 startActivity(intent);
                 finish();
@@ -205,8 +207,20 @@ public class Product_details extends BaseActivity implements Controller.ProductD
                     Dialog.dismiss();
                     Utils.showToastMessage(Product_details.this,"No Internet Connection",getResources().getDrawable(R.drawable.ic_nointernet));
                 }
+            }
+        });
 
-                Dialog.show();
+        productAddToWishlist.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (Utils.isOnline()!=false)
+                {
+                    Dialog.show();
+                    controller.AddToWishlist("Bearer "+getStringVal(Constants.TOKEN),product_id);
+                }else {
+                    Dialog.dismiss();
+                    Utils.showToastMessage(Product_details.this,"No Internet Connection",getResources().getDrawable(R.drawable.ic_nointernet));
+                }
             }
         });
 
@@ -239,6 +253,7 @@ public class Product_details extends BaseActivity implements Controller.ProductD
         Dialog.dismiss();
         if (productDetailResponseResponse.body().getStatus() == 200) {
 
+            decripitionTv.setText(productDetailResponseResponse.body().getData().get(0).getDescription());
             productDetialProductName.setText(productDetailResponseResponse.body().getData().get(0).getProductName());
             for (int i = 0; i < productDetailResponseResponse.body().getData().get(0).getImages().size(); i++) {
                 images.add(productDetailResponseResponse.body().getData().get(0).getImages().get(i).getImage());
@@ -344,7 +359,19 @@ public class Product_details extends BaseActivity implements Controller.ProductD
     }
 
     @Override
+    public void onSuccessAddToWistlist(Response<AddToWishlistResponse> addToWishlistResponseResponse) {
+        Dialog.dismiss();
+        if (addToWishlistResponseResponse.body().getStatus()==200)
+        {
+            Utils.showToastMessage(Product_details.this,addToWishlistResponseResponse.body().getMessage(),getResources().getDrawable(R.drawable.ic_cart_active));
+        }else {
+            Utils.showToastMessage(Product_details.this, addToWishlistResponseResponse.body().getMessage(), getResources().getDrawable(R.drawable.ic_error_black_24dp));
+        }
+    }
+
+    @Override
     public void onError(String error) {
+        Dialog.dismiss();
         Utils.showToastMessage(Product_details.this, error, getResources().getDrawable(R.drawable.ic_error_black_24dp));
     }
 }

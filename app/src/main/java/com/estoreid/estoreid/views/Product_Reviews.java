@@ -91,7 +91,7 @@ public class Product_Reviews extends AppCompatActivity {
     ImageView sendreview;
     @BindView(R.id.sendreviewlayout)
     RelativeLayout sendreviewlayout;
-    String type;
+    String type,product_id;
     Intent intent;
 
     @Override
@@ -102,6 +102,7 @@ public class Product_Reviews extends AppCompatActivity {
         ratingLayout.setFocusable(true);
         reviewsRecyler.setFocusable(false);
         intent = getIntent();
+        product_id =intent.getStringExtra("product_id");
         type = intent.getStringExtra("type");
 
         listeners();
@@ -124,8 +125,10 @@ public class Product_Reviews extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Product_Reviews.this, Product_details.class);
+                intent.putExtra("product_id",product_id);
                 intent.putExtra("type",type);
                 startActivity(intent);
+                finish();
                 //overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
             }
         });

@@ -118,7 +118,7 @@
                         android:layout_marginLeft="@dimen/defaultmargin"
                         android:layout_marginTop="@dimen/defaultmargin"
                         android:fontFamily="@font/quicksandbold"
-                        android:text="Nike Shoes"
+                        android:text=""
                         android:textColor="@color/colorBlack"
                         android:textSize="@dimen/xlargetext"></TextView>
 
@@ -173,7 +173,7 @@
                             android:layout_height="wrap_content"
                             android:background="@drawable/theam_button"
                             android:fontFamily="@font/quicksand"
-                            android:text="4.5"
+                            android:text=""
                             android:textColor="@color/colorWhite"
                             android:textSize="@dimen/normaltext">
 
@@ -188,7 +188,7 @@
                             android:layout_marginTop="@dimen/defaultmargin"
                             android:layout_toRightOf="@id/product_rating"
                             android:fontFamily="@font/quicksand"
-                            android:text="Very Good"
+                            android:text=""
                             android:textColor="@color/colorBlack"
                             android:textSize="@dimen/normaltext">
 
@@ -203,7 +203,7 @@
                             android:drawableRight="@drawable/ic_arrowtheam"
                             android:drawablePadding="5dp"
                             android:fontFamily="@font/quicksand"
-                            android:text="49 Reviews"
+                            android:text=""
                             android:textColor="@color/colorTheme"
                             android:textSize="@dimen/smalltext"></TextView>
                     </RelativeLayout>
@@ -237,7 +237,7 @@
                         android:layout_margin="@dimen/defaultmargin"
                         android:layout_marginTop="10dp"
                         android:fontFamily="@font/quicksand"
-                        android:text="@string/decs"
+                        android:text=""
                         app:colorClickableText="@color/colorTheme"
                         app:trimCollapsedText="Less"
                         app:trimExpandedText="More"

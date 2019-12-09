@@ -25,6 +25,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -44,6 +45,11 @@ import com.rilixtech.widget.countrycodepicker.Country;
 import com.rilixtech.widget.countrycodepicker.CountryCodePicker;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
+import com.vansuita.pickimage.bean.PickResult;
+import com.vansuita.pickimage.bundle.PickSetup;
+import com.vansuita.pickimage.dialog.PickImageDialog;
+import com.vansuita.pickimage.listeners.IPickClick;
+import com.vansuita.pickimage.listeners.IPickResult;
 
 import java.io.File;
 import java.io.IOException;
@@ -60,7 +66,7 @@ import butterknife.ButterKnife;
 import okhttp3.MultipartBody;
 import retrofit2.Response;
 
-public class SettingScreen extends BaseActivity implements Controller.UploadProfile, Controller.GetProfile {
+public class SettingScreen extends BaseActivity implements IPickResult, Controller.UploadProfile, Controller.GetProfile {
 
     public static int RESULT_LOAD_IMAGE = 101;
     public static int REQUEST_CAMERA = 102;
@@ -173,7 +179,35 @@ public class SettingScreen extends BaseActivity implements Controller.UploadProf
         settingUploadpic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                selectPhoto();
+//                selectPhoto();
+                PickImageDialog.build(new PickSetup()
+                        .setButtonOrientation(LinearLayout.HORIZONTAL)).show(SettingScreen.this).setOnClick(new IPickClick() {
+                    @Override
+                    public void onGalleryClick() {
+                        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                        startActivityForResult(intent, RESULT_LOAD_IMAGE);
+                    }
+
+                    @Override
+                    public void onCameraClick() {
+                        if (ContextCompat.checkSelfPermission(SettingScreen.this,
+                                Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+
+                            if (ActivityCompat.shouldShowRequestPermissionRationale(SettingScreen.this, Manifest.permission.CAMERA)) {
+
+                                ActivityCompat.requestPermissions(SettingScreen.this, new String[]{Manifest.permission.CAMERA}, MY_PERMISSIONS_REQUEST_CAMERA);
+                            } else {
+                                ActivityCompat.requestPermissions(SettingScreen.this,
+                                        new String[]{Manifest.permission.CAMERA},
+                                        MY_PERMISSIONS_REQUEST_CAMERA);
+                            }
+
+                        } else {
+                            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                            startActivityForResult(intent, REQUEST_CAMERA);
+                        }
+                    }
+                });
             }
         });
 
@@ -297,6 +331,14 @@ public class SettingScreen extends BaseActivity implements Controller.UploadProf
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK) {
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+
+            Log.d("++++++++++", "++++ data log +++" + imageBitmap);
+
+        }
+
+        if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK) {
 
 
             uri = data.getData();
@@ -345,6 +387,23 @@ public class SettingScreen extends BaseActivity implements Controller.UploadProf
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+    @Override
+    public void onPickResult(PickResult r) {
+        if (r.getError() == null) {
+            try {
+                part = Utils.sendImageFileToserver(bitmap, "user_image", SettingScreen.this);
+
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        } else {
+            //Handle possible errors
+            Toast.makeText(this, r.getError().getMessage(), Toast.LENGTH_LONG).show();
         }
     }
 

@@ -41,7 +41,7 @@ public class DashBoardShopAdapter extends RecyclerView.Adapter<DashBoardShopAdap
     @Override
 
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        Dialog = Utils.showDialog(this.context);
+//        Dialog = Utils.showDialog(this.context);
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View view = layoutInflater.inflate(R.layout.custom_shop_item, parent, false);
         return new ViewHolder(view);

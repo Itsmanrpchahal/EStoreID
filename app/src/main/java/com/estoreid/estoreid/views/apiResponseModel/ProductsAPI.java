@@ -77,6 +77,18 @@ public class ProductsAPI {
         @Expose
         private String image;
 
+        public String getWish_status() {
+            return wish_status;
+        }
+
+        public void setWish_status(String wish_status) {
+            this.wish_status = wish_status;
+        }
+
+        @SerializedName("wish_status")
+        @Expose
+        private String wish_status;
+
         public String getCart_status() {
             return cart_status;
         }

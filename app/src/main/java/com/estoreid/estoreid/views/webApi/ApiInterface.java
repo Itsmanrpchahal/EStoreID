@@ -2,11 +2,13 @@ package com.estoreid.estoreid.views.webApi;
 
 import com.estoreid.estoreid.views.apiResponseModel.AddCartQuantityResponse;
 import com.estoreid.estoreid.views.apiResponseModel.AddToCartResponse;
+import com.estoreid.estoreid.views.apiResponseModel.AddToWishlistResponse;
 import com.estoreid.estoreid.views.apiResponseModel.CartItemsResponse;
 import com.estoreid.estoreid.views.apiResponseModel.FavVendorsResponse;
 import com.estoreid.estoreid.views.apiResponseModel.FilterDataResponse;
 import com.estoreid.estoreid.views.apiResponseModel.FollowAPIResponse;
 import com.estoreid.estoreid.views.apiResponseModel.GetProfileResponse;
+import com.estoreid.estoreid.views.apiResponseModel.GetWishlistProducts;
 import com.estoreid.estoreid.views.apiResponseModel.LoginAPIReponse;
 import com.estoreid.estoreid.views.apiResponseModel.ProductDetailResponse;
 import com.estoreid.estoreid.views.apiResponseModel.ProductsAPI;
@@ -174,4 +176,16 @@ public interface ApiInterface {
             @Part("firstname") String firstname,
             @Part("email") String email
     );
+
+    @POST("addToWishList")
+    Call<AddToWishlistResponse> addtowistlist(
+            @Header("Authorization") String token,
+            @Query("product_id") String product_id
+    );
+
+    @POST("get_wishlist_products")
+    Call<GetWishlistProducts> getWishlist(
+            @Header("Authorization") String token
+    );
+
 }

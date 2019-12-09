@@ -9,6 +9,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
@@ -26,6 +27,7 @@ import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 
+import com.estoreid.estoreid.BuildConfig;
 import com.estoreid.estoreid.R;
 import com.estoreid.estoreid.views.MainActivity;
 import com.estoreid.estoreid.views.apiResponseModel.LoginAPIReponse;

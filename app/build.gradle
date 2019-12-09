@@ -92,4 +92,7 @@ dependencies {
     //country code
     implementation 'com.github.joielechong:countrycodepicker:2.4.1'
 
+    //pickimage
+    implementation 'com.github.jrvansuita:PickImage:2.2.4'
+
 }

@@ -2,11 +2,13 @@ package com.estoreid.estoreid.views.controller;
 
 import com.estoreid.estoreid.views.apiResponseModel.AddCartQuantityResponse;
 import com.estoreid.estoreid.views.apiResponseModel.AddToCartResponse;
+import com.estoreid.estoreid.views.apiResponseModel.AddToWishlistResponse;
 import com.estoreid.estoreid.views.apiResponseModel.CartItemsResponse;
 import com.estoreid.estoreid.views.apiResponseModel.FavVendorsResponse;
 import com.estoreid.estoreid.views.apiResponseModel.FilterDataResponse;
 import com.estoreid.estoreid.views.apiResponseModel.FollowAPIResponse;
 import com.estoreid.estoreid.views.apiResponseModel.GetProfileResponse;
+import com.estoreid.estoreid.views.apiResponseModel.GetWishlistProducts;
 import com.estoreid.estoreid.views.apiResponseModel.LoginAPIReponse;
 import com.estoreid.estoreid.views.apiResponseModel.ProductDetailResponse;
 import com.estoreid.estoreid.views.apiResponseModel.ProductsAPI;
@@ -46,6 +48,8 @@ public class Controller {
     public FavStore favStore;
     public CartItems cartItems;
     public AddCartItemQuantity addCartItemQuantity;
+    public AddToWishlist addToWishlist;
+    public GetWishlistProducts getWishlistProducts;
 
 
     //registerAPI
@@ -94,10 +98,11 @@ public class Controller {
     }
 
     //product details
-    public Controller(ProductDetail productDetail1,AddToCart addToCart1)
+    public Controller(ProductDetail productDetail1,AddToCart addToCart1,AddToWishlist addToWishlist1)
     {
         productDetail = productDetail1;
         addToCart = addToCart1;
+        addToWishlist = addToWishlist1;
         webAPI = new WebAPI();
     }
 
@@ -129,6 +134,13 @@ public class Controller {
     {
         cartItems = cartItems1;
         addCartItemQuantity = addCartItemQuantity1;
+        webAPI = new WebAPI();
+    }
+
+    //getWishlistProducts
+    public Controller(GetWishlistProducts getWishlistProducts1)
+    {
+        getWishlistProducts = getWishlistProducts1;
         webAPI = new WebAPI();
     }
 
@@ -458,6 +470,42 @@ public class Controller {
     }
 
 
+    public void AddToWishlist(String token,String product_id)
+    {
+        webAPI.getApi().addtowistlist(token,product_id).enqueue(new Callback<AddToWishlistResponse>() {
+            @Override
+            public void onResponse(Call<AddToWishlistResponse> call, Response<AddToWishlistResponse> response) {
+                if (response!=null)
+                {
+                    Response<AddToWishlistResponse> addToWishlistResponseResponse = response;
+                    addToWishlist.onSuccessAddToWistlist(addToWishlistResponseResponse);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<AddToWishlistResponse> call, Throwable t) {
+                addToWishlist.onError(t.getMessage());
+            }
+        });
+    }
+
+    public void GetWishlist(String token)
+    {
+        webAPI.getApi().getWishlist(token).enqueue(new Callback<com.estoreid.estoreid.views.apiResponseModel.GetWishlistProducts>() {
+            @Override
+            public void onResponse(Call<com.estoreid.estoreid.views.apiResponseModel.GetWishlistProducts> call, Response<com.estoreid.estoreid.views.apiResponseModel.GetWishlistProducts> response) {
+                Response<com.estoreid.estoreid.views.apiResponseModel.GetWishlistProducts> getWishlistProductsResponse = response;
+                getWishlistProducts.onSuccessGetWishlist(getWishlistProductsResponse);
+            }
+
+            @Override
+            public void onFailure(Call<com.estoreid.estoreid.views.apiResponseModel.GetWishlistProducts> call, Throwable t) {
+                getWishlistProducts.onError(t.getMessage());
+            }
+        });
+    }
+
+
     public interface RegisterAPI {
         void onSucess(Response<RegisterAPIReponse> registerAPIReponseResponse);
 
@@ -541,6 +589,16 @@ public class Controller {
 
     public interface AddCartItemQuantity{
         void onSucessAddCartQuantity(Response<AddCartQuantityResponse> addCartItemQuantityResponse);
+        void onError(String error);
+    }
+
+    public interface AddToWishlist{
+        void onSuccessAddToWistlist(Response<AddToWishlistResponse> addToWishlistResponseResponse);
+        void onError(String error);
+    }
+
+    public interface GetWishlistProducts{
+        void onSuccessGetWishlist(Response<com.estoreid.estoreid.views.apiResponseModel.GetWishlistProducts> getWishlistProductsResponse);
         void onError(String error);
     }
 }

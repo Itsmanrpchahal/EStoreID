@@ -1,5 +1,8 @@
 package com.estoreid.estoreid.views.webApi;
 
+import android.os.StrictMode;
+
+import com.estoreid.estoreid.BuildConfig;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -11,11 +14,14 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class WebAPI {
 
-    public static String BASE_URL = "http://estore.amrdev.site/api/";
+//    public static String BASE_URL = "http://estore.amrdev.site/api/";
+    public static String BASE_URL = "http://box5841.temp.domains/~amrdevsi/estore/api/";
     public static WebAPI mInstance;
     Retrofit retrofit;
     public static ApiInterface apiInterface;
     public WebAPI() {
+
+
 
         Gson gson = new GsonBuilder()
                 .setLenient()

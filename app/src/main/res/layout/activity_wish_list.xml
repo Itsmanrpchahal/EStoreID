@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorWhite"
+    tools:context=".views.wishlist.WishList">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_wishlistproducts"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginRight="15dp" />
+
+    <RelativeLayout
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin_dp55">
+
+        <ImageButton
+            android:id="@+id/back_wishlist"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/defaultmargin"
+            android:src="@drawable/ic_chevron_left_black_24dp"
+            android:background="@color/colorTrans"
+            android:layout_centerVertical="true"></ImageButton>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorBlack"
+            android:fontFamily="@font/latoregular"
+            android:textSize="@dimen/normaltext"
+            android:text="My Wishlist Products"
+            android:layout_centerInParent="true"></TextView>
+    </RelativeLayout>
+
+</RelativeLayout>

@@ -18,73 +18,52 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.estoreid.estoreid.R;
 import com.estoreid.estoreid.views.Product_details;
-import com.estoreid.estoreid.views.Products_Screen;
-import com.estoreid.estoreid.views.apiResponseModel.ProductsAPI;
+import com.estoreid.estoreid.views.apiResponseModel.GetWishlistProducts;
+import com.estoreid.estoreid.views.utils.Constants;
 
 import java.util.ArrayList;
 
-public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder>{
+public class WishlistProducts extends RecyclerView.Adapter<WishlistProducts.ViewHolder> {
 
     Context context;
-    String type;
-    ArrayList<ProductsAPI.Datum> products = new ArrayList<>();
-    View.OnClickListener onClickListener;
+    ArrayList<GetWishlistProducts.Datum> wishlist = new ArrayList<>();
 
-    public ProductAdapter(Context context, String type,ArrayList<ProductsAPI.Datum> products) {
+    public WishlistProducts(Context context, ArrayList<GetWishlistProducts.Datum> wishlist) {
         this.context = context;
-        this.type = type;
-        this.products = products;
+        this.wishlist = wishlist;
     }
-
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
-
-        View view = null;
-        if (type.equals("list"))
-        {   LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-             view = layoutInflater.inflate(R.layout.custom_products_list,parent,false);
-        }else if (type.equals("grid"))
-        {
-            LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-             view = layoutInflater.inflate(R.layout.custom_product_grid,parent,false);
-        }
-
+    public WishlistProducts.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        View view = inflater.inflate(R.layout.custom_products_list,parent,false);
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ProductAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull WishlistProducts.ViewHolder holder, int position) {
 
-        Glide.with(context).load("http://estore.amrdev.site/public/images/"+products.get(position).getImage()).into(holder.product_image);
-        holder.product_name.setText(products.get(position).getProductName());
-        holder.product_price.setText("$"+products.get(position).getSalePrice());
-        holder.product_original_price.setText("$"+products.get(position).getActualPrice());
+        GetWishlistProducts.Datum datum = wishlist.get(position);
+
+        holder.product_add_to_fav.setVisibility(View.GONE);
+        holder.product_add_to_cart.setVisibility(View.GONE);
+        Glide.with(context).load(Constants.IMAGES +wishlist.get(position).getImage()).into(holder.product_image);
+        holder.product_name.setText(wishlist.get(position).getProductName());
+        holder.product_price.setText("$"+wishlist.get(position).getSalePrice());
+        holder.product_original_price.setText("$"+wishlist.get(position).getActualPrice());
         holder.product_original_price.setPaintFlags(holder.product_original_price.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-        holder.product_brand.setText(products.get(position).getBrandName());
-        holder.product_discountper.setText(products.get(position).getDiscount()+"% off");
-        holder.product_rating.setRating(Float.parseFloat(products.get(position).getRating()));
+//        holder.product_brand.setText(wishlist.get(position).getBrandName());
+        holder.product_discountper.setText(wishlist.get(position).getDiscount()+"% off");
+        holder.product_rating.setRating(Float.parseFloat(String.valueOf(wishlist.get(position).getRating())));
 
-        if (products.get(position).getCart_status().equals("1"))
-        {
-            Glide.with(context).load(R.drawable.ic_addproductactive).into(holder.product_add_to_cart);
-        }
+        Glide.with(context).load(datum.getImage().toString()).into(holder.product_image);
 
-        if (products.get(position).getWish_status().equals("1"))
-        {
-            Glide.with(context).load(R.drawable.ic_addtowishlistactive).into(holder.product_add_to_fav);
-        }
-
-        String productid = products.get(position).getId().toString();
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Intent intent = new Intent(context, Product_details.class);
-                intent.putExtra("type",type);
-                intent.putExtra("product_id",productid);
+                intent.putExtra("product_id",wishlist.get(position).getId().toString());
                 context.startActivity(intent);
             }
         });
@@ -92,10 +71,11 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
 
     @Override
     public int getItemCount() {
-        return products.size();
+        return wishlist.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
+
         ImageView product_image;
         TextView product_name,product_price,product_original_price,product_discountper,products_review,product_brand;
         AppCompatRatingBar product_rating;
