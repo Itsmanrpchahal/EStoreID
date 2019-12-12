@@ -128,7 +128,7 @@ public class ProfileScreen extends BaseClass implements Controller.GetProfile {
             if (getProfileResponseResponse.body().getData().get(0).getImage()!=null)
             {
                 setStringVal(Constants.USER_NAME,getProfileResponseResponse.body().getData().get(0).getFirstName()+" "+getProfileResponseResponse.body().getData().get(0).getLastName());
-                setStringVal(Constants.USER_IMAGE,Constants.IMAGES+getProfileResponseResponse.body().getData().get(0).getImage());
+                setStringVal(Constants.USER_IMAGE,getProfileResponseResponse.body().getData().get(0).getImage());
                 Glide.with(ProfileScreen.this).load(Constants.IMAGES+getProfileResponseResponse.body().getData().get(0).getImage().toString()).into(profileUserimage);
             }
         }

@@ -9,7 +9,6 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.StrictMode;
 import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
@@ -27,7 +26,6 @@ import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 
-import com.estoreid.estoreid.BuildConfig;
 import com.estoreid.estoreid.R;
 import com.estoreid.estoreid.views.MainActivity;
 import com.estoreid.estoreid.views.apiResponseModel.LoginAPIReponse;
@@ -63,7 +61,6 @@ import org.json.JSONObject;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
-import java.util.regex.Pattern;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -484,8 +481,9 @@ public class Login extends BaseClass implements Controller.LoginAPI, Controller.
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             setStringVal(Constants.TOKEN, loginAPIReponseResponse.body().getData().getToken());
-            setStringVal(Constants.USER_NAME,"Username");
-            setStringVal(Constants.USER_IMAGE,"https://cdn2.iconfinder.com/data/icons/ios-7-icons/50/user_male2-512.png");
+            setStringVal(Constants.USER_NUMBER,loginAPIReponseResponse.body().getData().getMobileNumber());
+            setStringVal(Constants.USER_NAME,loginAPIReponseResponse.body().getData().getFirstName()+" "+loginAPIReponseResponse.body().getData().getLastName());
+            setStringVal(Constants.USER_IMAGE,loginAPIReponseResponse.body().getData().getImage());
             startActivity(intent);
         } else {
             Dialog.dismiss();

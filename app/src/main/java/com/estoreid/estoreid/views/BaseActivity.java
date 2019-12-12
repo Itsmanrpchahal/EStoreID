@@ -20,12 +20,12 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.estoreid.estoreid.R;
 import com.estoreid.estoreid.views.baseclass.BaseClass;
 import com.estoreid.estoreid.views.biometriclock.FingerprintActivity;
+import com.estoreid.estoreid.views.cart.Cart_Activity;
 import com.estoreid.estoreid.views.login.Login;
 import com.estoreid.estoreid.views.utils.Constants;
 import com.estoreid.estoreid.views.wishlist.WishList;
@@ -34,14 +34,14 @@ import com.makeramen.roundedimageview.RoundedImageView;
 
 public class BaseActivity extends BaseClass implements NavigationView.OnNavigationItemSelectedListener {
 
-    DrawerLayout drawer;
+    public DrawerLayout drawer;
     NavigationView navigationView;
     EditText search;
     Dialog popup,biometric;
     Button OK, CANCEL,BIOMETRICYES,BIOMETRICNO;
     View header;
     RoundedImageView imageView;
-    TextView username;
+    TextView username,drawer_location;
     Context context;
 
     @Override
@@ -68,6 +68,7 @@ public class BaseActivity extends BaseClass implements NavigationView.OnNavigati
         navigationView.getHeaderView(0);
         imageView = headerLayout.findViewById(R.id.drawer_useriamge);
         username = headerLayout.findViewById(R.id.drawer_username);
+        drawer_location = headerLayout.findViewById(R.id.drawer_location);
 
 
         setData();
@@ -77,9 +78,11 @@ public class BaseActivity extends BaseClass implements NavigationView.OnNavigati
     private void setData() {
         String image = getStringVal(Constants.USER_IMAGE);
         String name = getStringVal(Constants.USER_NAME);
+        String loc = getStringVal(Constants.CURRENT_LOCATION);
 
-        Glide.with(context).load(image).into(imageView);
+        Glide.with(context).load(Constants.IMAGES+image).into(imageView);
         username.setText(name);
+        drawer_location.setText(loc);
 
         Log.d("dataimage", getStringVal(Constants.USER_NAME) + "  " + getStringVal(Constants.USER_IMAGE));
     }
@@ -88,8 +91,11 @@ public class BaseActivity extends BaseClass implements NavigationView.OnNavigati
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.homet) {
-
             startAnimatedActivity(new Intent(getApplicationContext(), MainActivity.class));
+            drawer.closeDrawer(GravityCompat.START);
+        }else if (id== R.id.wishlist)
+        {
+            startAnimatedActivity(new Intent(getApplicationContext(), WishList.class));
             drawer.closeDrawer(GravityCompat.START);
         } else if (id == R.id.cart) {
             startAnimatedActivity(new Intent(getApplicationContext(), Cart_Activity.class));
@@ -108,16 +114,10 @@ public class BaseActivity extends BaseClass implements NavigationView.OnNavigati
             drawer.closeDrawer(GravityCompat.START);
         } else if (id == R.id.logout) {
             dialog();
-
         } else if (id == R.id.offerzone) {
             startAnimatedActivity(new Intent(getApplicationContext(), OfferZone.class));
             drawer.closeDrawer(GravityCompat.START);
-        }else if (id== R.id.wishlist)
-        {
-            startAnimatedActivity(new Intent(getApplicationContext(), WishList.class));
-            drawer.closeDrawer(GravityCompat.START);
         }
-
 
         return true;
     }

@@ -30,6 +30,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
@@ -54,7 +55,7 @@ import com.estoreid.estoreid.views.apiResponseModel.FollowAPIResponse;
 import com.estoreid.estoreid.views.apiResponseModel.VendorAPIResponse;
 import com.estoreid.estoreid.views.controller.Controller;
 import com.estoreid.estoreid.views.filter.FilterScreen;
-import com.estoreid.estoreid.views.signup.SignUp;
+import com.estoreid.estoreid.views.login.Login;
 import com.estoreid.estoreid.views.utils.Constants;
 import com.estoreid.estoreid.views.utils.Utils;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -74,11 +75,9 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.libraries.places.api.Places;
-import com.google.android.libraries.places.api.model.Place;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
@@ -160,7 +159,8 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback, Co
     Dialog Dialog;
     @BindView(R.id.nostore)
     TextView nostore;
-    Dialog popup;
+    Dialog popup,sortByDialog;
+
 
 
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -231,6 +231,17 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback, Co
             }
         });
 
+        sortbyTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (Utils.isOnline() != false) {
+                   sortbyDialog();
+                } else {
+                    Utils.showToastMessage(MainActivity.this, "No Internet Connection", getResources().getDrawable(R.drawable.ic_nointernet));
+                }
+            }
+        });
+
         filterLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -244,6 +255,25 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback, Co
             public void onClick(View v) {
                 CurrentLocation();
                 layoutvisibilty();
+            }
+        });
+    }
+
+    private void sortbyDialog() {
+        sortByDialog = new Dialog(this);
+        Window window = sortByDialog.getWindow();
+        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+        sortByDialog.setContentView(R.layout.sortbt_dialog);
+        sortByDialog.setCancelable(true);
+        sortByDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        sortByDialog.show();
+
+        ImageButton closedilog;
+        closedilog = sortByDialog.findViewById(R.id.closedilog);
+        closedilog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sortByDialog.dismiss();
             }
         });
     }
@@ -365,11 +395,9 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback, Co
                                     List<Address> address = (List<Address>) geocoder.getFromLocation(Double.parseDouble(lat), Double.parseDouble(lng), 1);
 
                                     if (address != null) {
-                                        //citystr = address.get(0).getAdminArea();
-                                        //cityname.setText(address.get(0).getLocality());
                                         loactionTv.setText(address.get(0).getLocality());
+                                        setStringVal(Constants.CURRENT_LOCATION,address.get(0).getLocality());
                                     } else {
-                                        //cityname.setText("Address not found");
                                     }
 
                                     if (mapView != null) {
@@ -507,8 +535,10 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback, Co
 
                     if (address != null) {
                         loactionTv.setText(address.get(0).getLocality());
+                        setStringVal(Constants.CURRENT_LOCATION,address.get(0).getLocality());
                     } else {
                         loactionTv.setText("Address not found");
+                        setStringVal(Constants.CURRENT_LOCATION,"");
                     }
 
                     if (mapView != null) {

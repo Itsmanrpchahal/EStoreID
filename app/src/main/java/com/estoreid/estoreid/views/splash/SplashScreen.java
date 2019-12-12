@@ -3,11 +3,9 @@ package com.estoreid.estoreid.views.splash;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.StrictMode;
 import android.view.WindowManager;
 import android.widget.ProgressBar;
 
-import com.estoreid.estoreid.BuildConfig;
 import com.estoreid.estoreid.R;
 import com.estoreid.estoreid.views.MainActivity;
 import com.estoreid.estoreid.views.baseclass.BaseClass;

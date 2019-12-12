@@ -1,7 +1,9 @@
 package com.estoreid.estoreid.views;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -26,6 +28,8 @@ public class OrderPlaced extends AppCompatActivity {
     TextView orderplaceText;
     @BindView(R.id.orderplace_decstext)
     TextView orderplaceDecstext;
+    @BindView(R.id.myorders)
+    Button myorders;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +45,15 @@ public class OrderPlaced extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 onBackPressed();
+            }
+        });
+
+        myorders.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(OrderPlaced.this,MyOrderActivity.class);
+                startActivity(intent);
+                finish();
             }
         });
     }

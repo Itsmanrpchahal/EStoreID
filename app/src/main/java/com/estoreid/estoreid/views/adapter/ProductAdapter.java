@@ -20,6 +20,7 @@ import com.estoreid.estoreid.R;
 import com.estoreid.estoreid.views.Product_details;
 import com.estoreid.estoreid.views.Products_Screen;
 import com.estoreid.estoreid.views.apiResponseModel.ProductsAPI;
+import com.estoreid.estoreid.views.utils.Constants;
 
 import java.util.ArrayList;
 
@@ -58,7 +59,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull ProductAdapter.ViewHolder holder, int position) {
 
-        Glide.with(context).load("http://estore.amrdev.site/public/images/"+products.get(position).getImage()).into(holder.product_image);
+        Glide.with(context).load(Constants.IMAGES +products.get(position).getImage()).into(holder.product_image);
         holder.product_name.setText(products.get(position).getProductName());
         holder.product_price.setText("$"+products.get(position).getSalePrice());
         holder.product_original_price.setText("$"+products.get(position).getActualPrice());
@@ -74,7 +75,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
 
         if (products.get(position).getWish_status().equals("1"))
         {
-            Glide.with(context).load(R.drawable.ic_addtowishlistactive).into(holder.product_add_to_fav);
+            Glide.with(context).load(R.drawable.ic_wishactive).into(holder.product_add_to_fav);
         }
 
         String productid = products.get(position).getId().toString();

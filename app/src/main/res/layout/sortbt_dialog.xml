@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layout_centerInParent="true"
+    android:background="@color/transparent">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/margin_dp12"
+        android:layout_centerInParent="true">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="@dimen/margin_dp10"
+            app:cardElevation="@dimen/margin_dp6"
+            android:layout_centerInParent="true"
+            app:cardBackgroundColor="@color/colorWhite">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/defaultmargin">
+
+                <RadioGroup
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorBlack"
+                        android:backgroundTint="@color/colorTheme"
+                        android:buttonTint="@color/colorTheme"
+                        android:fontFamily="@font/latoregular"
+                        android:textSize="18sp"
+                        android:text="SortBy Name"></RadioButton>
+
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/gray"
+                        android:layout_margin="@dimen/defaultmargin"></View>
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="@color/colorTheme"
+                        android:textColor="@color/colorBlack"
+                        android:buttonTint="@color/colorTheme"
+                        android:fontFamily="@font/latoregular"
+                        android:textSize="18sp"
+                        android:text="SortBy rating"></RadioButton>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/gray"
+                        android:layout_margin="@dimen/defaultmargin"></View>
+
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="@color/colorTheme"
+                        android:textColor="@color/colorBlack"
+                        android:buttonTint="@color/colorTheme"
+                        android:fontFamily="@font/latoregular"
+                        android:textSize="18sp"
+                        android:text="SortBy nearby location"></RadioButton>
+                </RadioGroup>
+
+
+            </RelativeLayout>
+
+
+        </androidx.cardview.widget.CardView>
+    </RelativeLayout>
+    <ImageButton
+        android:id="@+id/closedilog"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_gravity="top|right"
+        android:src="@drawable/ic_closetheme"
+        android:background="@color/colorTrans"
+        />
+
+</FrameLayout>

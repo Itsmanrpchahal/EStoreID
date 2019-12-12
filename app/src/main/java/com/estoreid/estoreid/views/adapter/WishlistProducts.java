@@ -48,7 +48,7 @@ public class WishlistProducts extends RecyclerView.Adapter<WishlistProducts.View
 
         holder.product_add_to_fav.setVisibility(View.GONE);
         holder.product_add_to_cart.setVisibility(View.GONE);
-        Glide.with(context).load(Constants.IMAGES +wishlist.get(position).getImage()).into(holder.product_image);
+        Glide.with(context).load(Constants.IMAGES +wishlist.get(position).getImage().toString()).into(holder.product_image);
         holder.product_name.setText(wishlist.get(position).getProductName());
         holder.product_price.setText("$"+wishlist.get(position).getSalePrice());
         holder.product_original_price.setText("$"+wishlist.get(position).getActualPrice());
@@ -57,7 +57,6 @@ public class WishlistProducts extends RecyclerView.Adapter<WishlistProducts.View
         holder.product_discountper.setText(wishlist.get(position).getDiscount()+"% off");
         holder.product_rating.setRating(Float.parseFloat(String.valueOf(wishlist.get(position).getRating())));
 
-        Glide.with(context).load(datum.getImage().toString()).into(holder.product_image);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

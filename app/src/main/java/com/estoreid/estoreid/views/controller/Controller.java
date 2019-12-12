@@ -7,12 +7,15 @@ import com.estoreid.estoreid.views.apiResponseModel.CartItemsResponse;
 import com.estoreid.estoreid.views.apiResponseModel.FavVendorsResponse;
 import com.estoreid.estoreid.views.apiResponseModel.FilterDataResponse;
 import com.estoreid.estoreid.views.apiResponseModel.FollowAPIResponse;
+import com.estoreid.estoreid.views.apiResponseModel.GetOrderListResponse;
 import com.estoreid.estoreid.views.apiResponseModel.GetProfileResponse;
 import com.estoreid.estoreid.views.apiResponseModel.GetWishlistProducts;
 import com.estoreid.estoreid.views.apiResponseModel.LoginAPIReponse;
+import com.estoreid.estoreid.views.apiResponseModel.OrderPlacedResponse;
 import com.estoreid.estoreid.views.apiResponseModel.ProductDetailResponse;
 import com.estoreid.estoreid.views.apiResponseModel.ProductsAPI;
 import com.estoreid.estoreid.views.apiResponseModel.RegisterAPIReponse;
+import com.estoreid.estoreid.views.apiResponseModel.RemoveCartItemResponse;
 import com.estoreid.estoreid.views.apiResponseModel.ResetAPIReponse;
 import com.estoreid.estoreid.views.apiResponseModel.SetNewPasswordAPIReponse;
 import com.estoreid.estoreid.views.apiResponseModel.SocailLoginAPIResponse;
@@ -50,6 +53,9 @@ public class Controller {
     public AddCartItemQuantity addCartItemQuantity;
     public AddToWishlist addToWishlist;
     public GetWishlistProducts getWishlistProducts;
+    public OrderPlaced orderPlaced;
+    public RemoveFromCart removeFromCart;
+    public GetOrderList getOrderList;
 
 
     //registerAPI
@@ -59,15 +65,13 @@ public class Controller {
     }
 
     //verifyAPI
-    public Controller(VerifyAPI verifyAPI1)
-    {
+    public Controller(VerifyAPI verifyAPI1) {
         verifyAPI = verifyAPI1;
         webAPI = new WebAPI();
     }
 
     //loginAPI ----- forgotPasswordApi ------ SocialLogin
-    public Controller(LoginAPI loginAPI1,ForgotPassword forgotPassword1,SetNewPassword setNewPassword1,setSocailLogin setSocailLogin1)
-    {
+    public Controller(LoginAPI loginAPI1, ForgotPassword forgotPassword1, SetNewPassword setNewPassword1, setSocailLogin setSocailLogin1) {
         loginAPI = loginAPI1;
         forgotPassword = forgotPassword1;
         setNewPassword = setNewPassword1;
@@ -76,30 +80,26 @@ public class Controller {
     }
 
     //vendor list
-    public Controller(VendorList vendorList1,FollowUnfollow followUnfollow1)
-    {
+    public Controller(VendorList vendorList1, FollowUnfollow followUnfollow1) {
         vendorList = vendorList1;
         followUnfollow = followUnfollow1;
         webAPI = new WebAPI();
     }
 
     //products api
-    public Controller(Products products1)
-    {
+    public Controller(Products products1) {
         products = products1;
         webAPI = new WebAPI();
     }
 
     //filter screen
-    public Controller(FilterScreen filterScreen1)
-    {
+    public Controller(FilterScreen filterScreen1) {
         filterScreen = filterScreen1;
         webAPI = new WebAPI();
     }
 
     //product details
-    public Controller(ProductDetail productDetail1,AddToCart addToCart1,AddToWishlist addToWishlist1)
-    {
+    public Controller(ProductDetail productDetail1, AddToCart addToCart1, AddToWishlist addToWishlist1) {
         productDetail = productDetail1;
         addToCart = addToCart1;
         addToWishlist = addToWishlist1;
@@ -107,50 +107,59 @@ public class Controller {
     }
 
     //get profile
-    public Controller(GetProfile getProfile1)
-    {
+    public Controller(GetProfile getProfile1) {
         getProfile = getProfile1;
         webAPI = new WebAPI();
     }
 
     //uploadProfile -- getProfile
-    public Controller(UploadProfile uploadProfile1,GetProfile getProfile1)
-    {
+    public Controller(UploadProfile uploadProfile1, GetProfile getProfile1) {
         uploadProfile = uploadProfile1;
         getProfile = getProfile1;
         webAPI = new WebAPI();
     }
 
     //fav strore
-    public Controller(FavStore favStore1,FollowUnfollow followUnfollow1)
-    {
+    public Controller(FavStore favStore1, FollowUnfollow followUnfollow1) {
         favStore = favStore1;
         followUnfollow = followUnfollow1;
         webAPI = new WebAPI();
     }
 
     //cart Items
-    public Controller(CartItems cartItems1,AddCartItemQuantity addCartItemQuantity1)
-    {
+    public Controller(CartItems cartItems1, AddCartItemQuantity addCartItemQuantity1, RemoveFromCart removeFromCart1) {
         cartItems = cartItems1;
         addCartItemQuantity = addCartItemQuantity1;
+        removeFromCart = removeFromCart1;
         webAPI = new WebAPI();
     }
 
     //getWishlistProducts
-    public Controller(GetWishlistProducts getWishlistProducts1)
-    {
+    public Controller(GetWishlistProducts getWishlistProducts1) {
         getWishlistProducts = getWishlistProducts1;
+        webAPI = new WebAPI();
+    }
+
+
+    //orderplaced
+    public Controller(OrderPlaced orderPlaced1) {
+        orderPlaced = orderPlaced1;
+        webAPI = new WebAPI();
+    }
+
+
+    //get order list
+    public Controller(GetOrderList getOrderList1) {
+        getOrderList = getOrderList1;
         webAPI = new WebAPI();
     }
 
     //rest  API's
     public void setRegisterAPI(String firstname, String lastname, String email, String password, String confirmPassword, String mobilenumber) {
-        webAPI.getApi().register(firstname,lastname,email,password,confirmPassword,mobilenumber).enqueue(new Callback<RegisterAPIReponse>() {
+        webAPI.getApi().register(firstname, lastname, email, password, confirmPassword, mobilenumber).enqueue(new Callback<RegisterAPIReponse>() {
             @Override
             public void onResponse(Call<RegisterAPIReponse> call, Response<RegisterAPIReponse> response) {
-                if (response!=null)
-                {
+                if (response != null) {
                     Response<RegisterAPIReponse> registerAPIReponseResponse = response;
                     registerAPI.onSucess(registerAPIReponseResponse);
                 }
@@ -164,13 +173,11 @@ public class Controller {
     }
 
 
-    public void setVerifyAPI(String user_id,String otp)
-    {
+    public void setVerifyAPI(String user_id, String otp) {
         webAPI.getApi().verify(user_id, otp).enqueue(new Callback<VerifyAPIReponse>() {
             @Override
             public void onResponse(Call<VerifyAPIReponse> call, Response<VerifyAPIReponse> response) {
-                if (response!=null)
-                {
+                if (response != null) {
                     Response<VerifyAPIReponse> verifyAPIResponse = response;
                     verifyAPI.onSucess(verifyAPIResponse);
                 }
@@ -183,13 +190,11 @@ public class Controller {
         });
     }
 
-    public void setLoginAPI(String email,String password,String device_token)
-    {
-        webAPI.getApi().login(email, password,device_token).enqueue(new Callback<LoginAPIReponse>() {
+    public void setLoginAPI(String email, String password, String device_token) {
+        webAPI.getApi().login(email, password, device_token).enqueue(new Callback<LoginAPIReponse>() {
             @Override
             public void onResponse(Call<LoginAPIReponse> call, Response<LoginAPIReponse> response) {
-                if (response!=null)
-                {
+                if (response != null) {
                     Response<LoginAPIReponse> loginAPIReponseResponse = response;
                     loginAPI.onSucess(loginAPIReponseResponse);
                 }
@@ -202,13 +207,11 @@ public class Controller {
         });
     }
 
-    public void setForgotPassword(String email)
-    {
+    public void setForgotPassword(String email) {
         webAPI.getApi().forget_password(email).enqueue(new Callback<ResetAPIReponse>() {
             @Override
             public void onResponse(Call<ResetAPIReponse> call, Response<ResetAPIReponse> response) {
-                if (response !=null)
-                {
+                if (response != null) {
                     Response<ResetAPIReponse> resetAPIReponseResponse = response;
                     forgotPassword.onSucessForgot(resetAPIReponseResponse);
                 }
@@ -216,18 +219,16 @@ public class Controller {
 
             @Override
             public void onFailure(Call<ResetAPIReponse> call, Throwable t) {
-                    forgotPassword.onError(t.getMessage());
+                forgotPassword.onError(t.getMessage());
             }
         });
     }
 
-    public void setSetNewPassword(String email,String otp,String password)
-    {
-        webAPI.getApi().setNewPassword(otp,email,password).enqueue(new Callback<SetNewPasswordAPIReponse>() {
+    public void setSetNewPassword(String email, String otp, String password) {
+        webAPI.getApi().setNewPassword(otp, email, password).enqueue(new Callback<SetNewPasswordAPIReponse>() {
             @Override
             public void onResponse(Call<SetNewPasswordAPIReponse> call, Response<SetNewPasswordAPIReponse> response) {
-                if (response!=null)
-                {
+                if (response != null) {
                     Response<SetNewPasswordAPIReponse> newPasswordAPIReponseResponse = response;
                     setNewPassword.onSuccessSetNewPassowrd(newPasswordAPIReponseResponse);
                 }
@@ -235,18 +236,16 @@ public class Controller {
 
             @Override
             public void onFailure(Call<SetNewPasswordAPIReponse> call, Throwable t) {
-                    setNewPassword.onError(t.getMessage());
+                setNewPassword.onError(t.getMessage());
             }
         });
     }
 
-    public void setSetSocailLogin(String email,String device_token, String firstname,String socialId,String type)
-    {
-        webAPI.getApi().socialLogin(email,device_token,firstname,socialId,type).enqueue(new Callback<SocailLoginAPIResponse>() {
+    public void setSetSocailLogin(String email, String device_token, String firstname, String socialId, String type) {
+        webAPI.getApi().socialLogin(email, device_token, firstname, socialId, type).enqueue(new Callback<SocailLoginAPIResponse>() {
             @Override
             public void onResponse(Call<SocailLoginAPIResponse> call, Response<SocailLoginAPIResponse> response) {
-                if (response!=null)
-                {
+                if (response != null) {
                     Response<SocailLoginAPIResponse> socailLoginAPIResponseResponse = response;
                     setSocailLogin.onSuccessSocialLogin(socailLoginAPIResponseResponse);
                 }
@@ -259,13 +258,11 @@ public class Controller {
         });
     }
 
-    public void setVendorList(String token,String lat,String lng,String pincode)
-    {
-        webAPI.getApi().vendorlist(token,lat,lng,pincode).enqueue(new Callback<VendorAPIResponse>() {
+    public void setVendorList(String token, String lat, String lng, String pincode) {
+        webAPI.getApi().vendorlist(token, lat, lng, pincode).enqueue(new Callback<VendorAPIResponse>() {
             @Override
             public void onResponse(Call<VendorAPIResponse> call, Response<VendorAPIResponse> response) {
-                if (response!=null)
-                {
+                if (response != null) {
                     Response<VendorAPIResponse> vendorListResponse = response;
                     vendorList.onSucessVendorList(vendorListResponse);
                 }
@@ -278,13 +275,11 @@ public class Controller {
         });
     }
 
-    public void setFollowUnfollow(String token,String vendor_id)
-    {
-        webAPI.getApi().FollowVendor(token,vendor_id).enqueue(new Callback<FollowAPIResponse>() {
+    public void setFollowUnfollow(String token, String vendor_id) {
+        webAPI.getApi().FollowVendor(token, vendor_id).enqueue(new Callback<FollowAPIResponse>() {
             @Override
             public void onResponse(Call<FollowAPIResponse> call, Response<FollowAPIResponse> response) {
-                if (response!=null)
-                {
+                if (response != null) {
                     Response<FollowAPIResponse> followAPIResponseResponse = response;
                     followUnfollow.onSucessFollow(followAPIResponseResponse);
                 }
@@ -297,13 +292,11 @@ public class Controller {
         });
     }
 
-    public void Products(String token,String vendor_id)
-    {
-        webAPI.getApi().products(token,vendor_id).enqueue(new Callback<ProductsAPI>() {
+    public void Products(String token, String vendor_id) {
+        webAPI.getApi().products(token, vendor_id).enqueue(new Callback<ProductsAPI>() {
             @Override
             public void onResponse(Call<ProductsAPI> call, Response<ProductsAPI> response) {
-                if (response!=null)
-                {
+                if (response != null) {
                     Response<ProductsAPI> productsAPIResponse = response;
                     products.onSuccessProduct(productsAPIResponse);
                 }
@@ -311,18 +304,16 @@ public class Controller {
 
             @Override
             public void onFailure(Call<ProductsAPI> call, Throwable t) {
-                    products.onError(t.getMessage());
+                products.onError(t.getMessage());
             }
         });
     }
 
-    public void FilterScreen(String token)
-    {
+    public void FilterScreen(String token) {
         webAPI.getApi().filterscreen(token).enqueue(new Callback<FilterDataResponse>() {
             @Override
             public void onResponse(Call<FilterDataResponse> call, Response<FilterDataResponse> response) {
-                if (response!=null)
-                {
+                if (response != null) {
                     Response<FilterDataResponse> filterDataResponseResponse = response;
                     filterScreen.onSucessFilter(filterDataResponseResponse);
                 }
@@ -335,13 +326,11 @@ public class Controller {
         });
     }
 
-    public void ProductDetails(String token,String product_id)
-    {
-        webAPI.getApi().productdetails(token,product_id).enqueue(new Callback<ProductDetailResponse>() {
+    public void ProductDetails(String token, String product_id) {
+        webAPI.getApi().productdetails(token, product_id).enqueue(new Callback<ProductDetailResponse>() {
             @Override
             public void onResponse(Call<ProductDetailResponse> call, Response<ProductDetailResponse> response) {
-                if (response!=null)
-                {
+                if (response != null) {
                     Response<ProductDetailResponse> productDetailResponse = response;
                     productDetail.onSuccessProductDetail(productDetailResponse);
                 }
@@ -354,13 +343,11 @@ public class Controller {
         });
     }
 
-    public void Addtocart(String token,String product_id,String color_id,String size_id)
-    {
-        webAPI.getApi().addtocart(token,product_id,color_id,size_id).enqueue(new Callback<AddToCartResponse>() {
+    public void Addtocart(String token, String product_id, String color_id, String size_id) {
+        webAPI.getApi().addtocart(token, product_id, color_id, size_id).enqueue(new Callback<AddToCartResponse>() {
             @Override
             public void onResponse(Call<AddToCartResponse> call, Response<AddToCartResponse> response) {
-                if (response!=null)
-                {
+                if (response != null) {
                     Response<AddToCartResponse> addToCartResponseResponse = response;
                     addToCart.onSuccessAddToCart(addToCartResponseResponse);
                 }
@@ -373,13 +360,11 @@ public class Controller {
         });
     }
 
-    public void GetProfile(String token)
-    {
+    public void GetProfile(String token) {
         webAPI.getApi().getProfile(token).enqueue(new Callback<GetProfileResponse>() {
             @Override
             public void onResponse(Call<GetProfileResponse> call, Response<GetProfileResponse> response) {
-                if (response!=null)
-                {
+                if (response != null) {
                     Response<GetProfileResponse> getProfileResponseResponse = response;
                     getProfile.onSuccessGetProfile(getProfileResponseResponse);
                 }
@@ -392,13 +377,11 @@ public class Controller {
         });
     }
 
-    public void UploadProfile(String token, String first_name, String last_name, String email, String phone, String gender, String dob, MultipartBody.Part part)
-    {
-        webAPI.getApi().uploadProfile(token,first_name,last_name,email,phone,gender,dob,part).enqueue(new Callback<UploadProfileResponse>() {
+    public void UploadProfile(String token, String first_name, String last_name, String email, String phone, String gender, String dob, MultipartBody.Part part) {
+        webAPI.getApi().uploadProfile(token, first_name, last_name, email, phone, gender, dob, part).enqueue(new Callback<UploadProfileResponse>() {
             @Override
             public void onResponse(Call<UploadProfileResponse> call, Response<UploadProfileResponse> response) {
-                if (response!=null)
-                {
+                if (response != null) {
                     Response<UploadProfileResponse> responseResponse = response;
                     uploadProfile.onSuccessUploadProfile(responseResponse);
                 }
@@ -406,18 +389,16 @@ public class Controller {
 
             @Override
             public void onFailure(Call<UploadProfileResponse> call, Throwable t) {
-                    uploadProfile.onError(t.getMessage());
+                uploadProfile.onError(t.getMessage());
             }
         });
     }
 
-    public void FavStore(String token)
-    {
+    public void FavStore(String token) {
         webAPI.getApi().favStores(token).enqueue(new Callback<FavVendorsResponse>() {
             @Override
             public void onResponse(Call<FavVendorsResponse> call, Response<FavVendorsResponse> response) {
-                if (response!=null)
-                {
+                if (response != null) {
                     Response<FavVendorsResponse> favVendorsResponseResponse = response;
                     favStore.onSuccessFavStore(favVendorsResponseResponse);
                 }
@@ -425,19 +406,17 @@ public class Controller {
 
             @Override
             public void onFailure(Call<FavVendorsResponse> call, Throwable t) {
-                    favStore.onError(t.getMessage());
+                favStore.onError(t.getMessage());
             }
         });
     }
 
 
-    public void CartItems(String token)
-    {
+    public void CartItems(String token) {
         webAPI.getApi().cartItems(token).enqueue(new Callback<CartItemsResponse>() {
             @Override
             public void onResponse(Call<CartItemsResponse> call, Response<CartItemsResponse> response) {
-                if (response != null)
-                {
+                if (response != null) {
                     Response<CartItemsResponse> cartItemsResponseResponse = response;
                     cartItems.onSuccessCartItems(cartItemsResponseResponse);
                 }
@@ -445,18 +424,16 @@ public class Controller {
 
             @Override
             public void onFailure(Call<CartItemsResponse> call, Throwable t) {
-                    cartItems.onError(t.getMessage());
+                cartItems.onError(t.getMessage());
             }
         });
     }
 
-    public void AddCartItemQuantity(String token,String cart_id,String quantint)
-    {
-        webAPI.getApi().addtcartquantity(token,cart_id,quantint).enqueue(new Callback<AddCartQuantityResponse>() {
+    public void AddCartItemQuantity(String token, String cart_id, String quantint) {
+        webAPI.getApi().addtcartquantity(token, cart_id, quantint).enqueue(new Callback<AddCartQuantityResponse>() {
             @Override
             public void onResponse(Call<AddCartQuantityResponse> call, Response<AddCartQuantityResponse> response) {
-                if (response != null)
-                {
+                if (response != null) {
                     Response<AddCartQuantityResponse> addCartItemQuantityResponse = response;
                     addCartItemQuantity.onSucessAddCartQuantity(addCartItemQuantityResponse);
                 }
@@ -470,13 +447,11 @@ public class Controller {
     }
 
 
-    public void AddToWishlist(String token,String product_id)
-    {
-        webAPI.getApi().addtowistlist(token,product_id).enqueue(new Callback<AddToWishlistResponse>() {
+    public void AddToWishlist(String token, String product_id) {
+        webAPI.getApi().addtowistlist(token, product_id).enqueue(new Callback<AddToWishlistResponse>() {
             @Override
             public void onResponse(Call<AddToWishlistResponse> call, Response<AddToWishlistResponse> response) {
-                if (response!=null)
-                {
+                if (response != null) {
                     Response<AddToWishlistResponse> addToWishlistResponseResponse = response;
                     addToWishlist.onSuccessAddToWistlist(addToWishlistResponseResponse);
                 }
@@ -489,8 +464,7 @@ public class Controller {
         });
     }
 
-    public void GetWishlist(String token)
-    {
+    public void GetWishlist(String token) {
         webAPI.getApi().getWishlist(token).enqueue(new Callback<com.estoreid.estoreid.views.apiResponseModel.GetWishlistProducts>() {
             @Override
             public void onResponse(Call<com.estoreid.estoreid.views.apiResponseModel.GetWishlistProducts> call, Response<com.estoreid.estoreid.views.apiResponseModel.GetWishlistProducts> response) {
@@ -501,6 +475,52 @@ public class Controller {
             @Override
             public void onFailure(Call<com.estoreid.estoreid.views.apiResponseModel.GetWishlistProducts> call, Throwable t) {
                 getWishlistProducts.onError(t.getMessage());
+            }
+        });
+    }
+
+    public void OrderPlaced(String token, String product_id, String transaction_id, String total_amount) {
+        webAPI.getApi().orderplaced(token, product_id, transaction_id, total_amount).enqueue(new Callback<OrderPlacedResponse>() {
+            @Override
+            public void onResponse(Call<OrderPlacedResponse> call, Response<OrderPlacedResponse> response) {
+                Response<OrderPlacedResponse> orderPlacedResponseResponse = response;
+                orderPlaced.onSuccessOrderPlaced(orderPlacedResponseResponse);
+            }
+
+            @Override
+            public void onFailure(Call<OrderPlacedResponse> call, Throwable t) {
+                orderPlaced.onError(t.getMessage());
+            }
+        });
+    }
+
+    public void RemoveFromCart(String token, String cart_id) {
+        webAPI.getApi().removecart(token, cart_id).enqueue(new Callback<RemoveCartItemResponse>() {
+            @Override
+            public void onResponse(Call<RemoveCartItemResponse> call, Response<RemoveCartItemResponse> response) {
+                Response<RemoveCartItemResponse> removeCartItemResponseResponse = response;
+                removeFromCart.onSuccessRemoveCart(removeCartItemResponseResponse);
+            }
+
+            @Override
+            public void onFailure(Call<RemoveCartItemResponse> call, Throwable t) {
+                removeFromCart.onError(t.getMessage());
+            }
+        });
+    }
+
+    public void GetOrderList(String token)
+    {
+        webAPI.getApi().orderlist(token).enqueue(new Callback<GetOrderListResponse>() {
+            @Override
+            public void onResponse(Call<GetOrderListResponse> call, Response<GetOrderListResponse> response) {
+                Response<GetOrderListResponse> orderPlacedResponseResponse = response;
+                getOrderList.onSuccessGetOrders(orderPlacedResponseResponse);
+            }
+
+            @Override
+            public void onFailure(Call<GetOrderListResponse> call, Throwable t) {
+                getOrderList.onError(t.getMessage());
             }
         });
     }
@@ -599,6 +619,22 @@ public class Controller {
 
     public interface GetWishlistProducts{
         void onSuccessGetWishlist(Response<com.estoreid.estoreid.views.apiResponseModel.GetWishlistProducts> getWishlistProductsResponse);
+        void onError(String error);
+    }
+
+    public interface OrderPlaced{
+        void onSuccessOrderPlaced(Response<OrderPlacedResponse> orderPlacedResponseResponse);
+        void onError(String error);
+    }
+
+    public interface RemoveFromCart{
+        void onSuccessRemoveCart(Response<RemoveCartItemResponse> removeFromCartResponse);
+        void onError(String error);
+    }
+
+    public interface GetOrderList
+    {
+        void onSuccessGetOrders(Response<GetOrderListResponse> getOrderListResponse);
         void onError(String error);
     }
 }

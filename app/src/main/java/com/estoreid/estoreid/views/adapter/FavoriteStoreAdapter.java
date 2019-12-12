@@ -17,6 +17,7 @@ import com.bumptech.glide.Glide;
 import com.estoreid.estoreid.R;
 import com.estoreid.estoreid.views.Products_Screen;
 import com.estoreid.estoreid.views.apiResponseModel.FavVendorsResponse;
+import com.estoreid.estoreid.views.utils.Constants;
 
 import java.util.ArrayList;
 
@@ -50,7 +51,7 @@ public class FavoriteStoreAdapter extends RecyclerView.Adapter<FavoriteStoreAdap
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.tv_rating.setText(datumArrayList.get(position).getRating().toString());
-        Glide.with(context).load("http://estore.amrdev.site/public/images/"+datumArrayList.get(position).getImage().toString()).into(holder.img_store);
+        Glide.with(context).load(Constants.IMAGES +datumArrayList.get(position).getImage().toString()).into(holder.img_store);
         holder.tv_venderName.setText(datumArrayList.get(position).getBusinessName());
         holder.tv_venderAddress.setText(datumArrayList.get(position).getAddress());
         holder.tv_venderTimming.setText("Timing: "+datumArrayList.get(position).getTimeFrom().toString()+" - "+datumArrayList.get(position).getTimeTo().toString());

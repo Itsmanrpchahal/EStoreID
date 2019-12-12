@@ -142,6 +142,11 @@ public class SettingScreen extends BaseActivity implements IPickResult, Controll
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
     private void listerners() {
 
         ccp.setOnCountryChangeListener(new CountryCodePicker.OnCountryChangeListener() {
@@ -180,12 +185,13 @@ public class SettingScreen extends BaseActivity implements IPickResult, Controll
             @Override
             public void onClick(View v) {
 //                selectPhoto();
-                PickImageDialog.build(new PickSetup()
-                        .setButtonOrientation(LinearLayout.HORIZONTAL)).show(SettingScreen.this).setOnClick(new IPickClick() {
+
+                PickImageDialog.build(new PickSetup().setButtonOrientation(LinearLayout.HORIZONTAL)).show(SettingScreen.this).setOnClick(new IPickClick() {
                     @Override
                     public void onGalleryClick() {
                         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                         startActivityForResult(intent, RESULT_LOAD_IMAGE);
+
                     }
 
                     @Override
@@ -207,6 +213,7 @@ public class SettingScreen extends BaseActivity implements IPickResult, Controll
                             startActivityForResult(intent, REQUEST_CAMERA);
                         }
                     }
+
                 });
             }
         });
@@ -347,10 +354,8 @@ public class SettingScreen extends BaseActivity implements IPickResult, Controll
                 CropImage.activity(uri).setGuidelines(CropImageView.Guidelines.ON).start(SettingScreen.this);
                 bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
 //                setStringVal(Constants.BitmapImage, String.valueOf(bitmap));
-
                 settingUserImage.setImageBitmap(bitmap);
                 part = Utils.sendImageFileToserver(bitmap, "user_image", SettingScreen.this);
-
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -417,6 +422,7 @@ public class SettingScreen extends BaseActivity implements IPickResult, Controll
                 settingEmail.setText(uploadProfileResponseResponse.body().getData().getEmail());
                 settingGender.setText(uploadProfileResponseResponse.body().getData().getGender());
                 settingDob.setText(Utils.convertTimeStampDate(Long.parseLong(uploadProfileResponseResponse.body().getData().getDob())));
+                Utils.showToastMessage(SettingScreen.this,uploadProfileResponseResponse.body().getMessage(),getResources().getDrawable(R.drawable.ic_check_circle));
             }
         }
     }
@@ -429,6 +435,7 @@ public class SettingScreen extends BaseActivity implements IPickResult, Controll
             settingLastname.setText(getProfileResponseResponse.body().getData().get(0).getLastName());
             settingEmail.setText(getProfileResponseResponse.body().getData().get(0).getEmail());
             settingPhnno.setText(getProfileResponseResponse.body().getData().get(0).getMobileNumber().toString());
+            setStringVal(Constants.USER_NUMBER,getProfileResponseResponse.body().getData().get(0).getMobileNumber().toString());
             if (getProfileResponseResponse.body().getData().get(0).getGender() != null) {
                 settingGender.setText(getProfileResponseResponse.body().getData().get(0).getGender());
             }
@@ -438,8 +445,9 @@ public class SettingScreen extends BaseActivity implements IPickResult, Controll
             }
 
             if (getProfileResponseResponse.body().getData().get(0).getImage() != null) {
+                Log.d("image",Constants.IMAGES + getProfileResponseResponse.body().getData().get(0).getImage());
                 setStringVal(Constants.USER_NAME, getProfileResponseResponse.body().getData().get(0).getFirstName() + " " + getProfileResponseResponse.body().getData().get(0).getLastName());
-                setStringVal(Constants.USER_IMAGE, Constants.IMAGES + getProfileResponseResponse.body().getData().get(0).getImage());
+                setStringVal(Constants.USER_IMAGE, getProfileResponseResponse.body().getData().get(0).getImage());
                 Glide.with(SettingScreen.this).load(Constants.IMAGES + getProfileResponseResponse.body().getData().get(0).getImage()).into(settingUserImage);
                 new getImagefromURL(settingUserImage).execute(Constants.IMAGES + getProfileResponseResponse.body().getData().get(0).getImage());
             }

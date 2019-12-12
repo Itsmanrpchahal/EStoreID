@@ -15,7 +15,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.estoreid.estoreid.R;
 import com.estoreid.estoreid.views.apiResponseModel.CartItemsResponse;
-import com.estoreid.estoreid.views.apiResponseModel.count;
+import com.estoreid.estoreid.views.cart.AddCartQuantity;
+import com.estoreid.estoreid.views.cart.RemoveCartItem;
 import com.estoreid.estoreid.views.utils.Constants;
 import com.estoreid.estoreid.views.utils.Utils;
 import com.makeramen.roundedimageview.RoundedImageView;
@@ -29,6 +30,11 @@ public class CartAddedItemAdapter extends RecyclerView.Adapter<CartAddedItemAdap
     AsyncTask<Integer> asyncTask;
     ArrayList<CartItemsResponse.Datum> cartsitems = new ArrayList<>();
     AddCartQuantity addCartQuantity;
+    RemoveCartItem removeCartItem;
+
+    public void CartAddedItemAdapter(RemoveCartItem removeCartItem) {
+        this.removeCartItem = removeCartItem;
+    }
 
     public void CartAddedItemAdapter(AddCartQuantity addCartQuantity) {
         this.addCartQuantity = addCartQuantity;
@@ -53,9 +59,8 @@ public class CartAddedItemAdapter extends RecyclerView.Adapter<CartAddedItemAdap
         CartItemsResponse.Datum datum = cartsitems.get(position);
         Glide.with(context).load(Constants.IMAGES+datum.getImage()).into(holder.cart_product_image);
         holder.product_name.setText(datum.getProductName());
-//        holder.product_category.setText(datum.);
-        holder.product_price.setText(datum.getSalePrice().toString());
-        holder.product_discount.setText(datum.getActualPrice().toString());
+        holder.product_price.setText("$"+datum.getSalePrice().toString());
+        holder.product_discount.setText("$"+datum.getActualPrice().toString());
         holder.product_discount.setPaintFlags(holder.product_discount.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
 
         holder.count_tv.setText(datum.getQuantity().toString());
@@ -79,7 +84,7 @@ public class CartAddedItemAdapter extends RecyclerView.Adapter<CartAddedItemAdap
         holder.remove_item_from_cart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (cartsitems.get(position).getQuantity() >= 1) {
+                if (cartsitems.get(position).getQuantity() >= 2) {
                     count1 = 0;
                     count1 = cartsitems.get(position).getQuantity() - 1;
                     cartsitems.get(position).setQuantity(count1);
@@ -91,6 +96,14 @@ public class CartAddedItemAdapter extends RecyclerView.Adapter<CartAddedItemAdap
                 }
             }
         });
+
+
+        holder.cart_item_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                removeCartItem.onSuccess(datum.getCartId().toString());
+            }
+        });
     }
 
     @Override
@@ -99,7 +112,7 @@ public class CartAddedItemAdapter extends RecyclerView.Adapter<CartAddedItemAdap
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        ImageButton remove_item_from_cart,add_item_from_cart;
+        ImageButton remove_item_from_cart,add_item_from_cart,cart_item_cancel;
         TextView count_tv,product_name,product_category,product_price,product_discount;
         RoundedImageView cart_product_image;
         public ViewHolder(@NonNull View itemView)
@@ -113,6 +126,7 @@ public class CartAddedItemAdapter extends RecyclerView.Adapter<CartAddedItemAdap
             product_category = itemView.findViewById(R.id.product_category);
             product_price = itemView.findViewById(R.id.product_price);
             product_discount = itemView.findViewById(R.id.product_discount);
+            cart_item_cancel = itemView.findViewById(R.id.cart_item_cancel);
         }
     }
 }

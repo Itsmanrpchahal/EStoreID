@@ -15,7 +15,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class WebAPI {
 
 //    public static String BASE_URL = "http://estore.amrdev.site/api/";
-    public static String BASE_URL = "http://box5841.temp.domains/~amrdevsi/estore/api/";
+    public static String BASE_URL = "http://amrsof.tech/estore/api/";
     public static WebAPI mInstance;
     Retrofit retrofit;
     public static ApiInterface apiInterface;

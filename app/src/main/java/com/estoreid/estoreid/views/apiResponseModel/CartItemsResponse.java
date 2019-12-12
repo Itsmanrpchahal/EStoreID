@@ -13,6 +13,9 @@ public class CartItemsResponse {
     @SerializedName("message")
     @Expose
     private String message;
+    @SerializedName("price")
+    @Expose
+    private Price price;
     @SerializedName("data")
     @Expose
     private List<Datum> data = null;
@@ -31,6 +34,14 @@ public class CartItemsResponse {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public Price getPrice() {
+        return price;
+    }
+
+    public void setPrice(Price price) {
+        this.price = price;
     }
 
     public List<Datum> getData() {
@@ -286,44 +297,7 @@ public class CartItemsResponse {
             this.sizes = sizes;
         }
 
-        public class Color {
 
-            @SerializedName("id")
-            @Expose
-            private Integer id;
-            @SerializedName("name")
-            @Expose
-            private String name;
-            @SerializedName("image")
-            @Expose
-            private String image;
-
-            public Integer getId() {
-                return id;
-            }
-
-            public void setId(Integer id) {
-                this.id = id;
-            }
-
-            public String getName() {
-                return name;
-            }
-
-            public void setName(String name) {
-                this.name = name;
-            }
-
-            public String getImage() {
-                return image;
-            }
-
-            public void setImage(String image) {
-                this.image = image;
-            }
-
-
-        }
 
         public class Size {
 
@@ -362,5 +336,80 @@ public class CartItemsResponse {
             }
 
         }
+
+        public class Color {
+
+            @SerializedName("id")
+            @Expose
+            private Integer id;
+            @SerializedName("name")
+            @Expose
+            private String name;
+            @SerializedName("image")
+            @Expose
+            private String image;
+
+            public Integer getId() {
+                return id;
+            }
+
+            public void setId(Integer id) {
+                this.id = id;
+            }
+
+            public String getName() {
+                return name;
+            }
+
+            public void setName(String name) {
+                this.name = name;
+            }
+
+            public String getImage() {
+                return image;
+            }
+
+            public void setImage(String image) {
+                this.image = image;
+            }
+
+        }
+    }
+    public class Price {
+
+        @SerializedName("sub_total")
+        @Expose
+        private Integer subTotal;
+        @SerializedName("tax_amount")
+        @Expose
+        private String taxAmount;
+        @SerializedName("total")
+        @Expose
+        private String total;
+
+        public Integer getSubTotal() {
+            return subTotal;
+        }
+
+        public void setSubTotal(Integer subTotal) {
+            this.subTotal = subTotal;
+        }
+
+        public String getTaxAmount() {
+            return taxAmount;
+        }
+
+        public void setTaxAmount(String taxAmount) {
+            this.taxAmount = taxAmount;
+        }
+
+        public String getTotal() {
+            return total;
+        }
+
+        public void setTotal(String total) {
+            this.total = total;
+        }
+
     }
 }

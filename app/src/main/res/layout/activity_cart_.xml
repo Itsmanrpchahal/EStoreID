@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/colorWhite"
     tools:openDrawer="start"
-    tools:context=".views.Cart_Activity">
+    tools:context=".views.cart.Cart_Activity">
 
 
         <RelativeLayout
@@ -31,6 +31,7 @@
         android:id="@+id/scrollview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginBottom="60dp"
         android:layout_marginTop="56dp">
 
         <RelativeLayout
@@ -63,7 +64,7 @@
                 android:id="@+id/cart_itemscount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="2 items available"
+                android:text=""
                 android:textColor="@color/colorBlack"
                 android:textSize="@dimen/normaltext"
                 android:layout_below="@id/view1"

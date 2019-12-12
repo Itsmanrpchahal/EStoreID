@@ -62,6 +62,7 @@
 
 
     <Button
+        android:id="@+id/myorders"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
@@ -73,7 +74,7 @@
         android:paddingRight="10dp"
         android:paddingLeft="10dp"
         android:textColor="@color/colorWhite"
-        android:drawableRight="@drawable/ic_rectangle"></Button>
+        android:drawableRight="@drawable/ic_orderplaced"></Button>
 
 
 </RelativeLayout>

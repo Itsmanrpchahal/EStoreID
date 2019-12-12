@@ -53,6 +53,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="from boots category"
+                    android:singleLine="true"
                     android:layout_below="@id/product_name"
                     android:textSize="@dimen/normaltext"
                     android:fontFamily="@font/quicksandbold"></TextView>
@@ -104,6 +105,7 @@
                     android:layout_width="wrap_content"
                     android:layout_marginRight="15dp"
                     android:layout_height="wrap_content"
+                    android:src="@drawable/ic_close"
                     android:background="@color/colorTrans"
                     android:layout_alignParentRight="true">
 
@@ -113,6 +115,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/saveforlater"
+                    android:gravity="end"
                     android:layout_toRightOf="@id/product_discount"
                     android:layout_marginTop="@dimen/defaultmargin"
                     android:layout_alignParentRight="true">
@@ -146,6 +149,7 @@
                         android:layout_height="wrap_content"
                         android:background="@drawable/ic_addcart"
                         android:padding="5dp"
+                        android:layout_marginRight="@dimen/margin_dp5"
                         android:layout_toRightOf="@id/count_tv"
                         ></ImageButton>
                 </RelativeLayout>

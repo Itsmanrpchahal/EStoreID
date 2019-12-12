@@ -1,5 +1,6 @@
 package com.estoreid.estoreid.views.webApi;
 
+import com.estoreid.estoreid.views.OrderPlaced;
 import com.estoreid.estoreid.views.apiResponseModel.AddCartQuantityResponse;
 import com.estoreid.estoreid.views.apiResponseModel.AddToCartResponse;
 import com.estoreid.estoreid.views.apiResponseModel.AddToWishlistResponse;
@@ -7,12 +8,15 @@ import com.estoreid.estoreid.views.apiResponseModel.CartItemsResponse;
 import com.estoreid.estoreid.views.apiResponseModel.FavVendorsResponse;
 import com.estoreid.estoreid.views.apiResponseModel.FilterDataResponse;
 import com.estoreid.estoreid.views.apiResponseModel.FollowAPIResponse;
+import com.estoreid.estoreid.views.apiResponseModel.GetOrderListResponse;
 import com.estoreid.estoreid.views.apiResponseModel.GetProfileResponse;
 import com.estoreid.estoreid.views.apiResponseModel.GetWishlistProducts;
 import com.estoreid.estoreid.views.apiResponseModel.LoginAPIReponse;
+import com.estoreid.estoreid.views.apiResponseModel.OrderPlacedResponse;
 import com.estoreid.estoreid.views.apiResponseModel.ProductDetailResponse;
 import com.estoreid.estoreid.views.apiResponseModel.ProductsAPI;
 import com.estoreid.estoreid.views.apiResponseModel.RegisterAPIReponse;
+import com.estoreid.estoreid.views.apiResponseModel.RemoveCartItemResponse;
 import com.estoreid.estoreid.views.apiResponseModel.ResetAPIReponse;
 import com.estoreid.estoreid.views.apiResponseModel.SetNewPasswordAPIReponse;
 import com.estoreid.estoreid.views.apiResponseModel.SocailLoginAPIResponse;
@@ -166,16 +170,7 @@ public interface ApiInterface {
             @Query("quantity") String quantity
     );
 
-    @Multipart
-    @POST(Constants.SERVER_main_folder +"payumoney/new_hash.php")
-    Call<String> getHashCall(
-            @Part("key") String key,
-            @Part("txnid") String txnid,
-            @Part("amount") String amount,
-            @Part("productinfo") String producinfo,
-            @Part("firstname") String firstname,
-            @Part("email") String email
-    );
+
 
     @POST("addToWishList")
     Call<AddToWishlistResponse> addtowistlist(
@@ -185,6 +180,26 @@ public interface ApiInterface {
 
     @POST("get_wishlist_products")
     Call<GetWishlistProducts> getWishlist(
+            @Header("Authorization") String token
+    );
+
+
+    @POST("save_order")
+    Call<OrderPlacedResponse> orderplaced(
+            @Header("Authorization") String token,
+            @Query("product_id") String product_id,
+            @Query("transaction_id") String transaction_id,
+            @Query("total_amount") String total_amount
+    );
+
+    @POST("removeFromCart")
+    Call<RemoveCartItemResponse> removecart(
+            @Header("Authorization") String token,
+            @Query("cart_id") String cart_id
+    );
+
+    @POST("getOrdersList")
+    Call<GetOrderListResponse> orderlist(
             @Header("Authorization") String token
     );
 
