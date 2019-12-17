@@ -38,7 +38,8 @@
         <activity android:name=".views.wishlist.WishList" />
         <activity android:name=".views.biometriclock.FingerprintActivity" />
         <activity android:name=".views.OfferZone" />
-        <activity android:name=".views.filter.FilterScreen" />
+        <activity android:name=".views.filter.FilterScreen"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".views.SendFeedbackActivity"
             android:screenOrientation="portrait"
@@ -140,7 +141,7 @@
 
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="${applicationId}.com.vansuita.pickimage.provider"
+            android:authorities="₹{applicationId}.com.vansuita.pickimage.provider"
             android:exported="false"
             android:grantUriPermissions="true"
             tools:replace="android:authorities">

@@ -19,6 +19,7 @@ import com.estoreid.estoreid.views.utils.Constants;
 import com.estoreid.estoreid.views.utils.Utils;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -63,6 +64,7 @@ public class MyOrderActivity extends BaseActivity implements Controller.GetOrder
             for (int i = 0; i < getOrderListResponse.body().getData().size(); i++) {
                 GetOrderListResponse.Datum datum = getOrderListResponse.body().getData().get(i);
                 responseArrayList.add(datum);
+                Collections.reverse(responseArrayList);
                 setAdapter(responseArrayList);
 
             }

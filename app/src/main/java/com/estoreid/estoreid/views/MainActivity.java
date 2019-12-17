@@ -427,9 +427,9 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback, Co
     @Override
     public void onMapReady(GoogleMap googleMap) {
         Gmap = googleMap;
-        Gmap.getUiSettings().setMyLocationButtonEnabled(false);
-        Gmap.getUiSettings().setZoomControlsEnabled(false);
-        Gmap.getUiSettings().setCompassEnabled(false);
+        Gmap.getUiSettings().setMyLocationButtonEnabled(true);
+        Gmap.getUiSettings().setZoomControlsEnabled(true);
+        Gmap.getUiSettings().setCompassEnabled(true);
         Gmap.setMyLocationEnabled(true);
 
         /*Rect rect = new Rect();
@@ -495,6 +495,7 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback, Co
 
         return bitmap;
     }
+
 
 
     @Override

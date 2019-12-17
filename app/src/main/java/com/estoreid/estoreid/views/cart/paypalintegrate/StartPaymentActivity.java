@@ -32,7 +32,7 @@ public class StartPaymentActivity extends BaseActivity implements Controller.Ord
     String txnID = "4012", amount = "200", phone = "8427180202", productname = "Nike", firstname = "Manpreet", email = "abhitron01@gmail.com";
     Controller controller;
     android.app.Dialog Dialog;
-    String user_id, total_amount, token,user_number;
+    String user_id, total_amount, token,user_number,user_email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +42,10 @@ public class StartPaymentActivity extends BaseActivity implements Controller.Ord
         token = getStringVal(Constants.TOKEN);
         user_number = getStringVal(Constants.USER_NUMBER);
         total_amount = getStringVal(Constants.TOTALAMOUNT);
+        user_email = getStringVal(Constants.USER_EMAIL);
         Dialog = Utils.showDialog(this);
+
+        Log.d("+++++++++",user_id+" "+token+" "+user_number+"  "+total_amount+"  "+user_email);
 
         controller = new Controller(this);
         startpay();
@@ -55,7 +58,7 @@ public class StartPaymentActivity extends BaseActivity implements Controller.Ord
                 .setPhone(user_number)                   // User Phone number
                 .setProductName(productname)                   // Product Name or description
                 .setFirstName(getStringVal(Constants.USER_NAME))                              // User First name
-                .setEmail(email)              // User Email ID
+                .setEmail(user_email)              // User Email ID
                 .setsUrl("https://www.payumoney.com/mobileapp/payumoney/success.php")     // Success URL (surl)
                 .setfUrl("https://www.payumoney.com/mobileapp/payumoney/failure.php")     //Failure URL (furl)
                 .setUdf1("")
@@ -76,7 +79,7 @@ public class StartPaymentActivity extends BaseActivity implements Controller.Ord
         try {
             paymentParam = builder.build();
             // generateHashFromServer(paymentParam );
-            getHashkey();
+            getHashkey(user_email);
 
         } catch (Exception e) {
             Log.e("++++++++", " error s " + e.toString());
@@ -84,15 +87,15 @@ public class StartPaymentActivity extends BaseActivity implements Controller.Ord
 
     }
 
-    public void getHashkey() {
+    public void getHashkey(String user_email) {
         ServiceWrapper service = new ServiceWrapper(null);
         Call<String> call = service.newHashCall(Constants.MERCHANTKEY, txnID, total_amount, productname,
-                getStringVal(Constants.USER_NAME), email);
+                getStringVal(Constants.USER_NAME), user_email);
 
         call.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
-
+//                finish();
                 Log.e("++++", "hash res " + response.body());
                 String merchantHash = response.body();
                 if (merchantHash.isEmpty() || merchantHash.equals("")) {
@@ -137,7 +140,6 @@ public class StartPaymentActivity extends BaseActivity implements Controller.Ord
                     if (Utils.isOnline() != false) {
                         Dialog.show();
                         controller.OrderPlaced("Bearer "+token, "", transactionResponse.getTransactionDetails(), total_amount);
-
                     } else {
                         Dialog.dismiss();
                         Utils.showToastMessage(StartPaymentActivity.this, "No Internet Connection", getResources().getDrawable(R.drawable.ic_nointernet));
@@ -171,6 +173,7 @@ public class StartPaymentActivity extends BaseActivity implements Controller.Ord
             startActivity(intent);
             finish();
         }
+
     }
 
     @Override

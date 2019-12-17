@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.estoreid.estoreid.R;
 import com.estoreid.estoreid.views.MyOrderDetailsActivity;
 import com.estoreid.estoreid.views.apiResponseModel.GetOrderListResponse;
+import com.estoreid.estoreid.views.utils.Constants;
 import com.estoreid.estoreid.views.utils.Utils;
 
 import org.w3c.dom.Text;
@@ -48,7 +49,7 @@ public class MyOrderAdapter extends RecyclerView.Adapter<MyOrderAdapter.ViewHold
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
         holder.tv_OrderName.setText("Order ID:"+arrayList.get(position).getOrderId());
-        holder.tv_OrderPrice.setText("$"+arrayList.get(position).getAmount());
+        holder.tv_OrderPrice.setText("₹"+arrayList.get(position).getAmount());
         holder.tv_orderTimming.setText(Utils.convertTimeStampDate(Long.parseLong(arrayList.get(position).getOrderDate())));
 
 //        if (position == 0) {
@@ -77,6 +78,8 @@ public class MyOrderAdapter extends RecyclerView.Adapter<MyOrderAdapter.ViewHold
             public void onClick(View view) {
                 Intent intent = new Intent(context, MyOrderDetailsActivity.class);
                 intent.putExtra("text_string","Delivered");
+                intent.putExtra("order_id",arrayList.get(position).getOrderId().toString());
+                intent.putExtra("total_amount",arrayList.get(position).getAmount().toString());
                 context.startActivity(intent);
             }
         });

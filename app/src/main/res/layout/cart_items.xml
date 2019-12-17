@@ -17,7 +17,8 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/dimen_5dp">
 
             <com.makeramen.roundedimageview.RoundedImageView
                 android:id="@+id/cart_product_image"
@@ -75,7 +76,7 @@
                     android:id="@+id/product_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="$100"
+                    android:text="₹100"
                     android:layout_below="@id/saveforlater"
                     android:textColor="@color/colorBlack"
                     android:layout_marginTop="@dimen/defaultmargin"
@@ -88,7 +89,7 @@
                     android:id="@+id/product_discount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="$10"
+                    android:text="₹10"
                     android:layout_below="@id/saveforlater"
                     android:layout_toRightOf="@id/product_price"
                     android:layout_marginTop="@dimen/defaultmargin"

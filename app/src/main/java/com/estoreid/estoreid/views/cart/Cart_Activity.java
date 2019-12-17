@@ -5,7 +5,6 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -15,7 +14,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
@@ -24,36 +22,25 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.estoreid.estoreid.R;
 import com.estoreid.estoreid.views.BaseActivity;
-import com.estoreid.estoreid.views.CheckOutActivity;
 import com.estoreid.estoreid.views.adapter.CartAddedItemAdapter;
 import com.estoreid.estoreid.views.adapter.ReletedProductAdpater;
 import com.estoreid.estoreid.views.apiResponseModel.AddCartQuantityResponse;
 import com.estoreid.estoreid.views.apiResponseModel.CartItemsResponse;
 import com.estoreid.estoreid.views.apiResponseModel.RemoveCartItemResponse;
-import com.estoreid.estoreid.views.cart.paypalintegrate.ServiceWrapper;
 import com.estoreid.estoreid.views.cart.paypalintegrate.StartPaymentActivity;
 import com.estoreid.estoreid.views.controller.Controller;
 import com.estoreid.estoreid.views.utils.Constants;
 import com.estoreid.estoreid.views.utils.Utils;
-import com.estoreid.estoreid.views.webApi.WebAPI;
-import com.payumoney.core.PayUmoneySdkInitializer;
-import com.payumoney.core.entity.TransactionResponse;
-import com.payumoney.sdkui.ui.utils.PayUmoneyFlowManager;
 
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import retrofit2.Call;
-import retrofit2.Callback;
 import retrofit2.Response;
 
 public class Cart_Activity extends BaseActivity implements Controller.CartItems, Controller.AddCartItemQuantity, Controller.RemoveFromCart {
 
 
-    PayUmoneySdkInitializer.PaymentParam.Builder builder = new PayUmoneySdkInitializer.PaymentParam.Builder();
-    PayUmoneySdkInitializer.PaymentParam paymentParam = null;
-    String txnID = "4012", amount = "200", phone = "8427180202", productname = "Nike", firstname = "Manpreet", email = "abhitron01@gmail.com";
     ReletedProductAdpater reletedProductAdpater;
     CartAddedItemAdapter adapter;
     @BindView(R.id.search_et)
@@ -113,6 +100,10 @@ public class Cart_Activity extends BaseActivity implements Controller.CartItems,
     Controller controller;
     Dialog Dialog;
     String size;
+    @BindView(R.id.devliverycharge_tv)
+    TextView devliverychargeTv;
+    @BindView(R.id.devliverycharge_tv1)
+    TextView devliverychargeTv1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -149,6 +140,7 @@ public class Cart_Activity extends BaseActivity implements Controller.CartItems,
                 if (!size.equals("0")) {
                     Intent intent = new Intent(Cart_Activity.this, StartPaymentActivity.class);
                     startActivity(intent);
+
                 } else {
                     Utils.showToastMessage(Cart_Activity.this, "Add Items in cart to continue ", getResources().getDrawable(R.drawable.ic_error_black_24dp));
                 }
@@ -213,10 +205,11 @@ public class Cart_Activity extends BaseActivity implements Controller.CartItems,
         if (cartItemsResponseResponse.body().getStatus() == 200) {
             for (int i = 0; i < cartItemsResponseResponse.body().getData().size(); i++) {
                 CartItemsResponse.Datum datum = cartItemsResponseResponse.body().getData().get(i);
-                subTotalTv1.setText("$" + cartItemsResponseResponse.body().getPrice().getSubTotal().toString());
-                totalTv1.setText("$" + cartItemsResponseResponse.body().getPrice().getTotal().toString());
+                subTotalTv1.setText("₹" + cartItemsResponseResponse.body().getPrice().getSubTotal().toString());
+                totalTv1.setText("₹" + cartItemsResponseResponse.body().getPrice().getTotal().toString());
                 taxTv1.setText(cartItemsResponseResponse.body().getPrice().getTaxAmount().toString());
                 cartItemscount.setText(String.valueOf(cartItemsResponseResponse.body().getData().size()) + " items available");
+                devliverychargeTv1.setText("₹"+cartItemsResponseResponse.body().getPrice().getDelivery());
                 setStringVal(Constants.TOTALAMOUNT, cartItemsResponseResponse.body().getPrice().getTotal().toString());
                 setStringVal(Constants.SUBTOTAL, cartItemsResponseResponse.body().getPrice().getSubTotal().toString());
                 size = String.valueOf(cartItemsResponseResponse.body().getData().size());
@@ -224,7 +217,7 @@ public class Cart_Activity extends BaseActivity implements Controller.CartItems,
                 setAdapter(cartitems);
             }
         } else {
-            size="0";
+            size = "0";
             additemRecyclerviw.setVisibility(View.GONE);
             subTotalTv1.setText("0");
             totalTv1.setText("0");

@@ -50,8 +50,8 @@ public class WishlistProducts extends RecyclerView.Adapter<WishlistProducts.View
         holder.product_add_to_cart.setVisibility(View.GONE);
         Glide.with(context).load(Constants.IMAGES +wishlist.get(position).getImage().toString()).into(holder.product_image);
         holder.product_name.setText(wishlist.get(position).getProductName());
-        holder.product_price.setText("$"+wishlist.get(position).getSalePrice());
-        holder.product_original_price.setText("$"+wishlist.get(position).getActualPrice());
+        holder.product_price.setText("₹"+wishlist.get(position).getSalePrice());
+        holder.product_original_price.setText("₹"+wishlist.get(position).getActualPrice());
         holder.product_original_price.setPaintFlags(holder.product_original_price.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
 //        holder.product_brand.setText(wishlist.get(position).getBrandName());
         holder.product_discountper.setText(wishlist.get(position).getDiscount()+"% off");

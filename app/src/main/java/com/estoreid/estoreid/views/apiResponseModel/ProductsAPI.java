@@ -13,6 +13,18 @@ public class ProductsAPI {
     @SerializedName("message")
     @Expose
     private String message;
+
+    public String getCartCount() {
+        return CartCount;
+    }
+
+    public void setCartCount(String cartCount) {
+        CartCount = cartCount;
+    }
+
+    @SerializedName("CartCount")
+    @Expose
+    private String CartCount;
     @SerializedName("data")
     @Expose
     private List<Datum> data = null;

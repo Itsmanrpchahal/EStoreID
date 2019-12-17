@@ -18,7 +18,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.estoreid.estoreid.R;
 import com.estoreid.estoreid.views.Product_details;
-import com.estoreid.estoreid.views.Products_Screen;
 import com.estoreid.estoreid.views.apiResponseModel.ProductsAPI;
 import com.estoreid.estoreid.views.utils.Constants;
 
@@ -29,12 +28,13 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
     Context context;
     String type;
     ArrayList<ProductsAPI.Datum> products = new ArrayList<>();
-    View.OnClickListener onClickListener;
+    String s;
 
-    public ProductAdapter(Context context, String type,ArrayList<ProductsAPI.Datum> products) {
+    public ProductAdapter(Context context, String type, ArrayList<ProductsAPI.Datum> products, String s) {
         this.context = context;
         this.type = type;
         this.products = products;
+        this.s = s;
     }
 
 
@@ -61,8 +61,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
 
         Glide.with(context).load(Constants.IMAGES +products.get(position).getImage()).into(holder.product_image);
         holder.product_name.setText(products.get(position).getProductName());
-        holder.product_price.setText("$"+products.get(position).getSalePrice());
-        holder.product_original_price.setText("$"+products.get(position).getActualPrice());
+        holder.product_price.setText("₹"+products.get(position).getSalePrice());
+        holder.product_original_price.setText("₹"+products.get(position).getActualPrice());
         holder.product_original_price.setPaintFlags(holder.product_original_price.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
         holder.product_brand.setText(products.get(position).getBrandName());
         holder.product_discountper.setText(products.get(position).getDiscount()+"% off");
@@ -86,6 +86,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
                 Intent intent = new Intent(context, Product_details.class);
                 intent.putExtra("type",type);
                 intent.putExtra("product_id",productid);
+                intent.putExtra("cartcount",s);
                 context.startActivity(intent);
             }
         });

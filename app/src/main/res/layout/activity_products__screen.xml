@@ -45,10 +45,11 @@
                 android:visibility="visible"></ImageButton>
 
             <TextView
+                android:id="@+id/cart_count"
                 android:layout_width="@dimen/margin_dp15"
                 android:layout_height="@dimen/margin_dp15"
                 android:background="@drawable/circle_background"
-                android:text="13"
+                android:text=""
                 android:textSize="8sp"
                 android:textAlignment="center"
                 android:gravity="center"

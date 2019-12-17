@@ -484,6 +484,7 @@ public class Login extends BaseClass implements Controller.LoginAPI, Controller.
             setStringVal(Constants.USER_NUMBER,loginAPIReponseResponse.body().getData().getMobileNumber());
             setStringVal(Constants.USER_NAME,loginAPIReponseResponse.body().getData().getFirstName()+" "+loginAPIReponseResponse.body().getData().getLastName());
             setStringVal(Constants.USER_IMAGE,loginAPIReponseResponse.body().getData().getImage());
+            setStringVal(Constants.USER_EMAIL,loginAPIReponseResponse.body().getData().getEmail());
             startActivity(intent);
         } else {
             Dialog.dismiss();
@@ -527,6 +528,7 @@ public class Login extends BaseClass implements Controller.LoginAPI, Controller.
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             setStringVal(Constants.TOKEN, socailLoginAPIResponseResponse.body().getData().getToken());
+            setStringVal(Constants.USER_EMAIL,socailLoginAPIResponseResponse.body().getData().getEmail());
             startActivity(intent);
         }
     }

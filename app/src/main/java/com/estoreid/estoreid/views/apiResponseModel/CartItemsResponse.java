@@ -98,6 +98,7 @@ public class CartItemsResponse {
         private String selectedColor;
         @SerializedName("selected_color_id")
         @Expose
+
         private Integer selectedColorId;
         @SerializedName("selected_size")
         @Expose
@@ -309,6 +310,7 @@ public class CartItemsResponse {
             private String name;
             @SerializedName("description")
             @Expose
+
             private String description;
 
             public Integer getId() {
@@ -386,6 +388,9 @@ public class CartItemsResponse {
         @SerializedName("total")
         @Expose
         private String total;
+        @Expose
+        private String delivery;
+        @SerializedName("delivery")
 
         public Integer getSubTotal() {
             return subTotal;
@@ -409,6 +414,14 @@ public class CartItemsResponse {
 
         public void setTotal(String total) {
             this.total = total;
+        }
+
+        public String getDelivery() {
+            return delivery;
+        }
+
+        public void setDelivery(String delivery) {
+            this.delivery = delivery;
         }
 
     }

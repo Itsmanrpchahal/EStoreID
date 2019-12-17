@@ -59,8 +59,8 @@ public class CartAddedItemAdapter extends RecyclerView.Adapter<CartAddedItemAdap
         CartItemsResponse.Datum datum = cartsitems.get(position);
         Glide.with(context).load(Constants.IMAGES+datum.getImage()).into(holder.cart_product_image);
         holder.product_name.setText(datum.getProductName());
-        holder.product_price.setText("$"+datum.getSalePrice().toString());
-        holder.product_discount.setText("$"+datum.getActualPrice().toString());
+        holder.product_price.setText("₹"+datum.getSalePrice().toString());
+        holder.product_discount.setText("₹"+datum.getActualPrice().toString());
         holder.product_discount.setPaintFlags(holder.product_discount.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
 
         holder.count_tv.setText(datum.getQuantity().toString());

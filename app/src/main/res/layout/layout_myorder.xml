@@ -44,7 +44,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:fontFamily="@font/quicksandbold"
-                    android:text="$12.00"
+                    android:text="₹12.00"
                     android:textColor="@color/colorTheme"
                     android:textSize="16sp" />
 

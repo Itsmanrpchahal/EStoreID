@@ -7,6 +7,7 @@ import com.estoreid.estoreid.views.apiResponseModel.CartItemsResponse;
 import com.estoreid.estoreid.views.apiResponseModel.FavVendorsResponse;
 import com.estoreid.estoreid.views.apiResponseModel.FilterDataResponse;
 import com.estoreid.estoreid.views.apiResponseModel.FollowAPIResponse;
+import com.estoreid.estoreid.views.apiResponseModel.GetBookOrderDetail;
 import com.estoreid.estoreid.views.apiResponseModel.GetOrderListResponse;
 import com.estoreid.estoreid.views.apiResponseModel.GetProfileResponse;
 import com.estoreid.estoreid.views.apiResponseModel.GetWishlistProducts;
@@ -56,6 +57,7 @@ public class Controller {
     public OrderPlaced orderPlaced;
     public RemoveFromCart removeFromCart;
     public GetOrderList getOrderList;
+    public GetBookedOrderData getBookedOrderData;
 
 
     //registerAPI
@@ -144,6 +146,13 @@ public class Controller {
     //orderplaced
     public Controller(OrderPlaced orderPlaced1) {
         orderPlaced = orderPlaced1;
+        webAPI = new WebAPI();
+    }
+
+    //getBookedOrderData
+    public Controller(GetBookedOrderData getBookedOrderData1)
+    {
+        getBookedOrderData = getBookedOrderData1;
         webAPI = new WebAPI();
     }
 
@@ -468,8 +477,12 @@ public class Controller {
         webAPI.getApi().getWishlist(token).enqueue(new Callback<com.estoreid.estoreid.views.apiResponseModel.GetWishlistProducts>() {
             @Override
             public void onResponse(Call<com.estoreid.estoreid.views.apiResponseModel.GetWishlistProducts> call, Response<com.estoreid.estoreid.views.apiResponseModel.GetWishlistProducts> response) {
-                Response<com.estoreid.estoreid.views.apiResponseModel.GetWishlistProducts> getWishlistProductsResponse = response;
-                getWishlistProducts.onSuccessGetWishlist(getWishlistProductsResponse);
+                if (response.isSuccessful())
+                {
+                    Response<com.estoreid.estoreid.views.apiResponseModel.GetWishlistProducts> getWishlistProductsResponse = response;
+                    getWishlistProducts.onSuccessGetWishlist(getWishlistProductsResponse);
+                }
+
             }
 
             @Override
@@ -483,8 +496,12 @@ public class Controller {
         webAPI.getApi().orderplaced(token, product_id, transaction_id, total_amount).enqueue(new Callback<OrderPlacedResponse>() {
             @Override
             public void onResponse(Call<OrderPlacedResponse> call, Response<OrderPlacedResponse> response) {
-                Response<OrderPlacedResponse> orderPlacedResponseResponse = response;
-                orderPlaced.onSuccessOrderPlaced(orderPlacedResponseResponse);
+                if (response.isSuccessful())
+                {
+                    Response<OrderPlacedResponse> orderPlacedResponseResponse = response;
+                    orderPlaced.onSuccessOrderPlaced(orderPlacedResponseResponse);
+                }
+
             }
 
             @Override
@@ -498,8 +515,12 @@ public class Controller {
         webAPI.getApi().removecart(token, cart_id).enqueue(new Callback<RemoveCartItemResponse>() {
             @Override
             public void onResponse(Call<RemoveCartItemResponse> call, Response<RemoveCartItemResponse> response) {
-                Response<RemoveCartItemResponse> removeCartItemResponseResponse = response;
-                removeFromCart.onSuccessRemoveCart(removeCartItemResponseResponse);
+                if (response.isSuccessful())
+                {
+                    Response<RemoveCartItemResponse> removeCartItemResponseResponse = response;
+                    removeFromCart.onSuccessRemoveCart(removeCartItemResponseResponse);
+                }
+
             }
 
             @Override
@@ -514,8 +535,12 @@ public class Controller {
         webAPI.getApi().orderlist(token).enqueue(new Callback<GetOrderListResponse>() {
             @Override
             public void onResponse(Call<GetOrderListResponse> call, Response<GetOrderListResponse> response) {
-                Response<GetOrderListResponse> orderPlacedResponseResponse = response;
-                getOrderList.onSuccessGetOrders(orderPlacedResponseResponse);
+                if (response.isSuccessful())
+                {
+                    Response<GetOrderListResponse> orderPlacedResponseResponse = response;
+                    getOrderList.onSuccessGetOrders(orderPlacedResponseResponse);
+                }
+
             }
 
             @Override
@@ -525,10 +550,28 @@ public class Controller {
         });
     }
 
+    public void GetBookedOrderData(String token,String order_id)
+    {
+        webAPI.getApi().getbookorderdata(token,order_id).enqueue(new Callback<GetBookOrderDetail>() {
+            @Override
+            public void onResponse(Call<GetBookOrderDetail> call, Response<GetBookOrderDetail> response) {
+                if (response.isSuccessful())
+                {
+                    Response<GetBookOrderDetail> bookOrderDetailResponse = response;
+                    getBookedOrderData.onSuccessBookedOrderData(bookOrderDetailResponse);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<GetBookOrderDetail> call, Throwable t) {
+                getBookedOrderData.onError(t.getMessage());
+            }
+        });
+    }
+
 
     public interface RegisterAPI {
         void onSucess(Response<RegisterAPIReponse> registerAPIReponseResponse);
-
         void onError(String error);
     }
 
@@ -635,6 +678,11 @@ public class Controller {
     public interface GetOrderList
     {
         void onSuccessGetOrders(Response<GetOrderListResponse> getOrderListResponse);
+        void onError(String error);
+    }
+
+    public interface GetBookedOrderData{
+        void onSuccessBookedOrderData(Response<GetBookOrderDetail> getBookedOrderDataResponse);
         void onError(String error);
     }
 }

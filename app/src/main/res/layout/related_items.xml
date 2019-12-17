@@ -28,7 +28,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/releted_product_name"
         android:layout_marginTop="5dp"
-        android:text="$50.00"
+        android:text="₹50.00"
         android:textSize="@dimen/normaltext"
         android:textColor="@color/colorBlack"
         android:fontFamily="@font/quicksandbold"></TextView>

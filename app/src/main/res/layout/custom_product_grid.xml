@@ -48,7 +48,7 @@
                     android:id="@+id/product_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="$99.95"
+                    android:text="₹99.95"
                     android:layout_below="@id/product_name"
                     android:fontFamily="@font/quicksandbold"
                     android:layout_marginTop="5dp"
@@ -62,7 +62,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/quicksand"
                     android:layout_marginTop="5dp"
-                    android:text="$120.95"
+                    android:text="₹120.95"
                     android:textSize="@dimen/textsize_sp14"
                     android:textColor="@color/colorgrey"
                     android:layout_below="@id/product_price"></TextView>

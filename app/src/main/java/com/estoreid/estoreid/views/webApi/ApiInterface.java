@@ -8,6 +8,7 @@ import com.estoreid.estoreid.views.apiResponseModel.CartItemsResponse;
 import com.estoreid.estoreid.views.apiResponseModel.FavVendorsResponse;
 import com.estoreid.estoreid.views.apiResponseModel.FilterDataResponse;
 import com.estoreid.estoreid.views.apiResponseModel.FollowAPIResponse;
+import com.estoreid.estoreid.views.apiResponseModel.GetBookOrderDetail;
 import com.estoreid.estoreid.views.apiResponseModel.GetOrderListResponse;
 import com.estoreid.estoreid.views.apiResponseModel.GetProfileResponse;
 import com.estoreid.estoreid.views.apiResponseModel.GetWishlistProducts;
@@ -201,6 +202,13 @@ public interface ApiInterface {
     @POST("getOrdersList")
     Call<GetOrderListResponse> orderlist(
             @Header("Authorization") String token
+    );
+
+    @FormUrlEncoded
+    @POST("getOrderDetails")
+    Call<GetBookOrderDetail> getbookorderdata(
+            @Header("Authorization") String token,
+            @Field("order_id") String order_id
     );
 
 }

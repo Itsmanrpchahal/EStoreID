@@ -16,7 +16,6 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
@@ -30,7 +29,6 @@ import com.estoreid.estoreid.views.adapter.ProductAdapter;
 import com.estoreid.estoreid.views.apiResponseModel.ProductsAPI;
 import com.estoreid.estoreid.views.controller.Controller;
 import com.estoreid.estoreid.views.filter.FilterScreen;
-import com.estoreid.estoreid.views.login.Login;
 import com.estoreid.estoreid.views.utils.Constants;
 import com.estoreid.estoreid.views.utils.Utils;
 
@@ -44,7 +42,7 @@ public class Products_Screen extends BaseActivity implements Controller.Products
 
     ProductAdapter adapter;
     Intent intent;
-    String type = "list";
+    String type = "list",cartcount;
     @BindView(R.id.search_et)
     EditText searchEt;
     @BindView(R.id.backontoolbar)
@@ -87,6 +85,8 @@ public class Products_Screen extends BaseActivity implements Controller.Products
     @BindView(R.id.totalproducts)
     TextView totalproducts;
     Dialog popup;
+    @BindView(R.id.cart_count)
+    TextView cartCount;
 
 
     @SuppressLint("WrongConstant")
@@ -110,13 +110,12 @@ public class Products_Screen extends BaseActivity implements Controller.Products
         if (intent != null) {
             vendor_id = intent.getStringExtra("vendor_id");
             type = intent.getStringExtra("type");
-            if (Utils.isOnline()!=false)
-            {
+            if (Utils.isOnline() != false) {
                 Dialog.show();
                 controller.Products("Bearer " + getStringVal(Constants.TOKEN), vendor_id);
-            }else {
+            } else {
                 Dialog.dismiss();
-                Utils.showToastMessage(Products_Screen.this,"No Internet Connection",getResources().getDrawable(R.drawable.ic_nointernet));
+                Utils.showToastMessage(Products_Screen.this, "No Internet Connection", getResources().getDrawable(R.drawable.ic_nointernet));
             }
 
         }
@@ -124,7 +123,7 @@ public class Products_Screen extends BaseActivity implements Controller.Products
     }
 
     @SuppressLint("WrongConstant")
-    private void setListGrid(String type, ArrayList<ProductsAPI.Datum> products) {
+    private void setListGrid(String type, ArrayList<ProductsAPI.Datum> products, String s) {
         if (type.equals("list")) {
             LinearLayoutManager linearLayout = new LinearLayoutManager(this);
             productListview.setImageDrawable(getResources().getDrawable(R.drawable.listview_active));
@@ -133,7 +132,7 @@ public class Products_Screen extends BaseActivity implements Controller.Products
             linearLayout.setOrientation(LinearLayout.VERTICAL);
             itemsRecyclerView.setHasFixedSize(true);
             itemsRecyclerView.setLayoutManager(linearLayout);
-            adapter = new ProductAdapter(this, type, products);
+            adapter = new ProductAdapter(this, type, products,s);
             itemsRecyclerView.setAdapter(adapter);
             adapter.notifyDataSetChanged();
         } else {
@@ -142,7 +141,7 @@ public class Products_Screen extends BaseActivity implements Controller.Products
 
             GridLayoutManager gridLayoutManager = new GridLayoutManager(getApplicationContext(), 2);
             itemsRecyclerView.setLayoutManager(gridLayoutManager); // set LayoutManager to RecyclerView
-            adapter = new ProductAdapter(this, type, products);
+            adapter = new ProductAdapter(this, type, products,s);
             itemsRecyclerView.setAdapter(adapter);
             adapter.notifyDataSetChanged();
         }
@@ -157,7 +156,7 @@ public class Products_Screen extends BaseActivity implements Controller.Products
                 productGrid.setImageDrawable(getResources().getDrawable(R.drawable.grid_active));
                 GridLayoutManager gridLayoutManager = new GridLayoutManager(getApplicationContext(), 2);
                 itemsRecyclerView.setLayoutManager(gridLayoutManager); // set LayoutManager to RecyclerView
-                adapter = new ProductAdapter(getApplicationContext(), type, products);
+                adapter = new ProductAdapter(getApplicationContext(), type, products, cartcount);
                 itemsRecyclerView.setAdapter(adapter);
                 adapter.notifyDataSetChanged();
             }
@@ -171,7 +170,7 @@ public class Products_Screen extends BaseActivity implements Controller.Products
                 productGrid.setImageDrawable(getResources().getDrawable(R.drawable.grid));
                 GridLayoutManager gridLayoutManager = new GridLayoutManager(getApplicationContext(), 1);
                 itemsRecyclerView.setLayoutManager(gridLayoutManager); // set LayoutManager to RecyclerView
-                adapter = new ProductAdapter(getApplicationContext(), type, products);
+                adapter = new ProductAdapter(getApplicationContext(), type, products, cartcount);
                 itemsRecyclerView.setAdapter(adapter);
                 adapter.notifyDataSetChanged();
             }
@@ -194,7 +193,7 @@ public class Products_Screen extends BaseActivity implements Controller.Products
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-           dialog();
+            dialog();
         }
     }
 
@@ -206,7 +205,9 @@ public class Products_Screen extends BaseActivity implements Controller.Products
             for (int i = 0; i < productsAPIResponse.body().getData().size(); i++) {
                 ProductsAPI.Datum datum = productsAPIResponse.body().getData().get(i);
                 products.add(datum);
-                setListGrid(type, products);
+                cartCount.setText(productsAPIResponse.body().getCartCount().toString());
+                cartcount = productsAPIResponse.body().getCartCount().toString();
+                setListGrid(type, products,cartcount);
 
             }
             totalproducts.setText(String.valueOf(products.size()));
@@ -239,8 +240,8 @@ public class Products_Screen extends BaseActivity implements Controller.Products
         OK.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               finish();
-               System.exit(0);
+                finish();
+                System.exit(0);
             }
         });
 

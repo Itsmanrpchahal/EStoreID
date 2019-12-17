@@ -59,6 +59,7 @@
                         android:visibility="visible"></ImageButton>
 
                     <TextView
+                        android:id="@+id/cartcount"
                         android:layout_width="@dimen/margin_dp15"
                         android:layout_height="@dimen/margin_dp15"
                         android:layout_alignParentRight="true"
@@ -66,7 +67,7 @@
                         android:layout_marginBottom="17dp"
                         android:background="@drawable/circle_background"
                         android:gravity="center"
-                        android:text="13"
+                        android:text=""
                         android:textAlignment="center"
                         android:textColor="@color/colorWhite"
                         android:textSize="8sp"></TextView>
@@ -135,7 +136,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/defaultmargin"
                             android:fontFamily="@font/quicksand"
-                            android:text="$99"
+                            android:text="₹99"
                             android:textColor="@color/colorTheme"
                             android:textSize="@dimen/largetext"></TextView>
 
@@ -148,7 +149,7 @@
                             android:layout_toRightOf="@id/producat_detail_price"
                             android:fontFamily="@font/quicksand"
                             android:gravity="center_vertical"
-                            android:text="$199"></TextView>
+                            android:text="₹199"></TextView>
 
                     </RelativeLayout>
 
