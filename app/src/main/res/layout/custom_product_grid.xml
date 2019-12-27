@@ -38,6 +38,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Nike Shoe"
+                    android:singleLine="true"
                     android:fontFamily="@font/quicksand"
                     android:textColor="@color/colorBlack"
                     android:textSize="@dimen/textsize_sp16"

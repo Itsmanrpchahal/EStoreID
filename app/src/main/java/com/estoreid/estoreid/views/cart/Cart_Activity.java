@@ -2,20 +2,17 @@ package com.estoreid.estoreid.views.cart;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -43,18 +40,6 @@ public class Cart_Activity extends BaseActivity implements Controller.CartItems,
 
     ReletedProductAdpater reletedProductAdpater;
     CartAddedItemAdapter adapter;
-    @BindView(R.id.search_et)
-    EditText searchEt;
-    @BindView(R.id.backontoolbar)
-    ImageButton backontoolbar;
-    @BindView(R.id.cart_toolbar)
-    ImageButton cartToolbar;
-    @BindView(R.id.serach_toolbar)
-    ImageButton serachToolbar;
-    @BindView(R.id.toolbartitle)
-    TextView toolbartitle;
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
     @BindView(R.id.product_serach)
     ImageButton productSerach;
     @BindView(R.id.toolbar_layout)
@@ -95,7 +80,8 @@ public class Cart_Activity extends BaseActivity implements Controller.CartItems,
     ScrollView scrollview;
     @BindView(R.id.safetext)
     TextView safetext;
-    ArrayList<CartItemsResponse.Datum> cartitems = new ArrayList<>();
+    ArrayList<CartItemsResponse.Data.Cart> cartitems = new ArrayList<>();
+    ArrayList<CartItemsResponse.Data.Related> relatedItems = new ArrayList<>();
     static Integer counter = 0;
     Controller controller;
     Dialog Dialog;
@@ -104,13 +90,16 @@ public class Cart_Activity extends BaseActivity implements Controller.CartItems,
     TextView devliverychargeTv;
     @BindView(R.id.devliverycharge_tv1)
     TextView devliverychargeTv1;
+    @BindView(R.id.cart_back)
+    ImageButton cartBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View contentView = inflater.inflate(R.layout.activity_cart_, null, false);
-        drawer.addView(contentView, 0);
+        setContentView(R.layout.activity_cart_);
+//        LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+//        View contentView = inflater.inflate(R.layout.activity_cart_, null, false);
+//        drawer.addView(contentView, 0);
         ButterKnife.bind(this);
         Dialog = Utils.showDialog(this);
         Dialog.show();
@@ -147,11 +136,18 @@ public class Cart_Activity extends BaseActivity implements Controller.CartItems,
 
             }
         });
+
+        cartBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
     }
 
 
     @SuppressLint("WrongConstant")
-    private void setAdapter(ArrayList<CartItemsResponse.Datum> cartitems) {
+    private void setAdapter(ArrayList<CartItemsResponse.Data.Cart> cartitems) {
 
         //Cart Addet items
         LinearLayoutManager linearLayout = new LinearLayoutManager(this);
@@ -193,7 +189,7 @@ public class Cart_Activity extends BaseActivity implements Controller.CartItems,
         linearLayout1.setOrientation(LinearLayout.HORIZONTAL);
         relatedItemRecyclerview.setHasFixedSize(true);
         relatedItemRecyclerview.setLayoutManager(linearLayout1);
-        reletedProductAdpater = new ReletedProductAdpater(this);
+        reletedProductAdpater = new ReletedProductAdpater(this, relatedItems,size);
         relatedItemRecyclerview.setAdapter(reletedProductAdpater);
         reletedProductAdpater.notifyDataSetChanged();
     }
@@ -202,19 +198,27 @@ public class Cart_Activity extends BaseActivity implements Controller.CartItems,
     public void onSuccessCartItems(Response<CartItemsResponse> cartItemsResponseResponse) {
         Dialog.dismiss();
         cartitems.clear();
+        relatedItems.clear();
         if (cartItemsResponseResponse.body().getStatus() == 200) {
-            for (int i = 0; i < cartItemsResponseResponse.body().getData().size(); i++) {
-                CartItemsResponse.Datum datum = cartItemsResponseResponse.body().getData().get(i);
-                subTotalTv1.setText("₹" + cartItemsResponseResponse.body().getPrice().getSubTotal().toString());
-                totalTv1.setText("₹" + cartItemsResponseResponse.body().getPrice().getTotal().toString());
-                taxTv1.setText(cartItemsResponseResponse.body().getPrice().getTaxAmount().toString());
-                cartItemscount.setText(String.valueOf(cartItemsResponseResponse.body().getData().size()) + " items available");
-                devliverychargeTv1.setText("₹"+cartItemsResponseResponse.body().getPrice().getDelivery());
-                setStringVal(Constants.TOTALAMOUNT, cartItemsResponseResponse.body().getPrice().getTotal().toString());
-                setStringVal(Constants.SUBTOTAL, cartItemsResponseResponse.body().getPrice().getSubTotal().toString());
-                size = String.valueOf(cartItemsResponseResponse.body().getData().size());
+            for (int i = 0; i < cartItemsResponseResponse.body().getData().getCart().size(); i++) {
+                CartItemsResponse.Data.Cart datum = cartItemsResponseResponse.body().getData().getCart().get(i);
+                subTotalTv1.setText("₹" + cartItemsResponseResponse.body().getData().getPrice().getSubTotal().toString());
+                totalTv1.setText("₹" + cartItemsResponseResponse.body().getData().getPrice().getTotal().toString());
+                taxTv1.setText(cartItemsResponseResponse.body().getData().getPrice().getTaxAmount().toString());
+                devliverychargeTv1.setText("₹" + cartItemsResponseResponse.body().getData().getPrice().getDelivery());
+                setStringVal(Constants.TOTALAMOUNT, cartItemsResponseResponse.body().getData().getPrice().getTotal().toString());
+                setStringVal(Constants.SUBTOTAL, cartItemsResponseResponse.body().getData().getPrice().getSubTotal().toString());
+                size = String.valueOf(cartItemsResponseResponse.body().getData().getCart().size());
+
                 cartitems.add(datum);
                 setAdapter(cartitems);
+                if (cartItemsResponseResponse.body().getData().getRelated().size() == 0) {
+                    cardview.setVisibility(View.GONE);
+                }
+
+                //Get related Items
+                CartItemsResponse.Data.Related related = cartItemsResponseResponse.body().getData().getRelated().get(i);
+                relatedItems.add(related);
             }
         } else {
             size = "0";

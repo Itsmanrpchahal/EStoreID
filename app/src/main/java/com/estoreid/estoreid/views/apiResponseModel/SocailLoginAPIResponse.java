@@ -44,21 +44,30 @@ public class SocailLoginAPIResponse {
         @SerializedName("token")
         @Expose
         private String token;
-        @SerializedName("name")
-        @Expose
-        private String name;
         @SerializedName("id")
         @Expose
         private Integer id;
         @SerializedName("email")
         @Expose
         private String email;
-        @SerializedName("type")
+        @SerializedName("first_name")
         @Expose
-        private Object type;
-        @SerializedName("social_id")
+        private String firstName;
+        @SerializedName("last_name")
         @Expose
-        private Object socialId;
+        private String lastName;
+        @SerializedName("mobile_number")
+        @Expose
+        private String mobileNumber;
+        @SerializedName("gender")
+        @Expose
+        private String gender;
+        @SerializedName("dob")
+        @Expose
+        private String dob;
+        @SerializedName("image")
+        @Expose
+        private String image;
 
         public String getToken() {
             return token;
@@ -66,14 +75,6 @@ public class SocailLoginAPIResponse {
 
         public void setToken(String token) {
             this.token = token;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
         }
 
         public Integer getId() {
@@ -92,20 +93,52 @@ public class SocailLoginAPIResponse {
             this.email = email;
         }
 
-        public Object getType() {
-            return type;
+        public String getFirstName() {
+            return firstName;
         }
 
-        public void setType(Object type) {
-            this.type = type;
+        public void setFirstName(String firstName) {
+            this.firstName = firstName;
         }
 
-        public Object getSocialId() {
-            return socialId;
+        public String getLastName() {
+            return lastName;
         }
 
-        public void setSocialId(Object socialId) {
-            this.socialId = socialId;
+        public void setLastName(String lastName) {
+            this.lastName = lastName;
+        }
+
+        public String getMobileNumber() {
+            return mobileNumber;
+        }
+
+        public void setMobileNumber(String mobileNumber) {
+            this.mobileNumber = mobileNumber;
+        }
+
+        public String getGender() {
+            return gender;
+        }
+
+        public void setGender(String gender) {
+            this.gender = gender;
+        }
+
+        public String getDob() {
+            return dob;
+        }
+
+        public void setDob(String dob) {
+            this.dob = dob;
+        }
+
+        public String getImage() {
+            return image;
+        }
+
+        public void setImage(String image) {
+            this.image = image;
         }
 
     }

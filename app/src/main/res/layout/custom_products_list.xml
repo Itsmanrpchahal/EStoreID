@@ -13,7 +13,7 @@
         app:cardBackgroundColor="@color/colorWhite"
         app:cardElevation="5dp">
 
-        <RelativeLayout
+         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -69,6 +69,7 @@
                     android:fontFamily="@font/quicksand"
                     android:layout_marginTop="2dp"
                     android:layout_marginLeft="5dp"
+                    android:singleLine="true"
                     android:textSize="@dimen/textsize_sp12"
                     android:layout_toRightOf="@id/product_rating"
                     android:layout_below="@id/product_brand"></TextView>

@@ -62,6 +62,11 @@ public class BaseActivity extends BaseClass implements NavigationView.OnNavigati
 
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        navigationView.getMenu().getItem(8).setActionView(R.layout.custom_reward);
+
+        TextView textView = navigationView.findViewById(R.id.rewardcoinstext);
+//        textView.setText("10");
+
 
         View headerLayout =
                 navigationView.inflateHeaderView(R.layout.header_layout);

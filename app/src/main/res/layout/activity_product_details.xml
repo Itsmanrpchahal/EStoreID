@@ -136,7 +136,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/defaultmargin"
                             android:fontFamily="@font/quicksand"
-                            android:text="₹99"
+                            android:text=""
                             android:textColor="@color/colorTheme"
                             android:textSize="@dimen/largetext"></TextView>
 
@@ -149,7 +149,7 @@
                             android:layout_toRightOf="@id/producat_detail_price"
                             android:fontFamily="@font/quicksand"
                             android:gravity="center_vertical"
-                            android:text="₹199"></TextView>
+                            android:text=""></TextView>
 
                     </RelativeLayout>
 

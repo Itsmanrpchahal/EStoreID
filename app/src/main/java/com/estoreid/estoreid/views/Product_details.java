@@ -3,6 +3,7 @@ package com.estoreid.estoreid.views;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.View;
@@ -256,6 +257,9 @@ public class Product_details extends BaseActivity implements Controller.ProductD
 
             decripitionTv.setText(productDetailResponseResponse.body().getData().get(0).getDescription());
             productDetialProductName.setText(productDetailResponseResponse.body().getData().get(0).getProductName());
+            producatDetailPrice.setText("₹"+productDetailResponseResponse.body().getData().get(0).getSalePrice());
+            productOriginalPrice.setText("₹"+productDetailResponseResponse.body().getData().get(0).getActualPrice());
+            productOriginalPrice.setPaintFlags(productOriginalPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
             for (int i = 0; i < productDetailResponseResponse.body().getData().get(0).getImages().size(); i++) {
                 images.add(productDetailResponseResponse.body().getData().get(0).getImages().get(i).getImage());
             }

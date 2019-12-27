@@ -13,6 +13,29 @@ public class FilterDataResponse {
     @SerializedName("message")
     @Expose
     private String message;
+    @SerializedName("start_price")
+    @Expose
+    private String start_price;
+
+    public String getStart_price() {
+        return start_price;
+    }
+
+    public void setStart_price(String start_price) {
+        this.start_price = start_price;
+    }
+
+    public String getEnd_price() {
+        return end_price;
+    }
+
+    public void setEnd_price(String end_price) {
+        this.end_price = end_price;
+    }
+
+    @SerializedName("end_price")
+    @Expose
+    private String end_price;
     @SerializedName("data")
     @Expose
     private List<Datum> data = null;

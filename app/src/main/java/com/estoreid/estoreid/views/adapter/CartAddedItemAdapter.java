@@ -28,7 +28,7 @@ public class CartAddedItemAdapter extends RecyclerView.Adapter<CartAddedItemAdap
     Context context;
     int count1 ;
     AsyncTask<Integer> asyncTask;
-    ArrayList<CartItemsResponse.Datum> cartsitems = new ArrayList<>();
+    ArrayList<CartItemsResponse.Data.Cart> cartsitems = new ArrayList<>();
     AddCartQuantity addCartQuantity;
     RemoveCartItem removeCartItem;
 
@@ -40,7 +40,7 @@ public class CartAddedItemAdapter extends RecyclerView.Adapter<CartAddedItemAdap
         this.addCartQuantity = addCartQuantity;
     }
 
-    public CartAddedItemAdapter(Context context, ArrayList<CartItemsResponse.Datum> cartsitems) {
+    public CartAddedItemAdapter(Context context, ArrayList<CartItemsResponse.Data.Cart> cartsitems) {
         this.context = context;
         this.cartsitems = cartsitems;
     }
@@ -56,7 +56,7 @@ public class CartAddedItemAdapter extends RecyclerView.Adapter<CartAddedItemAdap
     @Override
     public void onBindViewHolder(@NonNull CartAddedItemAdapter.ViewHolder holder, int position) {
 
-        CartItemsResponse.Datum datum = cartsitems.get(position);
+        CartItemsResponse.Data.Cart datum = cartsitems.get(position);
         Glide.with(context).load(Constants.IMAGES+datum.getImage()).into(holder.cart_product_image);
         holder.product_name.setText(datum.getProductName());
         holder.product_price.setText("₹"+datum.getSalePrice().toString());

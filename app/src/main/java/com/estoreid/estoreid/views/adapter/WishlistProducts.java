@@ -53,8 +53,7 @@ public class WishlistProducts extends RecyclerView.Adapter<WishlistProducts.View
         holder.product_price.setText("₹"+wishlist.get(position).getSalePrice());
         holder.product_original_price.setText("₹"+wishlist.get(position).getActualPrice());
         holder.product_original_price.setPaintFlags(holder.product_original_price.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-//        holder.product_brand.setText(wishlist.get(position).getBrandName());
-        holder.product_discountper.setText(wishlist.get(position).getDiscount()+"% off");
+          holder.product_discountper.setText(wishlist.get(position).getDiscount()+"% off");
         holder.product_rating.setRating(Float.parseFloat(String.valueOf(wishlist.get(position).getRating())));
 
 

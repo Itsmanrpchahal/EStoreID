@@ -3,6 +3,7 @@ package com.estoreid.estoreid.views.filter;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -25,6 +26,7 @@ import com.estoreid.estoreid.views.apiResponseModel.FilterDataResponse;
 import com.estoreid.estoreid.views.controller.Controller;
 import com.estoreid.estoreid.views.utils.Constants;
 import com.estoreid.estoreid.views.utils.Utils;
+import com.jaygoo.widget.OnRangeChangedListener;
 import com.jaygoo.widget.RangeSeekBar;
 
 import java.util.ArrayList;
@@ -74,6 +76,7 @@ public class FilterScreen extends BaseActivity implements Controller.FilterScree
     ArrayList<FilterDataResponse.Datum.Category> categoryArrayList = new ArrayList<>();
     ArrayList<FilterDataResponse.Datum.Color> colorArrayList = new ArrayList<>();
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,6 +84,7 @@ public class FilterScreen extends BaseActivity implements Controller.FilterScree
         controller = new Controller(this);
         ButterKnife.bind(this);
         Dialog = Utils.showDialog(this);
+
 
         if (Utils.isOnline() != false) {
 
@@ -98,6 +102,28 @@ public class FilterScreen extends BaseActivity implements Controller.FilterScree
             @Override
             public void onClick(View v) {
                 onBackPressed();
+            }
+        });
+
+
+
+        rangeseekbar.setOnRangeChangedListener(new OnRangeChangedListener() {
+            @Override
+            public void onRangeChanged(RangeSeekBar view, float leftValue, float rightValue, boolean isFromUser) {
+                Log.d("onRangeChanged",leftValue+"  "+rightValue);
+                filterStartprice.setText("₹"+ (int)leftValue);
+                filterEndprice.setText("₹"+(int) rightValue);
+            }
+
+            @Override
+            public void onStartTrackingTouch(RangeSeekBar view, boolean isLeft) {
+                Log.d("onStartTrackingTouch", String.valueOf(isLeft));
+            }
+
+            @Override
+            public void onStopTrackingTouch(RangeSeekBar view, boolean isLeft) {
+                Log.d("onStopTrackingTouch", String.valueOf(isLeft));
+
             }
         });
     }
@@ -137,6 +163,12 @@ public class FilterScreen extends BaseActivity implements Controller.FilterScree
         categoryArrayList.clear();
         if (filterDataResponseResponse.body().getStatus() == 200) {
 
+            Float startPrice = Float.valueOf(filterDataResponseResponse.body().getStart_price());
+            Float endPrice = Float.valueOf(filterDataResponseResponse.body().getEnd_price());
+            filterStartprice.setText("₹"+ startPrice);
+            filterEndprice.setText("₹"+endPrice);
+//            rangeseekbar.setProgress(startPrice,endPrice);
+            rangeseekbar.setRange(startPrice,endPrice,10);
             for (int i = 0; i < filterDataResponseResponse.body().getData().get(0).getBrands().size(); i++) {
                 FilterDataResponse.Datum.Brand brand = filterDataResponseResponse.body().getData().get(0).getBrands().get(i);
                 brands.add(brand);
